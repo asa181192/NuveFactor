@@ -1,0 +1,63 @@
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Negocio.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Negocio.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Negocio.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\DataLayer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Entidades.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Newtonsoft.Json.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\EntityFramework.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\DataLayer.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\DataLayer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Entidades.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Entidades.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\Newtonsoft.Json.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\EntityFramework.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.vbprojResolveAssemblyReference.cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.Resources.resources
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.vbproj.GenerateResource.Cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\Negocio\obj\Debug\Negocio.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Negocio.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Negocio.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Negocio.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Entidades.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Entidades.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Entidades.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.Resources.resources
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.dll
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.xml
+C:\Users\alfredo.santiago\Desktop\nuve\Negocio\obj\Debug\Negocio.pdb
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Negocio.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Negocio.pdb
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Negocio.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Entidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.dll
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.xml
+C:\Users\alfredo.santiago\Documents\nuve\Negocio\obj\Debug\Negocio.pdb

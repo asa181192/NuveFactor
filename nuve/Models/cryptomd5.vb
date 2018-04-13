@@ -1,0 +1,84 @@
+﻿Imports Microsoft.VisualBasic
+Imports System.Data
+Imports System.IO
+Imports System.ComponentModel
+Imports System.Runtime.Serialization.Json
+Imports System.Web.UI
+Imports System.Linq
+Imports System.Security.Cryptography
+Imports System.Text
+Imports System.Web.Services
+Imports System
+
+Public Class cryptomd5  
+  Implements IDisposable
+
+  Protected des As TripleDESCryptoServiceProvider
+  Protected hashmd5 As MD5CryptoServiceProvider
+  Protected Crypto As String
+
+  Public Sub New()
+    Me.des = New TripleDESCryptoServiceProvider
+    Me.hashmd5 = New MD5CryptoServiceProvider
+    Me.Crypto = System.Configuration.ConfigurationManager.AppSettings("Crypto")
+  End Sub
+
+  Public Function Encriptar(ByVal texto As String) As String
+    If Trim(texto) = "" Then
+      Encriptar = ""
+    Else
+      des.Key = hashmd5.ComputeHash((New UnicodeEncoding).GetBytes(Crypto))
+      des.Mode = CipherMode.ECB
+      Dim encrypt As ICryptoTransform = des.CreateEncryptor()
+      Dim buff() As Byte = UnicodeEncoding.ASCII.GetBytes(texto)
+      Encriptar = Convert.ToBase64String(encrypt.TransformFinalBlock(buff, 0, buff.Length))
+    End If
+    Return Encriptar
+  End Function
+
+  Public Function Desencriptar(ByVal texto As String) As String
+    Dim cString As String = ""
+    If Trim(texto) = "" Then
+      Desencriptar = ""
+    Else
+      If Microsoft.VisualBasic.Strings.InStr(texto, " ") > 0 Then
+        cString = Replace(texto, " ", "+")
+      Else
+        cString = texto
+      End If
+      des.Key = hashmd5.ComputeHash((New UnicodeEncoding).GetBytes(Crypto))
+      des.Mode = CipherMode.ECB
+      Dim desencrypta As ICryptoTransform = des.CreateDecryptor()
+      Dim buff() As Byte = Convert.FromBase64String(cString)
+      Desencriptar = UnicodeEncoding.ASCII.GetString(desencrypta.TransformFinalBlock(buff, 0, buff.Length))
+    End If
+    Return Desencriptar
+  End Function
+
+#Region "IDisposable Support"
+  Private disposedValue As Boolean
+
+  Protected Overridable Sub Dispose(disposing As Boolean)
+    If Not Me.disposedValue Then
+      If disposing Then
+        If Me.des IsNot Nothing Then Me.des.Dispose()
+        If Me.des IsNot Nothing Then Me.des = Nothing
+        If Me.hashmd5 IsNot Nothing Then hashmd5.Dispose()
+        If Me.hashmd5 IsNot Nothing Then hashmd5 = Nothing
+      End If
+    End If
+    Me.disposedValue = True
+  End Sub
+
+  Protected Overrides Sub Finalize()  
+    Dispose(False)
+    MyBase.Finalize()
+  End Sub
+
+  Public Sub Dispose() Implements IDisposable.Dispose
+    Dispose(True)
+    GC.SuppressFinalize(Me)
+  End Sub
+#End Region
+
+End Class

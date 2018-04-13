@@ -1,0 +1,344 @@
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\nuve.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\nuve.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\nuve.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Antlr3.Runtime.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DataLayer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.Core.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Entidades.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Data.Edm.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Data.OData.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Negocio.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Newtonsoft.Json.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Owin.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Spatial.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Helpers.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Http.OData.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Mvc.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Optimization.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Razor.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.Deployment.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.Razor.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\WebGrease.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\WebMatrix.Data.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\WebMatrix.WebData.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\EntityFramework.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\EntityFramework.SqlServer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DataLayer.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DataLayer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Entidades.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Entidades.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Negocio.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Negocio.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Newtonsoft.Json.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Helpers.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Mvc.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Razor.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.Deployment.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.WebPages.Razor.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\WebMatrix.Data.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\WebMatrix.WebData.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.Core.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Web.Http.OData.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Data.Edm.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\Microsoft.Data.OData.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\System.Spatial.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\EntityFramework.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\EntityFramework.SqlServer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\de\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\es\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\it\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\de\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\es\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\fr\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\it\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ja\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ko\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ru\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\de\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\es\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\fr\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\it\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ja\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ko\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\ru\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hans\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.vbprojResolveAssemblyReference.cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.Resources.resources
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.vbproj.GenerateResource.Cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\nuve\obj\Debug\nuve.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\nuve.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\nuve.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\nuve.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Antlr3.Runtime.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DataLayer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.Core.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Entidades.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Data.Edm.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Data.OData.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Negocio.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Newtonsoft.Json.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Owin.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Net.Http.Formatting.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Spatial.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Helpers.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.OData.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.WebHost.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Mvc.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Optimization.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Razor.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.Deployment.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.Razor.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\WebGrease.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\WebMatrix.Data.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\WebMatrix.WebData.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\EntityFramework.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DataLayer.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DataLayer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Entidades.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Entidades.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Negocio.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Negocio.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Newtonsoft.Json.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Net.Http.Formatting.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Helpers.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.WebHost.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Mvc.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Razor.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.Deployment.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.WebPages.Razor.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\WebMatrix.Data.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\WebMatrix.WebData.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.Core.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Web.Http.OData.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Data.Edm.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\Microsoft.Data.OData.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\System.Spatial.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\EntityFramework.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\de\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\es\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\it\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\de\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\es\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\fr\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\it\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ja\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ko\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ru\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\de\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\es\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\fr\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\it\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ja\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ko\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\ru\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hans\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.Resources.resources
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.dll
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.xml
+C:\Users\alfredo.santiago\Desktop\nuve\nuve\obj\Debug\nuve.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorDAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\nuve.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\nuve.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\nuve.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Antlr3.Runtime.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.AspNet.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.Core.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OAuth.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OpenId.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorBAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorEntidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Data.Edm.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Data.OData.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Negocio.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Newtonsoft.Json.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Owin.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Net.Http.Formatting.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Spatial.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Helpers.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.OData.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.WebHost.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Mvc.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Optimization.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Razor.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.Deployment.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.Razor.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\WebGrease.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\WebMatrix.Data.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\WebMatrix.WebData.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorDAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DataLayer.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Entidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorBAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorBAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorEntidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorEntidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Negocio.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Negocio.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Newtonsoft.Json.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Net.Http.Formatting.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Helpers.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.WebHost.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Mvc.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Razor.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.Deployment.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.WebPages.Razor.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\WebMatrix.Data.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Web.WebPages.OAuth.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\WebMatrix.WebData.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.AspNet.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.Core.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OAuth.Consumer.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OAuth.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OpenId.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Web.Http.OData.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Data.Edm.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Data.OData.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\System.Spatial.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\FactorDAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\de\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\es\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\fr\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\it\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ja\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ko\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ru\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hans\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hant\Microsoft.Data.Edm.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\de\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\es\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\fr\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\it\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ja\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ko\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ru\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hans\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hant\Microsoft.Data.OData.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\de\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\es\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\fr\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\it\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ja\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ko\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\ru\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hans\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.pdb
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\AutoMapper.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\AutoMapper.xml

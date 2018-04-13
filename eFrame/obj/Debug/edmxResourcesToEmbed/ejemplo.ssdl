@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ejemplo.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ejemploStoreContainer">
+    <EntitySet Name="clientes" EntityType="ejemplo.Store.clientes" store:Type="Tables" store:Schema="dbo" store:Name="clientes">
+      <DefiningQuery>SELECT 
+      [clientes].[origen] AS [origen], 
+      [clientes].[cliente] AS [cliente], 
+      [clientes].[pfisica] AS [pfisica], 
+      [clientes].[nombre] AS [nombre], 
+      [clientes].[n] AS [n], 
+      [clientes].[s] AS [s], 
+      [clientes].[p] AS [p], 
+      [clientes].[m] AS [m], 
+      [clientes].[rfc] AS [rfc], 
+      [clientes].[domicilio] AS [domicilio], 
+      [clientes].[colonia] AS [colonia], 
+      [clientes].[cp] AS [cp], 
+      [clientes].[municipio] AS [municipio], 
+      [clientes].[estado] AS [estado], 
+      [clientes].[telefono] AS [telefono], 
+      [clientes].[email] AS [email], 
+      [clientes].[promotor] AS [promotor], 
+      [clientes].[promo_cve] AS [promo_cve], 
+      [clientes].[fec_alta] AS [fec_alta], 
+      [clientes].[fec_baja] AS [fec_baja], 
+      [clientes].[cltedesde] AS [cltedesde], 
+      [clientes].[contactos] AS [contactos], 
+      [clientes].[riesgo] AS [riesgo], 
+      [clientes].[actividad] AS [actividad], 
+      [clientes].[notas] AS [notas], 
+      [clientes].[bnc_dump] AS [bnc_dump], 
+      [clientes].[aval] AS [aval], 
+      [clientes].[pfempre] AS [pfempre], 
+      [clientes].[banx_activ] AS [banx_activ], 
+      [clientes].[banx_calif] AS [banx_calif], 
+      [clientes].[curp] AS [curp], 
+      [clientes].[pais] AS [pais], 
+      [clientes].[extranjero] AS [extranjero], 
+      [clientes].[pexpuesto] AS [pexpuesto], 
+      [clientes].[altoriesgo] AS [altoriesgo], 
+      [clientes].[numemp] AS [numemp], 
+      [clientes].[nip] AS [nip], 
+      [clientes].[accionista] AS [accionista], 
+      [clientes].[void] AS [void], 
+      [clientes].[id_unico] AS [id_unico], 
+      [clientes].[sepomex] AS [sepomex], 
+      [clientes].[ingresos] AS [ingresos], 
+      [clientes].[numext] AS [numext], 
+      [clientes].[numint] AS [numint], 
+      [clientes].[activo] AS [activo], 
+      [clientes].[pasivo] AS [pasivo], 
+      [clientes].[capital] AS [capital], 
+      [clientes].[calle] AS [calle], 
+      [clientes].[edocivil] AS [edocivil], 
+      [clientes].[identificacion] AS [identificacion], 
+      [clientes].[tipovivienda] AS [tipovivienda], 
+      [clientes].[ife] AS [ife], 
+      [clientes].[TEL] AS [TEL], 
+      [clientes].[login_name] AS [login_name], 
+      [clientes].[xfer] AS [xfer], 
+      [clientes].[nbrclientecs] AS [nbrclientecs], 
+      [clientes].[tiposociedad] AS [tiposociedad], 
+      [clientes].[sociedad] AS [sociedad], 
+      [clientes].[subactiv] AS [subactiv], 
+      [clientes].[Riesgopld] AS [Riesgopld], 
+      [clientes].[fecbalance] AS [fecbalance], 
+      [clientes].[cveprebc] AS [cveprebc], 
+      [clientes].[relacion] AS [relacion], 
+      [clientes].[sececo] AS [sececo], 
+      [clientes].[grupo] AS [grupo], 
+      [clientes].[bnc_reporte] AS [bnc_reporte], 
+      [clientes].[bnc_folio] AS [bnc_folio], 
+      [clientes].[bnc_max_retraso] AS [bnc_max_retraso], 
+      [clientes].[bnc_max_dias] AS [bnc_max_dias], 
+      [clientes].[cnbv_loca] AS [cnbv_loca], 
+      [clientes].[relacion_tipo] AS [relacion_tipo], 
+      [clientes].[relacion_juridico] AS [relacion_juridico], 
+      [clientes].[digito_control] AS [digito_control], 
+      [clientes].[cve_consolida] AS [cve_consolida], 
+      [clientes].[historia_fecha_max] AS [historia_fecha_max], 
+      [clientes].[historia_vigente_max] AS [historia_vigente_max], 
+      [clientes].[historia_vencido_max] AS [historia_vencido_max], 
+      [clientes].[fec_edores] AS [fec_edores], 
+      [clientes].[nbrchequera] AS [nbrchequera], 
+      [clientes].[metpago] AS [metpago], 
+      [clientes].[patron] AS [patron], 
+      [clientes].[etiquetas] AS [etiquetas], 
+      [clientes].[desbloqueado] AS [desbloqueado], 
+      [clientes].[pagodomici] AS [pagodomici], 
+      [clientes].[pais_actual] AS [pais_actual], 
+      [clientes].[ingre_neto] AS [ingre_neto], 
+      [clientes].[cnbvloca2016] AS [cnbvloca2016], 
+      [clientes].[fecha_variables] AS [fecha_variables], 
+      [clientes].[pagos_infonavit] AS [pagos_infonavit], 
+      [clientes].[numemp_a1] AS [numemp_a1], 
+      [clientes].[numemp_a1_total] AS [numemp_a1_total], 
+      [clientes].[numemp_a2] AS [numemp_a2], 
+      [clientes].[numemp_a2_total] AS [numemp_a2_total], 
+      [clientes].[numemp_a3] AS [numemp_a3], 
+      [clientes].[numemp_a3_total] AS [numemp_a3_total], 
+      [clientes].[mercado_proveedores] AS [mercado_proveedores], 
+      [clientes].[mercado_clientes] AS [mercado_clientes], 
+      [clientes].[edos_finan_auditados] AS [edos_finan_auditados], 
+      [clientes].[no_agencias_calificadoras] AS [no_agencias_calificadoras], 
+      [clientes].[ind_consejo_admon] AS [ind_consejo_admon], 
+      [clientes].[estructura_org] AS [estructura_org], 
+      [clientes].[comp_accionaria] AS [comp_accionaria], 
+      [clientes].[tipoentidad] AS [tipoentidad], 
+      [clientes].[segm_inst_finan] AS [segm_inst_finan], 
+      [clientes].[diversificacion_negocio_financieras] AS [diversificacion_negocio_financieras], 
+      [clientes].[diversificacion_finaciamiento_financieras] AS [diversificacion_finaciamiento_financieras], 
+      [clientes].[top3_acreditados_financieras] AS [top3_acreditados_financieras], 
+      [clientes].[consejeros_indep_financieras] AS [consejeros_indep_financieras], 
+      [clientes].[consejeros_total_financieras] AS [consejeros_total_financieras], 
+      [clientes].[comp_accionaria_financieras] AS [comp_accionaria_financieras], 
+      [clientes].[solvencia_financieras] AS [solvencia_financieras], 
+      [clientes].[liquidez_financieras] AS [liquidez_financieras], 
+      [clientes].[eficiencia_financiera] AS [eficiencia_financiera], 
+      [clientes].[calidad_gobierno_financieras] AS [calidad_gobierno_financieras], 
+      [clientes].[experiencia_funcionarios_financieras] AS [experiencia_funcionarios_financieras], 
+      [clientes].[existencia_politicas_financieras] AS [existencia_politicas_financieras], 
+      [clientes].[edo_financieros_audit_financieras] AS [edo_financieros_audit_financieras], 
+      [clientes].[metpagocta] AS [metpagocta], 
+      [clientes].[bloqvarcual] AS [bloqvarcual], 
+      [clientes].[patron_pais] AS [patron_pais], 
+      [clientes].[fecreportado] AS [fecreportado]
+      FROM [dbo].[clientes] AS [clientes]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.clientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="clientes">
+    <Key>
+      <PropertyRef Name="origen" />
+      <PropertyRef Name="cliente" />
+      <PropertyRef Name="pfisica" />
+      <PropertyRef Name="nombre" />
+      <PropertyRef Name="n" />
+      <PropertyRef Name="s" />
+      <PropertyRef Name="p" />
+      <PropertyRef Name="m" />
+      <PropertyRef Name="rfc" />
+      <PropertyRef Name="cp" />
+      <PropertyRef Name="estado" />
+      <PropertyRef Name="telefono" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="promotor" />
+      <PropertyRef Name="promo_cve" />
+      <PropertyRef Name="fec_alta" />
+      <PropertyRef Name="fec_baja" />
+      <PropertyRef Name="cltedesde" />
+      <PropertyRef Name="contactos" />
+      <PropertyRef Name="riesgo" />
+      <PropertyRef Name="actividad" />
+      <PropertyRef Name="notas" />
+      <PropertyRef Name="bnc_dump" />
+      <PropertyRef Name="aval" />
+      <PropertyRef Name="pfempre" />
+      <PropertyRef Name="banx_activ" />
+      <PropertyRef Name="banx_calif" />
+      <PropertyRef Name="curp" />
+      <PropertyRef Name="pais" />
+      <PropertyRef Name="extranjero" />
+      <PropertyRef Name="pexpuesto" />
+      <PropertyRef Name="altoriesgo" />
+      <PropertyRef Name="numemp" />
+      <PropertyRef Name="nip" />
+      <PropertyRef Name="accionista" />
+      <PropertyRef Name="void" />
+    </Key>
+    <Property Name="origen" Type="decimal" Nullable="false" Precision="2" />
+    <Property Name="cliente" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="pfisica" Type="bit" Nullable="false" />
+    <Property Name="nombre" Type="char" Nullable="false" MaxLength="150" />
+    <Property Name="n" Type="text" Nullable="false" />
+    <Property Name="s" Type="text" Nullable="false" />
+    <Property Name="p" Type="text" Nullable="false" />
+    <Property Name="m" Type="text" Nullable="false" />
+    <Property Name="rfc" Type="char" Nullable="false" MaxLength="13" />
+    <Property Name="domicilio" Type="char" MaxLength="100" />
+    <Property Name="colonia" Type="char" MaxLength="100" />
+    <Property Name="cp" Type="int" Nullable="false" />
+    <Property Name="municipio" Type="char" MaxLength="100" />
+    <Property Name="estado" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="telefono" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="email" Type="char" Nullable="false" MaxLength="100" />
+    <Property Name="promotor" Type="int" Nullable="false" />
+    <Property Name="promo_cve" Type="char" Nullable="false" MaxLength="6" />
+    <Property Name="fec_alta" Type="datetime" Nullable="false" />
+    <Property Name="fec_baja" Type="datetime" Nullable="false" />
+    <Property Name="cltedesde" Type="datetime" Nullable="false" />
+    <Property Name="contactos" Type="text" Nullable="false" />
+    <Property Name="riesgo" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="actividad" Type="decimal" Nullable="false" Precision="3" />
+    <Property Name="notas" Type="text" Nullable="false" />
+    <Property Name="bnc_dump" Type="text" Nullable="false" />
+    <Property Name="aval" Type="bit" Nullable="false" />
+    <Property Name="pfempre" Type="bit" Nullable="false" />
+    <Property Name="banx_activ" Type="decimal" Nullable="false" Precision="11" />
+    <Property Name="banx_calif" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="curp" Type="char" Nullable="false" MaxLength="18" />
+    <Property Name="pais" Type="int" Nullable="false" />
+    <Property Name="extranjero" Type="bit" Nullable="false" />
+    <Property Name="pexpuesto" Type="bit" Nullable="false" />
+    <Property Name="altoriesgo" Type="bit" Nullable="false" />
+    <Property Name="numemp" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="nip" Type="int" Nullable="false" />
+    <Property Name="accionista" Type="bit" Nullable="false" />
+    <Property Name="void" Type="bit" Nullable="false" />
+    <Property Name="id_unico" Type="char" MaxLength="25" />
+    <Property Name="sepomex" Type="char" MaxLength="25" />
+    <Property Name="ingresos" Type="money" />
+    <Property Name="numext" Type="char" MaxLength="20" />
+    <Property Name="numint" Type="char" MaxLength="20" />
+    <Property Name="activo" Type="money" />
+    <Property Name="pasivo" Type="money" />
+    <Property Name="capital" Type="money" />
+    <Property Name="calle" Type="char" MaxLength="150" />
+    <Property Name="edocivil" Type="int" />
+    <Property Name="identificacion" Type="int" />
+    <Property Name="tipovivienda" Type="int" />
+    <Property Name="ife" Type="char" MaxLength="13" />
+    <Property Name="TEL" Type="char" MaxLength="12" />
+    <Property Name="login_name" Type="char" MaxLength="20" />
+    <Property Name="xfer" Type="bit" />
+    <Property Name="nbrclientecs" Type="int" />
+    <Property Name="tiposociedad" Type="int" />
+    <Property Name="sociedad" Type="char" MaxLength="200" />
+    <Property Name="subactiv" Type="numeric" Precision="20" />
+    <Property Name="Riesgopld" Type="int" />
+    <Property Name="fecbalance" Type="datetime" />
+    <Property Name="cveprebc" Type="char" MaxLength="64" />
+    <Property Name="relacion" Type="bit" />
+    <Property Name="sececo" Type="int" />
+    <Property Name="grupo" Type="int" />
+    <Property Name="bnc_reporte" Type="datetime" />
+    <Property Name="bnc_folio" Type="nchar" MaxLength="30" />
+    <Property Name="bnc_max_retraso" Type="int" />
+    <Property Name="bnc_max_dias" Type="int" />
+    <Property Name="cnbv_loca" Type="char" MaxLength="12" />
+    <Property Name="relacion_tipo" Type="int" />
+    <Property Name="relacion_juridico" Type="int" />
+    <Property Name="digito_control" Type="int" />
+    <Property Name="cve_consolida" Type="int" />
+    <Property Name="historia_fecha_max" Type="datetime" />
+    <Property Name="historia_vigente_max" Type="money" />
+    <Property Name="historia_vencido_max" Type="money" />
+    <Property Name="fec_edores" Type="datetime" />
+    <Property Name="nbrchequera" Type="char" MaxLength="18" />
+    <Property Name="metpago" Type="int" />
+    <Property Name="patron" Type="char" MaxLength="150" />
+    <Property Name="etiquetas" Type="char" MaxLength="30" />
+    <Property Name="desbloqueado" Type="datetime" />
+    <Property Name="pagodomici" Type="bit" />
+    <Property Name="pais_actual" Type="int" />
+    <Property Name="ingre_neto" Type="money" />
+    <Property Name="cnbvloca2016" Type="char" MaxLength="12" />
+    <Property Name="fecha_variables" Type="datetime" />
+    <Property Name="pagos_infonavit" Type="money" />
+    <Property Name="numemp_a1" Type="int" />
+    <Property Name="numemp_a1_total" Type="int" />
+    <Property Name="numemp_a2" Type="int" />
+    <Property Name="numemp_a2_total" Type="int" />
+    <Property Name="numemp_a3" Type="int" />
+    <Property Name="numemp_a3_total" Type="int" />
+    <Property Name="mercado_proveedores" Type="int" />
+    <Property Name="mercado_clientes" Type="int" />
+    <Property Name="edos_finan_auditados" Type="int" />
+    <Property Name="no_agencias_calificadoras" Type="int" />
+    <Property Name="ind_consejo_admon" Type="int" />
+    <Property Name="estructura_org" Type="int" />
+    <Property Name="comp_accionaria" Type="int" />
+    <Property Name="tipoentidad" Type="int" />
+    <Property Name="segm_inst_finan" Type="int" />
+    <Property Name="diversificacion_negocio_financieras" Type="int" />
+    <Property Name="diversificacion_finaciamiento_financieras" Type="int" />
+    <Property Name="top3_acreditados_financieras" Type="money" />
+    <Property Name="consejeros_indep_financieras" Type="int" />
+    <Property Name="consejeros_total_financieras" Type="int" />
+    <Property Name="comp_accionaria_financieras" Type="money" />
+    <Property Name="solvencia_financieras" Type="int" />
+    <Property Name="liquidez_financieras" Type="int" />
+    <Property Name="eficiencia_financiera" Type="int" />
+    <Property Name="calidad_gobierno_financieras" Type="int" />
+    <Property Name="experiencia_funcionarios_financieras" Type="int" />
+    <Property Name="existencia_politicas_financieras" Type="int" />
+    <Property Name="edo_financieros_audit_financieras" Type="int" />
+    <Property Name="metpagocta" Type="char" MaxLength="20" />
+    <Property Name="bloqvarcual" Type="text" />
+    <Property Name="patron_pais" Type="int" />
+    <Property Name="fecreportado" Type="datetime" />
+  </EntityType>
+  <Function Name="fdn_MemotoTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="memo" Type="varchar(max)" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="fdu_tabla_columnas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tabla" Type="varchar(max)" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="tabla" Type="varchar(max)" />
+          <Property Name="ordinal" Type="int" />
+          <Property Name="columna" Type="varchar(max)" />
+          <Property Name="tipo" Type="varchar(max)" />
+          <Property Name="collation" Type="varchar(max)" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <Function Name="sp_Nuevo_Cliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tnOficina" Type="int" Mode="In" />
+  </Function>
+</Schema>

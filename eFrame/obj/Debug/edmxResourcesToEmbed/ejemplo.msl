@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+  <Alias Key="Model" Value="ejemplo" />
+  <Alias Key="Target" Value="ejemplo.Store" />
+  <EntityContainerMapping CdmEntityContainer="ejemploContainer" StorageEntityContainer="ejemploStoreContainer">
+    <EntitySetMapping Name="clientes">
+      <EntityTypeMapping TypeName="ejemplo.cliente">
+        <MappingFragment StoreEntitySet="clientes">
+          <ScalarProperty Name="fecreportado" ColumnName="fecreportado" />
+          <ScalarProperty Name="patron_pais" ColumnName="patron_pais" />
+          <ScalarProperty Name="bloqvarcual" ColumnName="bloqvarcual" />
+          <ScalarProperty Name="metpagocta" ColumnName="metpagocta" />
+          <ScalarProperty Name="edo_financieros_audit_financieras" ColumnName="edo_financieros_audit_financieras" />
+          <ScalarProperty Name="existencia_politicas_financieras" ColumnName="existencia_politicas_financieras" />
+          <ScalarProperty Name="experiencia_funcionarios_financieras" ColumnName="experiencia_funcionarios_financieras" />
+          <ScalarProperty Name="calidad_gobierno_financieras" ColumnName="calidad_gobierno_financieras" />
+          <ScalarProperty Name="eficiencia_financiera" ColumnName="eficiencia_financiera" />
+          <ScalarProperty Name="liquidez_financieras" ColumnName="liquidez_financieras" />
+          <ScalarProperty Name="solvencia_financieras" ColumnName="solvencia_financieras" />
+          <ScalarProperty Name="comp_accionaria_financieras" ColumnName="comp_accionaria_financieras" />
+          <ScalarProperty Name="consejeros_total_financieras" ColumnName="consejeros_total_financieras" />
+          <ScalarProperty Name="consejeros_indep_financieras" ColumnName="consejeros_indep_financieras" />
+          <ScalarProperty Name="top3_acreditados_financieras" ColumnName="top3_acreditados_financieras" />
+          <ScalarProperty Name="diversificacion_finaciamiento_financieras" ColumnName="diversificacion_finaciamiento_financieras" />
+          <ScalarProperty Name="diversificacion_negocio_financieras" ColumnName="diversificacion_negocio_financieras" />
+          <ScalarProperty Name="segm_inst_finan" ColumnName="segm_inst_finan" />
+          <ScalarProperty Name="tipoentidad" ColumnName="tipoentidad" />
+          <ScalarProperty Name="comp_accionaria" ColumnName="comp_accionaria" />
+          <ScalarProperty Name="estructura_org" ColumnName="estructura_org" />
+          <ScalarProperty Name="ind_consejo_admon" ColumnName="ind_consejo_admon" />
+          <ScalarProperty Name="no_agencias_calificadoras" ColumnName="no_agencias_calificadoras" />
+          <ScalarProperty Name="edos_finan_auditados" ColumnName="edos_finan_auditados" />
+          <ScalarProperty Name="mercado_clientes" ColumnName="mercado_clientes" />
+          <ScalarProperty Name="mercado_proveedores" ColumnName="mercado_proveedores" />
+          <ScalarProperty Name="numemp_a3_total" ColumnName="numemp_a3_total" />
+          <ScalarProperty Name="numemp_a3" ColumnName="numemp_a3" />
+          <ScalarProperty Name="numemp_a2_total" ColumnName="numemp_a2_total" />
+          <ScalarProperty Name="numemp_a2" ColumnName="numemp_a2" />
+          <ScalarProperty Name="numemp_a1_total" ColumnName="numemp_a1_total" />
+          <ScalarProperty Name="numemp_a1" ColumnName="numemp_a1" />
+          <ScalarProperty Name="pagos_infonavit" ColumnName="pagos_infonavit" />
+          <ScalarProperty Name="fecha_variables" ColumnName="fecha_variables" />
+          <ScalarProperty Name="cnbvloca2016" ColumnName="cnbvloca2016" />
+          <ScalarProperty Name="ingre_neto" ColumnName="ingre_neto" />
+          <ScalarProperty Name="pais_actual" ColumnName="pais_actual" />
+          <ScalarProperty Name="pagodomici" ColumnName="pagodomici" />
+          <ScalarProperty Name="desbloqueado" ColumnName="desbloqueado" />
+          <ScalarProperty Name="etiquetas" ColumnName="etiquetas" />
+          <ScalarProperty Name="patron" ColumnName="patron" />
+          <ScalarProperty Name="metpago" ColumnName="metpago" />
+          <ScalarProperty Name="nbrchequera" ColumnName="nbrchequera" />
+          <ScalarProperty Name="fec_edores" ColumnName="fec_edores" />
+          <ScalarProperty Name="historia_vencido_max" ColumnName="historia_vencido_max" />
+          <ScalarProperty Name="historia_vigente_max" ColumnName="historia_vigente_max" />
+          <ScalarProperty Name="historia_fecha_max" ColumnName="historia_fecha_max" />
+          <ScalarProperty Name="cve_consolida" ColumnName="cve_consolida" />
+          <ScalarProperty Name="digito_control" ColumnName="digito_control" />
+          <ScalarProperty Name="relacion_juridico" ColumnName="relacion_juridico" />
+          <ScalarProperty Name="relacion_tipo" ColumnName="relacion_tipo" />
+          <ScalarProperty Name="cnbv_loca" ColumnName="cnbv_loca" />
+          <ScalarProperty Name="bnc_max_dias" ColumnName="bnc_max_dias" />
+          <ScalarProperty Name="bnc_max_retraso" ColumnName="bnc_max_retraso" />
+          <ScalarProperty Name="bnc_folio" ColumnName="bnc_folio" />
+          <ScalarProperty Name="bnc_reporte" ColumnName="bnc_reporte" />
+          <ScalarProperty Name="grupo" ColumnName="grupo" />
+          <ScalarProperty Name="sececo" ColumnName="sececo" />
+          <ScalarProperty Name="relacion" ColumnName="relacion" />
+          <ScalarProperty Name="cveprebc" ColumnName="cveprebc" />
+          <ScalarProperty Name="fecbalance" ColumnName="fecbalance" />
+          <ScalarProperty Name="Riesgopld" ColumnName="Riesgopld" />
+          <ScalarProperty Name="subactiv" ColumnName="subactiv" />
+          <ScalarProperty Name="sociedad" ColumnName="sociedad" />
+          <ScalarProperty Name="tiposociedad" ColumnName="tiposociedad" />
+          <ScalarProperty Name="nbrclientecs" ColumnName="nbrclientecs" />
+          <ScalarProperty Name="xfer" ColumnName="xfer" />
+          <ScalarProperty Name="login_name" ColumnName="login_name" />
+          <ScalarProperty Name="TEL" ColumnName="TEL" />
+          <ScalarProperty Name="ife" ColumnName="ife" />
+          <ScalarProperty Name="tipovivienda" ColumnName="tipovivienda" />
+          <ScalarProperty Name="identificacion" ColumnName="identificacion" />
+          <ScalarProperty Name="edocivil" ColumnName="edocivil" />
+          <ScalarProperty Name="calle" ColumnName="calle" />
+          <ScalarProperty Name="capital" ColumnName="capital" />
+          <ScalarProperty Name="pasivo" ColumnName="pasivo" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="numint" ColumnName="numint" />
+          <ScalarProperty Name="numext" ColumnName="numext" />
+          <ScalarProperty Name="ingresos" ColumnName="ingresos" />
+          <ScalarProperty Name="sepomex" ColumnName="sepomex" />
+          <ScalarProperty Name="id_unico" ColumnName="id_unico" />
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="accionista" ColumnName="accionista" />
+          <ScalarProperty Name="nip" ColumnName="nip" />
+          <ScalarProperty Name="numemp" ColumnName="numemp" />
+          <ScalarProperty Name="altoriesgo" ColumnName="altoriesgo" />
+          <ScalarProperty Name="pexpuesto" ColumnName="pexpuesto" />
+          <ScalarProperty Name="extranjero" ColumnName="extranjero" />
+          <ScalarProperty Name="pais" ColumnName="pais" />
+          <ScalarProperty Name="curp" ColumnName="curp" />
+          <ScalarProperty Name="banx_calif" ColumnName="banx_calif" />
+          <ScalarProperty Name="banx_activ" ColumnName="banx_activ" />
+          <ScalarProperty Name="pfempre" ColumnName="pfempre" />
+          <ScalarProperty Name="aval" ColumnName="aval" />
+          <ScalarProperty Name="bnc_dump" ColumnName="bnc_dump" />
+          <ScalarProperty Name="notas" ColumnName="notas" />
+          <ScalarProperty Name="actividad" ColumnName="actividad" />
+          <ScalarProperty Name="riesgo" ColumnName="riesgo" />
+          <ScalarProperty Name="contactos" ColumnName="contactos" />
+          <ScalarProperty Name="cltedesde" ColumnName="cltedesde" />
+          <ScalarProperty Name="fec_baja" ColumnName="fec_baja" />
+          <ScalarProperty Name="fec_alta" ColumnName="fec_alta" />
+          <ScalarProperty Name="promo_cve" ColumnName="promo_cve" />
+          <ScalarProperty Name="promotor" ColumnName="promotor" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="municipio" ColumnName="municipio" />
+          <ScalarProperty Name="cp" ColumnName="cp" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+          <ScalarProperty Name="rfc" ColumnName="rfc" />
+          <ScalarProperty Name="m" ColumnName="m" />
+          <ScalarProperty Name="p" ColumnName="p" />
+          <ScalarProperty Name="s" ColumnName="s" />
+          <ScalarProperty Name="n" ColumnName="n" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="pfisica" ColumnName="pfisica" />
+          <ScalarProperty Name="cliente1" ColumnName="cliente" />
+          <ScalarProperty Name="origen" ColumnName="origen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="fdn_MemotoTable" FunctionName="ejemplo.Store.fdn_MemotoTable">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ejemplo.fdn_MemotoTable_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="fdu_tabla_columnas" FunctionName="ejemplo.Store.fdu_tabla_columnas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ejemplo.fdu_tabla_columnas_Result">
+          <ScalarProperty Name="tabla" ColumnName="tabla" />
+          <ScalarProperty Name="ordinal" ColumnName="ordinal" />
+          <ScalarProperty Name="columna" ColumnName="columna" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="collation" ColumnName="collation" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_Nuevo_Cliente" FunctionName="ejemplo.Store.sp_Nuevo_Cliente" />
+  </EntityContainerMapping>
+</Mapping>

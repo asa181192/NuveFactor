@@ -1,0 +1,14 @@
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\FactorEntidades.dll.config
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\FactorEntidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\FactorEntidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\FactorEntidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorENT.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorENT.vbprojResolveAssemblyReference.cache

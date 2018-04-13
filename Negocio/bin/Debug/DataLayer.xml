@@ -1,0 +1,244 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+DataLayer
+</name>
+</assembly>
+<members>
+<member name="M:DataLayer.arrendadoraDL.outboxDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.outboxDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tiposociedadDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tiposociedadDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tipoviviendaDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tipoviviendaDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.subactivDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.subactivDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.clienteDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.clienteDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.bitacoraDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.bitacoraDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.oficinaDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.oficinaDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.riesgoDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.riesgoDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.persoDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.persoDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.activDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.activDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.sepomexDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.sepomexDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.sececoDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.sececoDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.catalogosDL.ipaddrDL.#ctor">
+	<summary>
+ Catalogos
+ </summary>
+	<remarks>Catalogos</remarks>
+</member><member name="M:DataLayer.catalogosDL.ipaddrDL.#ctor(System.String)">
+	<summary>
+ Catalogos
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Catalogos</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.promotorDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.promotorDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.usuarioDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.usuarioDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tipoidDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.tipoidDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.estadocivilDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.estadocivilDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.metpagoDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.metpagoDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.controlDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.controlDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.paiDL.#ctor">
+	<summary>
+ Arrendadora
+ </summary>
+	<remarks>Arrendadora</remarks>
+</member><member name="M:DataLayer.arrendadoraDL.paiDL.#ctor(System.String)">
+	<summary>
+ Arrendadora
+ </summary>
+	<param name="scnn">cnnstr</param>
+	<remarks>Arrendadora</remarks>
+</member><member name="P:DataLayer.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:DataLayer.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:DataLayer.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

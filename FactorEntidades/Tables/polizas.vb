@@ -1,0 +1,98 @@
+Imports System
+Imports System.Collections.Generic
+Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports System.Data.Entity.Spatial
+
+Partial Public Class polizas
+    <Key>
+    <Column(Order:=0)>
+    <DatabaseGenerated(DatabaseGeneratedOption.None)>
+    Public Property idpoliza As Integer
+
+    Public Property idaseguradora As Integer?
+
+    <StringLength(20)>
+    Public Property poliza As String
+
+    <Key>
+    <Column(Order:=1)>
+    Public Property cancelada As Boolean
+
+    Public Property moneda As Integer?
+
+    Public Property mvigencia As Integer?
+
+    Public Property femision As Date?
+
+    Public Property fvigencia1 As Date?
+
+    Public Property fvigencia2 As Date?
+
+    <Column(TypeName:="numeric")>
+    Public Property piva As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property indemnizacion As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property facturacion As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primasubtotal As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primaiva As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primatotal As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primapdescuento As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primapagar As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primaminima As Decimal?
+
+    Public Property primaperiodos As Integer?
+
+    <Column(TypeName:="numeric")>
+    Public Property primaasubtotal As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primaaiva As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property primaatotal As Decimal?
+
+    Public Property primaafprimera As Date?
+
+    <Column(TypeName:="numeric")>
+    Public Property gecosto As Decimal?
+
+    Public Property geasegurados As Integer?
+
+    Public Property geperiodos As Integer?
+
+    <Column(TypeName:="numeric")>
+    Public Property gesubtotal As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property geiva As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property getotal As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property geatotal As Decimal?
+
+    Public Property gefprimera As Date?
+
+    <Column(TypeName:="numeric")>
+    Public Property deducible As Decimal?
+
+    <StringLength(200)>
+    Public Property archivopdf As String
+End Class

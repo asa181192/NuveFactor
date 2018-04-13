@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="arrendadora" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="arrendadoraContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="bitacoras" EntityType="arrendadora.bitacora" />
+    <EntitySet Name="controls" EntityType="arrendadora.control" />
+    <EntitySet Name="oficinas" EntityType="arrendadora.oficina" />
+    <EntitySet Name="outboxes" EntityType="arrendadora.outbox" />
+    <EntitySet Name="usuarios" EntityType="arrendadora.usuario" />
+    <FunctionImport Name="fdu_ParametrosControl" IsComposable="true" ReturnType="Collection(arrendadora.fdu_ParametrosControl_Result)" />
+  </EntityContainer>
+  <EntityType Name="bitacora">
+    <Key>
+      <PropertyRef Name="usuario" />
+      <PropertyRef Name="maquina" />
+      <PropertyRef Name="fecha" />
+      <PropertyRef Name="accion" />
+      <PropertyRef Name="llave" />
+    </Key>
+    <Property Type="String" Name="usuario" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="maquina" Nullable="false" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="fecha" Nullable="false" Precision="3" />
+    <Property Type="String" Name="accion" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="folio" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="corte" Nullable="false" Precision="3" />
+    <Property Type="String" Name="llave" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Type="Boolean" Name="void" Nullable="false" />
+  </EntityType>
+  <EntityType Name="control">
+    <Key>
+      <PropertyRef Name="registro" />
+    </Key>
+    <Property Type="Int32" Name="registro" Nullable="false" />
+    <Property Type="String" Name="compania" Nullable="false" MaxLength="60" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="razon" MaxLength="200" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="rfc" Nullable="false" MaxLength="13" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="domicilio" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="colonia" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="municipio" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="estado" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="cp" Nullable="false" />
+    <Property Type="String" Name="telefono" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="u_cliente" Nullable="false" />
+    <Property Type="String" Name="tasas" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="u_esquema" Nullable="false" Precision="2" Scale="0" />
+    <Property Type="String" Name="serie_fm" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="folio_fm" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="serie_rta" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="folio_rta" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="serie_oc" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="folio_oc" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="serie_la" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="folio_la" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="folio_poli" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="parametros" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="filltasas" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fec_cont" Nullable="false" Precision="3" />
+    <Property Type="DateTime" Name="fec_cobra" Nullable="false" Precision="3" />
+    <Property Type="String" Name="trustees" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="requer" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Int32" Name="marca" Nullable="false" />
+    <Property Type="Decimal" Name="cargo" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="solicitud" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="abogado" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="demanda" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="etapa" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Boolean" Name="stop_robot" Nullable="false" />
+    <Property Type="Boolean" Name="expand" Nullable="false" />
+    <Property Type="Int32" Name="u_cuenta" Nullable="false" />
+    <Property Type="Boolean" Name="void" Nullable="false" />
+    <Property Type="Int32" Name="u_oficina" Nullable="false" />
+    <Property Type="Decimal" Name="folio_ls" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="serie_ls" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="folio_ap" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="serie_ap" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="trusteesfora" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fec_oper" Nullable="false" Precision="3" />
+    <Property Type="String" Name="cfd_source" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="cfd_certificate" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cfd_privatekey" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="cfd_password" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Type="Int32" Name="u_layclabe" />
+    <Property Type="String" Name="fax" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="homepage" MaxLength="60" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="dominio" MaxLength="60" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="mailserver" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ftpserver" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="dias_cont" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="rangoaviso" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="venceauto" Precision="1" Scale="0" />
+    <Property Type="Decimal" Name="vencseguro" Precision="2" Scale="0" />
+    <Property Type="Decimal" Name="pzomaxseg" Precision="2" Scale="0" />
+    <Property Type="Decimal" Name="mincruzado" Precision="9" Scale="2" />
+    <Property Type="Decimal" Name="opcongela" Precision="3" Scale="0" />
+    <Property Type="Boolean" Name="intevfp" />
+    <Property Type="Boolean" Name="interfasnew" />
+    <Property Type="Decimal" Name="exp_pass" Precision="3" Scale="0" />
+    <Property Type="Decimal" Name="hist_pass" Precision="3" Scale="0" />
+    <Property Type="Decimal" Name="len_pass" Precision="3" Scale="0" />
+    <Property Type="Boolean" Name="sens_pass" />
+    <Property Type="Decimal" Name="login_attempts" Precision="3" Scale="0" />
+    <Property Type="Decimal" Name="op_relevnte" Precision="14" Scale="2" />
+    <Property Type="Decimal" Name="fira_dias" Precision="2" Scale="0" />
+    <Property Type="String" Name="dom_border" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="col_border" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="cp_border" />
+    <Property Type="String" Name="mpo_border" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="edo_border" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="noaproba" />
+    <Property Type="Decimal" Name="anoaproba" Precision="4" Scale="0" />
+    <Property Type="String" Name="nocertif" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="fec_efactu" Precision="0" />
+    <Property Type="DateTime" Name="iva_cambio" Precision="0" />
+    <Property Type="String" Name="cpgeneral" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="cpcedula" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="antesquien" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="serie_xm" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="folio_xm" />
+    <Property Type="String" Name="cfdi_source" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="aviso_privacidad" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="adlogon" />
+    <Property Type="Boolean" Name="run_robot" />
+    <Property Type="Decimal" Name="tasamorat" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="u_interfas" />
+    <Property Type="Decimal" Name="u_domici" Precision="2" Scale="0" />
+    <Property Type="Boolean" Name="enviar_domici" />
+  </EntityType>
+  <EntityType Name="oficina">
+    <Key>
+      <PropertyRef Name="fec_contra" />
+      <PropertyRef Name="oficina1" />
+    </Key>
+    <Property Type="String" Name="clave" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="origen" Nullable="false" Precision="2" Scale="0" />
+    <Property Type="Decimal" Name="oficina1" Nullable="false" Precision="2" Scale="0" />
+    <Property Type="Decimal" Name="folio" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="tasaiva" Nullable="false" Precision="5" Scale="2" />
+    <Property Type="String" Name="s_domic" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="s_colonia" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="s_ciudad" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="s_emitido" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_domic" Nullable="false" MaxLength="60" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_colonia" Nullable="false" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_ciudad" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_municipio" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_estado" MaxLength="40" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="c_cp" />
+    <Property Type="String" Name="representante" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="correo_repre" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="c_telefonos" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="print_ofic" Nullable="false" />
+    <Property Type="String" Name="path_sucur" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="path_bnc_in" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="path_bnc_loaded" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="path_xch_out" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="path_xch_sent" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="bncgenera" Nullable="false" />
+    <Property Type="Int32" Name="cons_in" Nullable="false" />
+    <Property Type="Int32" Name="cons_out" Nullable="false" />
+    <Property Type="DateTime" Name="fec_cont" Nullable="false" Precision="3" />
+    <Property Type="String" Name="lista_conts" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fec_tesore" Nullable="false" Precision="3" />
+    <Property Type="String" Name="expediente" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="Decimal" Name="ratifija" Nullable="false" Precision="13" Scale="2" />
+    <Property Type="Decimal" Name="ratibase" Nullable="false" Precision="13" Scale="2" />
+    <Property Type="Decimal" Name="ratimillar" Nullable="false" Precision="5" Scale="2" />
+    <Property Type="Boolean" Name="raticalc" Nullable="false" />
+    <Property Type="Boolean" Name="void" Nullable="false" />
+    <Property Type="Decimal" Name="u_cliente" Precision="6" Scale="0" />
+    <Property Type="Int32" Name="u_refer" />
+    <Property Type="Int32" Name="u_riesgo" />
+    <Property Type="Int32" Name="u_poliza" />
+    <Property Type="Int32" Name="u_demanda" />
+    <Property Type="Int32" Name="u_etapa" />
+    <Property Type="Int32" Name="u_abogado" />
+    <Property Type="Int32" Name="u_linea" />
+    <Property Type="Int32" Name="u_orden" />
+    <Property Type="String" Name="apoderado" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="testigo1" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="testigo2" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="placas" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="salidas" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="seguro" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="notarionum" />
+    <Property Type="String" Name="notarionom" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="notariociu" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="jurisdic" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="serie_ini" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="serie_ncc" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="chd_serie" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="u_notacc" />
+    <Property Type="Decimal" Name="u_numchd" Precision="6" Scale="0" />
+    <Property Type="Int32" Name="u_folio" />
+    <Property Type="Decimal" Name="com_prepag" Precision="6" Scale="2" />
+    <Property Type="Boolean" Name="cierrecont" />
+    <Property Type="Int32" Name="u_ficha" />
+    <Property Type="Int32" Name="regional" />
+    <Property Type="String" Name="correo_operativo" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="u_caratula" />
+    <Property Type="Int32" Name="id_tren" />
+    <Property Type="String" Name="corto" MaxLength="3" FixedLength="true" Unicode="true" />
+    <Property Type="DateTime" Name="robot_sync" Precision="3" />
+    <Property Type="Int32" Name="difhorario" />
+    <Property Type="Int32" Name="id_plaza" />
+    <Property Type="String" Name="division" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="cond_mora" />
+    <Property Type="Int32" Name="u_credito" />
+    <Property Type="Int32" Name="u_promotor" />
+    <Property Type="Int32" Name="u_proveedor" />
+    <Property Type="Int32" Name="u_factprov" />
+    <Property Type="Int32" Name="u_cfd" />
+    <Property Type="DateTime" Name="fec_contra" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="u_efactura" />
+    <Property Type="String" Name="serie_efac" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="orden_region" />
+    <Property Type="Boolean" Name="run_process" />
+    <Property Type="String" Name="firma_cred" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="modalidad" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fec_actual" Precision="3" />
+    <Property Type="String" Name="serie_var" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="rep_serie" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="u_reprov" />
+    <Property Type="DateTime" Name="fec_oper" Precision="0" />
+    <Property Type="Int32" Name="u_cuenta" />
+    <Property Type="Int32" Name="u_solicheq" />
+    <Property Type="Int32" Name="u_operacion" />
+    <Property Type="String" Name="banamexsel" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="u_interfas" />
+    <Property Type="String" Name="puesto" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="conomina" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="outbox">
+    <Key>
+      <PropertyRef Name="office" />
+      <PropertyRef Name="llave" />
+      <PropertyRef Name="tag" />
+      <PropertyRef Name="changes" />
+      <PropertyRef Name="fecalta" />
+    </Key>
+    <Property Type="Int32" Name="office" Nullable="false" />
+    <Property Type="String" Name="archivo" MaxLength="15" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="tag" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="llave" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="changes" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fecalta" Nullable="false" Precision="3" />
+    <Property Type="DateTime" Name="fecxfer" Nullable="false" Precision="3" />
+    <Property Type="String" Name="consfile" Nullable="false" MaxLength="26" FixedLength="true" Unicode="false" />
+    <Property Type="Boolean" Name="void" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="folio" />
+      <PropertyRef Name="userid" />
+      <PropertyRef Name="nombre" />
+      <PropertyRef Name="password" />
+      <PropertyRef Name="activo" />
+      <PropertyRef Name="supervisor" />
+      <PropertyRef Name="trustees" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="lista_pass" />
+      <PropertyRef Name="fec_pass" />
+      <PropertyRef Name="jefe" />
+      <PropertyRef Name="user_job" />
+      <PropertyRef Name="acepta" />
+      <PropertyRef Name="historia" />
+      <PropertyRef Name="void" />
+      <PropertyRef Name="oficina" />
+      <PropertyRef Name="perfil" />
+    </Key>
+    <Property Type="Decimal" Name="folio" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="String" Name="userid" Nullable="false" MaxLength="20" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="Int32" Name="password" Nullable="false" />
+    <Property Type="Boolean" Name="activo" Nullable="false" />
+    <Property Type="Boolean" Name="supervisor" Nullable="false" />
+    <Property Type="String" Name="trustees" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="email" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="lista_pass" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="fec_pass" Nullable="false" Precision="3" />
+    <Property Type="String" Name="jefe" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+    <Property Type="String" Name="user_job" Nullable="false" MaxLength="30" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="acepta" Nullable="false" Precision="3" />
+    <Property Type="String" Name="historia" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="void" Nullable="false" />
+    <Property Type="Decimal" Name="oficina" Nullable="false" Precision="2" Scale="0" />
+    <Property Type="String" Name="perfil" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="sign" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="promotor" />
+    <Property Type="DateTime" Name="fecbaja" Precision="3" />
+    <Property Type="Int32" Name="regional" />
+    <Property Type="String" Name="id_regi" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Type="Int32" Name="ubicacion" />
+    <Property Type="String" Name="oficinas" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="session" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="token" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="last_login" Precision="3" />
+    <Property Type="String" Name="userbncfisicas" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="pwdbncfisicas" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="userbncmorales" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="pwdbncmorales" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Type="Binary" Name="firma" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <ComplexType Name="fdu_ParametrosControl_Result">
+    <Property Type="String" Name="nombre" Nullable="true" />
+    <Property Type="String" Name="valor" Nullable="true" />
+  </ComplexType>
+</Schema>

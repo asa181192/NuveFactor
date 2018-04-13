@@ -1,0 +1,13 @@
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\eFrame.dll.config
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\eFrame.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\eFrame.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\eFrame.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\EntityFramework.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\EntityFramework.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\obj\Debug\eFrame.Resources.resources
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\obj\Debug\eFrame.vbproj.GenerateResource.Cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\obj\Debug\eFrame.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\obj\Debug\eFrame.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\eFrame\obj\Debug\eFrame.pdb

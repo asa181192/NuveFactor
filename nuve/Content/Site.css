@@ -1,0 +1,165 @@
+﻿.btn-black {
+  color: #fff;
+  background-color: rgba(18, 43, 64, 1);
+  border-color: gray;
+}
+.btn-black:focus,
+.btn-black.focus {
+  color: #fff;
+  background-color: rgba(18, 43, 64, 1);
+  border-color: gray;
+}
+.btn-black:hover {
+  color: #fff;
+  background-color: rgba(140, 140, 140, 1);
+  border-color: gray;
+}
+
+.btn-bxmas {
+  border: 1px solid #c4d600;
+  background: #c4d600;
+  font-weight: bold;
+  color: #333e48;
+}
+.btn-bxmas:focus,
+.btn-bxmas.focus {
+  border: 1px solid #c4d660;
+  background: #c4d600;
+  font-weight: bold;
+  color: #ffffff;
+}
+.btn-bxmas:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.bodyback {
+  background-image: url("/Images/login-bg-nuve.png");
+  background-clip: content-box;
+  background-size: cover;
+}
+
+.loginBox {
+	max-width: 520px;
+	padding: 25px 100px 10px 100px;
+	border-radius: 30px;
+	border: 0px currentColor;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-o-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-khtml-border-radius: 30px;
+	background-color: #C4D600;
+	margin: 20px auto 0px;
+	color: #333E48;
+}
+
+.loginWrapper {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+
+
+}
+
+.head {
+  color: #333E48;
+  background-color: #ffffff;
+  font-size: 18px;
+  text-align: left;    
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  margin-left: -3px;
+}
+.headForma {
+  width: 80%;
+  height: 0px;
+  border-right: 60px solid transparent;
+  border-top: 30px solid #C4D600;
+}
+.headFormaContenido {    
+  margin-top: -25px;
+  margin-left: 5px;
+}  
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #3BB0C9;
+    filter: alpha(Opacity='50');
+    color: #ffffff;
+    font-size: large;
+    box-shadow: 0px 0px 20px #333e48;
+}
+
+.highlight {
+    border: 1px solid #D2D3D4;
+    background: #f5f5f5;
+    color: #333e48;
+}
+
+.REDALERT {
+  color: #991426;
+}
+
+.BoxFlex {
+    width: 210px;
+	height: 210px;
+	text-align: center;
+
+}
+
+.BoxFlexShadow {
+    background-color: #ffffff;
+	border-top: solid 1px #99A4AE;
+	border-bottom: solid 1px #99A4AE;
+	border-left: solid 1px #99A4AE;
+	border-right: solid 1px #99A4AE;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	width: 190px;
+	height: 190px;
+	text-align: center;
+	font-size: 24px;
+	cursor: pointer;
+	box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-webkit-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-moz-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-o-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	margin: 5px;
+}
+
+.ContenedorFlexbox {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.topmargin {
+    margin-top: 50px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.fullwidth {
+    width: 100%
+}
+
+.input-validation-error{ border: 1px solid red; }
+
+.field-validation-error{}

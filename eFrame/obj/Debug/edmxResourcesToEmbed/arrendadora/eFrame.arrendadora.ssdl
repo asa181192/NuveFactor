@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="arrendadoraModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="arrendadoraModelStoreContainer">
+    <EntitySet Name="bitacora" EntityType="arrendadoraModel.Store.bitacora" store:Type="Tables" store:Schema="dbo" store:Name="bitacora">
+      <DefiningQuery>SELECT 
+      [bitacora].[usuario] AS [usuario], 
+      [bitacora].[maquina] AS [maquina], 
+      [bitacora].[fecha] AS [fecha], 
+      [bitacora].[accion] AS [accion], 
+      [bitacora].[folio] AS [folio], 
+      [bitacora].[corte] AS [corte], 
+      [bitacora].[llave] AS [llave], 
+      [bitacora].[void] AS [void]
+      FROM [dbo].[bitacora] AS [bitacora]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="control" EntityType="arrendadoraModel.Store.control" store:Type="Tables" store:Schema="dbo" store:Name="control">
+      <DefiningQuery>SELECT 
+      [control].[registro] AS [registro], 
+      [control].[compania] AS [compania], 
+      [control].[razon] AS [razon], 
+      [control].[rfc] AS [rfc], 
+      [control].[domicilio] AS [domicilio], 
+      [control].[colonia] AS [colonia], 
+      [control].[municipio] AS [municipio], 
+      [control].[estado] AS [estado], 
+      [control].[cp] AS [cp], 
+      [control].[telefono] AS [telefono], 
+      [control].[u_cliente] AS [u_cliente], 
+      [control].[tasas] AS [tasas], 
+      [control].[u_esquema] AS [u_esquema], 
+      [control].[serie_fm] AS [serie_fm], 
+      [control].[folio_fm] AS [folio_fm], 
+      [control].[serie_rta] AS [serie_rta], 
+      [control].[folio_rta] AS [folio_rta], 
+      [control].[serie_oc] AS [serie_oc], 
+      [control].[folio_oc] AS [folio_oc], 
+      [control].[serie_la] AS [serie_la], 
+      [control].[folio_la] AS [folio_la], 
+      [control].[folio_poli] AS [folio_poli], 
+      [control].[parametros] AS [parametros], 
+      [control].[filltasas] AS [filltasas], 
+      [control].[fec_cont] AS [fec_cont], 
+      [control].[fec_cobra] AS [fec_cobra], 
+      [control].[trustees] AS [trustees], 
+      [control].[requer] AS [requer], 
+      [control].[marca] AS [marca], 
+      [control].[cargo] AS [cargo], 
+      [control].[solicitud] AS [solicitud], 
+      [control].[abogado] AS [abogado], 
+      [control].[demanda] AS [demanda], 
+      [control].[etapa] AS [etapa], 
+      [control].[stop_robot] AS [stop_robot], 
+      [control].[expand] AS [expand], 
+      [control].[u_cuenta] AS [u_cuenta], 
+      [control].[void] AS [void], 
+      [control].[u_oficina] AS [u_oficina], 
+      [control].[folio_ls] AS [folio_ls], 
+      [control].[serie_ls] AS [serie_ls], 
+      [control].[folio_ap] AS [folio_ap], 
+      [control].[serie_ap] AS [serie_ap], 
+      [control].[trusteesfora] AS [trusteesfora], 
+      [control].[fec_oper] AS [fec_oper], 
+      [control].[cfd_source] AS [cfd_source], 
+      [control].[cfd_certificate] AS [cfd_certificate], 
+      [control].[cfd_privatekey] AS [cfd_privatekey], 
+      [control].[cfd_password] AS [cfd_password], 
+      [control].[u_layclabe] AS [u_layclabe], 
+      [control].[fax] AS [fax], 
+      [control].[homepage] AS [homepage], 
+      [control].[dominio] AS [dominio], 
+      [control].[mailserver] AS [mailserver], 
+      [control].[ftpserver] AS [ftpserver], 
+      [control].[dias_cont] AS [dias_cont], 
+      [control].[rangoaviso] AS [rangoaviso], 
+      [control].[venceauto] AS [venceauto], 
+      [control].[vencseguro] AS [vencseguro], 
+      [control].[pzomaxseg] AS [pzomaxseg], 
+      [control].[mincruzado] AS [mincruzado], 
+      [control].[opcongela] AS [opcongela], 
+      [control].[intevfp] AS [intevfp], 
+      [control].[interfasnew] AS [interfasnew], 
+      [control].[exp_pass] AS [exp_pass], 
+      [control].[hist_pass] AS [hist_pass], 
+      [control].[len_pass] AS [len_pass], 
+      [control].[sens_pass] AS [sens_pass], 
+      [control].[login_attempts] AS [login_attempts], 
+      [control].[op_relevnte] AS [op_relevnte], 
+      [control].[fira_dias] AS [fira_dias], 
+      [control].[dom_border] AS [dom_border], 
+      [control].[col_border] AS [col_border], 
+      [control].[cp_border] AS [cp_border], 
+      [control].[mpo_border] AS [mpo_border], 
+      [control].[edo_border] AS [edo_border], 
+      [control].[noaproba] AS [noaproba], 
+      [control].[anoaproba] AS [anoaproba], 
+      [control].[nocertif] AS [nocertif], 
+      [control].[fec_efactu] AS [fec_efactu], 
+      [control].[iva_cambio] AS [iva_cambio], 
+      [control].[cpgeneral] AS [cpgeneral], 
+      [control].[cpcedula] AS [cpcedula], 
+      [control].[antesquien] AS [antesquien], 
+      [control].[serie_xm] AS [serie_xm], 
+      [control].[folio_xm] AS [folio_xm], 
+      [control].[cfdi_source] AS [cfdi_source], 
+      [control].[aviso_privacidad] AS [aviso_privacidad], 
+      [control].[adlogon] AS [adlogon], 
+      [control].[run_robot] AS [run_robot], 
+      [control].[tasamorat] AS [tasamorat], 
+      [control].[u_interfas] AS [u_interfas], 
+      [control].[u_domici] AS [u_domici], 
+      [control].[enviar_domici] AS [enviar_domici]
+      FROM [dbo].[control] AS [control]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="oficinas" EntityType="arrendadoraModel.Store.oficinas" store:Type="Tables" store:Schema="dbo" store:Name="oficinas">
+      <DefiningQuery>SELECT 
+      [oficinas].[clave] AS [clave], 
+      [oficinas].[origen] AS [origen], 
+      [oficinas].[oficina] AS [oficina], 
+      [oficinas].[folio] AS [folio], 
+      [oficinas].[nombre] AS [nombre], 
+      [oficinas].[tasaiva] AS [tasaiva], 
+      [oficinas].[s_domic] AS [s_domic], 
+      [oficinas].[s_colonia] AS [s_colonia], 
+      [oficinas].[s_ciudad] AS [s_ciudad], 
+      [oficinas].[s_emitido] AS [s_emitido], 
+      [oficinas].[c_domic] AS [c_domic], 
+      [oficinas].[c_colonia] AS [c_colonia], 
+      [oficinas].[c_ciudad] AS [c_ciudad], 
+      [oficinas].[c_municipio] AS [c_municipio], 
+      [oficinas].[c_estado] AS [c_estado], 
+      [oficinas].[c_cp] AS [c_cp], 
+      [oficinas].[representante] AS [representante], 
+      [oficinas].[correo_repre] AS [correo_repre], 
+      [oficinas].[c_telefonos] AS [c_telefonos], 
+      [oficinas].[print_ofic] AS [print_ofic], 
+      [oficinas].[path_sucur] AS [path_sucur], 
+      [oficinas].[path_bnc_in] AS [path_bnc_in], 
+      [oficinas].[path_bnc_loaded] AS [path_bnc_loaded], 
+      [oficinas].[path_xch_out] AS [path_xch_out], 
+      [oficinas].[path_xch_sent] AS [path_xch_sent], 
+      [oficinas].[bncgenera] AS [bncgenera], 
+      [oficinas].[cons_in] AS [cons_in], 
+      [oficinas].[cons_out] AS [cons_out], 
+      [oficinas].[fec_cont] AS [fec_cont], 
+      [oficinas].[lista_conts] AS [lista_conts], 
+      [oficinas].[fec_tesore] AS [fec_tesore], 
+      [oficinas].[expediente] AS [expediente], 
+      [oficinas].[ratifija] AS [ratifija], 
+      [oficinas].[ratibase] AS [ratibase], 
+      [oficinas].[ratimillar] AS [ratimillar], 
+      [oficinas].[raticalc] AS [raticalc], 
+      [oficinas].[void] AS [void], 
+      [oficinas].[u_cliente] AS [u_cliente], 
+      [oficinas].[u_refer] AS [u_refer], 
+      [oficinas].[u_riesgo] AS [u_riesgo], 
+      [oficinas].[u_poliza] AS [u_poliza], 
+      [oficinas].[u_demanda] AS [u_demanda], 
+      [oficinas].[u_etapa] AS [u_etapa], 
+      [oficinas].[u_abogado] AS [u_abogado], 
+      [oficinas].[u_linea] AS [u_linea], 
+      [oficinas].[u_orden] AS [u_orden], 
+      [oficinas].[apoderado] AS [apoderado], 
+      [oficinas].[testigo1] AS [testigo1], 
+      [oficinas].[testigo2] AS [testigo2], 
+      [oficinas].[placas] AS [placas], 
+      [oficinas].[salidas] AS [salidas], 
+      [oficinas].[seguro] AS [seguro], 
+      [oficinas].[notarionum] AS [notarionum], 
+      [oficinas].[notarionom] AS [notarionom], 
+      [oficinas].[notariociu] AS [notariociu], 
+      [oficinas].[jurisdic] AS [jurisdic], 
+      [oficinas].[serie_ini] AS [serie_ini], 
+      [oficinas].[serie_ncc] AS [serie_ncc], 
+      [oficinas].[chd_serie] AS [chd_serie], 
+      [oficinas].[u_notacc] AS [u_notacc], 
+      [oficinas].[u_numchd] AS [u_numchd], 
+      [oficinas].[u_folio] AS [u_folio], 
+      [oficinas].[com_prepag] AS [com_prepag], 
+      [oficinas].[cierrecont] AS [cierrecont], 
+      [oficinas].[u_ficha] AS [u_ficha], 
+      [oficinas].[regional] AS [regional], 
+      [oficinas].[correo_operativo] AS [correo_operativo], 
+      [oficinas].[u_caratula] AS [u_caratula], 
+      [oficinas].[id_tren] AS [id_tren], 
+      [oficinas].[corto] AS [corto], 
+      [oficinas].[robot_sync] AS [robot_sync], 
+      [oficinas].[difhorario] AS [difhorario], 
+      [oficinas].[id_plaza] AS [id_plaza], 
+      [oficinas].[division] AS [division], 
+      [oficinas].[cond_mora] AS [cond_mora], 
+      [oficinas].[u_credito] AS [u_credito], 
+      [oficinas].[u_promotor] AS [u_promotor], 
+      [oficinas].[u_proveedor] AS [u_proveedor], 
+      [oficinas].[u_factprov] AS [u_factprov], 
+      [oficinas].[u_cfd] AS [u_cfd], 
+      [oficinas].[fec_contra] AS [fec_contra], 
+      [oficinas].[u_efactura] AS [u_efactura], 
+      [oficinas].[serie_efac] AS [serie_efac], 
+      [oficinas].[orden_region] AS [orden_region], 
+      [oficinas].[run_process] AS [run_process], 
+      [oficinas].[firma_cred] AS [firma_cred], 
+      [oficinas].[modalidad] AS [modalidad], 
+      [oficinas].[fec_actual] AS [fec_actual], 
+      [oficinas].[serie_var] AS [serie_var], 
+      [oficinas].[rep_serie] AS [rep_serie], 
+      [oficinas].[u_reprov] AS [u_reprov], 
+      [oficinas].[fec_oper] AS [fec_oper], 
+      [oficinas].[u_cuenta] AS [u_cuenta], 
+      [oficinas].[u_solicheq] AS [u_solicheq], 
+      [oficinas].[u_operacion] AS [u_operacion], 
+      [oficinas].[banamexsel] AS [banamexsel], 
+      [oficinas].[u_interfas] AS [u_interfas], 
+      [oficinas].[puesto] AS [puesto], 
+      [oficinas].[conomina] AS [conomina]
+      FROM [dbo].[oficinas] AS [oficinas]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="outbox" EntityType="arrendadoraModel.Store.outbox" store:Type="Tables" store:Schema="dbo" store:Name="outbox">
+      <DefiningQuery>SELECT 
+      [outbox].[office] AS [office], 
+      [outbox].[archivo] AS [archivo], 
+      [outbox].[tag] AS [tag], 
+      [outbox].[llave] AS [llave], 
+      [outbox].[changes] AS [changes], 
+      [outbox].[fecalta] AS [fecalta], 
+      [outbox].[fecxfer] AS [fecxfer], 
+      [outbox].[consfile] AS [consfile], 
+      [outbox].[void] AS [void]
+      FROM [dbo].[outbox] AS [outbox]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="usuarios" EntityType="arrendadoraModel.Store.usuarios" store:Type="Tables" store:Schema="dbo" store:Name="usuarios">
+      <DefiningQuery>SELECT 
+      [usuarios].[folio] AS [folio], 
+      [usuarios].[userid] AS [userid], 
+      [usuarios].[nombre] AS [nombre], 
+      [usuarios].[password] AS [password], 
+      [usuarios].[activo] AS [activo], 
+      [usuarios].[supervisor] AS [supervisor], 
+      [usuarios].[trustees] AS [trustees], 
+      [usuarios].[email] AS [email], 
+      [usuarios].[lista_pass] AS [lista_pass], 
+      [usuarios].[fec_pass] AS [fec_pass], 
+      [usuarios].[jefe] AS [jefe], 
+      [usuarios].[user_job] AS [user_job], 
+      [usuarios].[acepta] AS [acepta], 
+      [usuarios].[historia] AS [historia], 
+      [usuarios].[void] AS [void], 
+      [usuarios].[oficina] AS [oficina], 
+      [usuarios].[perfil] AS [perfil], 
+      [usuarios].[sign] AS [sign], 
+      [usuarios].[promotor] AS [promotor], 
+      [usuarios].[fecbaja] AS [fecbaja], 
+      [usuarios].[regional] AS [regional], 
+      [usuarios].[id_regi] AS [id_regi], 
+      [usuarios].[ubicacion] AS [ubicacion], 
+      [usuarios].[oficinas] AS [oficinas], 
+      [usuarios].[session] AS [session], 
+      [usuarios].[token] AS [token], 
+      [usuarios].[last_login] AS [last_login], 
+      [usuarios].[userbncfisicas] AS [userbncfisicas], 
+      [usuarios].[pwdbncfisicas] AS [pwdbncfisicas], 
+      [usuarios].[userbncmorales] AS [userbncmorales], 
+      [usuarios].[pwdbncmorales] AS [pwdbncmorales], 
+      [usuarios].[firma] AS [firma]
+      FROM [dbo].[usuarios] AS [usuarios]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.bitacora' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="bitacora">
+    <Key>
+      <PropertyRef Name="usuario" />
+      <PropertyRef Name="maquina" />
+      <PropertyRef Name="fecha" />
+      <PropertyRef Name="accion" />
+      <PropertyRef Name="folio" />
+      <PropertyRef Name="corte" />
+      <PropertyRef Name="void" />
+    </Key>
+    <Property Name="usuario" Type="char" Nullable="false" MaxLength="20" />
+    <Property Name="maquina" Type="char" Nullable="false" MaxLength="30" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="accion" Type="text" Nullable="false" />
+    <Property Name="folio" Type="char" Nullable="false" MaxLength="10" />
+    <Property Name="corte" Type="datetime" Nullable="false" />
+    <Property Name="llave" Type="char" MaxLength="3" />
+    <Property Name="void" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.control' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="control">
+    <Key>
+      <PropertyRef Name="registro" />
+      <PropertyRef Name="compania" />
+      <PropertyRef Name="rfc" />
+      <PropertyRef Name="domicilio" />
+      <PropertyRef Name="colonia" />
+      <PropertyRef Name="municipio" />
+      <PropertyRef Name="estado" />
+      <PropertyRef Name="cp" />
+      <PropertyRef Name="telefono" />
+      <PropertyRef Name="u_cliente" />
+      <PropertyRef Name="tasas" />
+      <PropertyRef Name="u_esquema" />
+      <PropertyRef Name="serie_fm" />
+      <PropertyRef Name="folio_fm" />
+      <PropertyRef Name="serie_rta" />
+      <PropertyRef Name="folio_rta" />
+      <PropertyRef Name="serie_oc" />
+      <PropertyRef Name="folio_oc" />
+      <PropertyRef Name="serie_la" />
+      <PropertyRef Name="folio_la" />
+      <PropertyRef Name="folio_poli" />
+      <PropertyRef Name="parametros" />
+      <PropertyRef Name="filltasas" />
+      <PropertyRef Name="fec_cont" />
+      <PropertyRef Name="fec_cobra" />
+      <PropertyRef Name="trustees" />
+      <PropertyRef Name="requer" />
+      <PropertyRef Name="marca" />
+      <PropertyRef Name="cargo" />
+      <PropertyRef Name="solicitud" />
+      <PropertyRef Name="abogado" />
+      <PropertyRef Name="demanda" />
+      <PropertyRef Name="etapa" />
+      <PropertyRef Name="stop_robot" />
+      <PropertyRef Name="expand" />
+      <PropertyRef Name="u_cuenta" />
+      <PropertyRef Name="void" />
+      <PropertyRef Name="u_oficina" />
+      <PropertyRef Name="folio_ls" />
+      <PropertyRef Name="serie_ls" />
+      <PropertyRef Name="folio_ap" />
+      <PropertyRef Name="serie_ap" />
+      <PropertyRef Name="trusteesfora" />
+      <PropertyRef Name="fec_oper" />
+      <PropertyRef Name="cfd_source" />
+    </Key>
+    <Property Name="registro" Type="int" Nullable="false" />
+    <Property Name="compania" Type="char" Nullable="false" MaxLength="60" />
+    <Property Name="razon" Type="char" MaxLength="200" />
+    <Property Name="rfc" Type="char" Nullable="false" MaxLength="13" />
+    <Property Name="domicilio" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="colonia" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="municipio" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="estado" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="cp" Type="int" Nullable="false" />
+    <Property Name="telefono" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="u_cliente" Type="int" Nullable="false" />
+    <Property Name="tasas" Type="text" Nullable="false" />
+    <Property Name="u_esquema" Type="decimal" Nullable="false" Precision="2" />
+    <Property Name="serie_fm" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="folio_fm" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="serie_rta" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="folio_rta" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="serie_oc" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="folio_oc" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="serie_la" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="folio_la" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="folio_poli" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="parametros" Type="text" Nullable="false" />
+    <Property Name="filltasas" Type="text" Nullable="false" />
+    <Property Name="fec_cont" Type="datetime" Nullable="false" />
+    <Property Name="fec_cobra" Type="datetime" Nullable="false" />
+    <Property Name="trustees" Type="text" Nullable="false" />
+    <Property Name="requer" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="marca" Type="int" Nullable="false" />
+    <Property Name="cargo" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="solicitud" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="abogado" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="demanda" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="etapa" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="stop_robot" Type="bit" Nullable="false" />
+    <Property Name="expand" Type="bit" Nullable="false" />
+    <Property Name="u_cuenta" Type="int" Nullable="false" />
+    <Property Name="void" Type="bit" Nullable="false" />
+    <Property Name="u_oficina" Type="int" Nullable="false" />
+    <Property Name="folio_ls" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="serie_ls" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="folio_ap" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="serie_ap" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="trusteesfora" Type="text" Nullable="false" />
+    <Property Name="fec_oper" Type="datetime" Nullable="false" />
+    <Property Name="cfd_source" Type="text" Nullable="false" />
+    <Property Name="cfd_certificate" Type="nvarchar(max)" />
+    <Property Name="cfd_privatekey" Type="nvarchar(max)" />
+    <Property Name="cfd_password" Type="nchar" MaxLength="20" />
+    <Property Name="u_layclabe" Type="int" />
+    <Property Name="fax" Type="char" MaxLength="40" />
+    <Property Name="homepage" Type="char" MaxLength="60" />
+    <Property Name="dominio" Type="char" MaxLength="60" />
+    <Property Name="mailserver" Type="text" />
+    <Property Name="ftpserver" Type="text" />
+    <Property Name="dias_cont" Type="char" MaxLength="30" />
+    <Property Name="rangoaviso" Type="char" MaxLength="30" />
+    <Property Name="venceauto" Type="decimal" Precision="1" />
+    <Property Name="vencseguro" Type="decimal" Precision="2" />
+    <Property Name="pzomaxseg" Type="decimal" Precision="2" />
+    <Property Name="mincruzado" Type="decimal" Precision="9" Scale="2" />
+    <Property Name="opcongela" Type="decimal" Precision="3" />
+    <Property Name="intevfp" Type="bit" />
+    <Property Name="interfasnew" Type="bit" />
+    <Property Name="exp_pass" Type="decimal" Precision="3" />
+    <Property Name="hist_pass" Type="decimal" Precision="3" />
+    <Property Name="len_pass" Type="decimal" Precision="3" />
+    <Property Name="sens_pass" Type="bit" />
+    <Property Name="login_attempts" Type="decimal" Precision="3" />
+    <Property Name="op_relevnte" Type="decimal" Precision="14" Scale="2" />
+    <Property Name="fira_dias" Type="decimal" Precision="2" />
+    <Property Name="dom_border" Type="text" />
+    <Property Name="col_border" Type="text" />
+    <Property Name="cp_border" Type="int" />
+    <Property Name="mpo_border" Type="text" />
+    <Property Name="edo_border" Type="text" />
+    <Property Name="noaproba" Type="int" />
+    <Property Name="anoaproba" Type="decimal" Precision="4" />
+    <Property Name="nocertif" Type="char" MaxLength="20" />
+    <Property Name="fec_efactu" Type="date" />
+    <Property Name="iva_cambio" Type="date" />
+    <Property Name="cpgeneral" Type="char" MaxLength="50" />
+    <Property Name="cpcedula" Type="char" MaxLength="10" />
+    <Property Name="antesquien" Type="char" MaxLength="50" />
+    <Property Name="serie_xm" Type="char" MaxLength="3" />
+    <Property Name="folio_xm" Type="int" />
+    <Property Name="cfdi_source" Type="text" />
+    <Property Name="aviso_privacidad" Type="text" />
+    <Property Name="adlogon" Type="bit" />
+    <Property Name="run_robot" Type="bit" />
+    <Property Name="tasamorat" Type="decimal" />
+    <Property Name="u_interfas" Type="int" />
+    <Property Name="u_domici" Type="decimal" Precision="2" />
+    <Property Name="enviar_domici" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.oficinas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="oficinas">
+    <Key>
+      <PropertyRef Name="clave" />
+      <PropertyRef Name="origen" />
+      <PropertyRef Name="oficina" />
+      <PropertyRef Name="folio" />
+      <PropertyRef Name="nombre" />
+      <PropertyRef Name="tasaiva" />
+      <PropertyRef Name="s_domic" />
+      <PropertyRef Name="s_colonia" />
+      <PropertyRef Name="s_ciudad" />
+      <PropertyRef Name="s_emitido" />
+      <PropertyRef Name="c_domic" />
+      <PropertyRef Name="c_colonia" />
+      <PropertyRef Name="c_ciudad" />
+      <PropertyRef Name="representante" />
+      <PropertyRef Name="correo_repre" />
+      <PropertyRef Name="c_telefonos" />
+      <PropertyRef Name="print_ofic" />
+      <PropertyRef Name="path_sucur" />
+      <PropertyRef Name="path_bnc_in" />
+      <PropertyRef Name="path_bnc_loaded" />
+      <PropertyRef Name="path_xch_out" />
+      <PropertyRef Name="path_xch_sent" />
+      <PropertyRef Name="bncgenera" />
+      <PropertyRef Name="cons_in" />
+      <PropertyRef Name="cons_out" />
+      <PropertyRef Name="fec_cont" />
+      <PropertyRef Name="lista_conts" />
+      <PropertyRef Name="fec_tesore" />
+      <PropertyRef Name="expediente" />
+      <PropertyRef Name="ratifija" />
+      <PropertyRef Name="ratibase" />
+      <PropertyRef Name="ratimillar" />
+      <PropertyRef Name="raticalc" />
+      <PropertyRef Name="void" />
+      <PropertyRef Name="fec_contra" />
+    </Key>
+    <Property Name="clave" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="origen" Type="decimal" Nullable="false" Precision="2" />
+    <Property Name="oficina" Type="decimal" Nullable="false" Precision="2" />
+    <Property Name="folio" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="nombre" Type="char" Nullable="false" MaxLength="20" />
+    <Property Name="tasaiva" Type="decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="s_domic" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="s_colonia" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="s_ciudad" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="s_emitido" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="c_domic" Type="char" Nullable="false" MaxLength="60" />
+    <Property Name="c_colonia" Type="char" Nullable="false" MaxLength="40" />
+    <Property Name="c_ciudad" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="c_municipio" Type="char" MaxLength="40" />
+    <Property Name="c_estado" Type="char" MaxLength="40" />
+    <Property Name="c_cp" Type="int" />
+    <Property Name="representante" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="correo_repre" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="c_telefonos" Type="text" Nullable="false" />
+    <Property Name="print_ofic" Type="bit" Nullable="false" />
+    <Property Name="path_sucur" Type="text" Nullable="false" />
+    <Property Name="path_bnc_in" Type="text" Nullable="false" />
+    <Property Name="path_bnc_loaded" Type="text" Nullable="false" />
+    <Property Name="path_xch_out" Type="text" Nullable="false" />
+    <Property Name="path_xch_sent" Type="text" Nullable="false" />
+    <Property Name="bncgenera" Type="bit" Nullable="false" />
+    <Property Name="cons_in" Type="int" Nullable="false" />
+    <Property Name="cons_out" Type="int" Nullable="false" />
+    <Property Name="fec_cont" Type="datetime" Nullable="false" />
+    <Property Name="lista_conts" Type="text" Nullable="false" />
+    <Property Name="fec_tesore" Type="datetime" Nullable="false" />
+    <Property Name="expediente" Type="char" Nullable="false" MaxLength="20" />
+    <Property Name="ratifija" Type="decimal" Nullable="false" Precision="13" Scale="2" />
+    <Property Name="ratibase" Type="decimal" Nullable="false" Precision="13" Scale="2" />
+    <Property Name="ratimillar" Type="decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="raticalc" Type="bit" Nullable="false" />
+    <Property Name="void" Type="bit" Nullable="false" />
+    <Property Name="u_cliente" Type="decimal" Precision="6" />
+    <Property Name="u_refer" Type="int" />
+    <Property Name="u_riesgo" Type="int" />
+    <Property Name="u_poliza" Type="int" />
+    <Property Name="u_demanda" Type="int" />
+    <Property Name="u_etapa" Type="int" />
+    <Property Name="u_abogado" Type="int" />
+    <Property Name="u_linea" Type="int" />
+    <Property Name="u_orden" Type="int" />
+    <Property Name="apoderado" Type="text" />
+    <Property Name="testigo1" Type="text" />
+    <Property Name="testigo2" Type="text" />
+    <Property Name="placas" Type="text" />
+    <Property Name="salidas" Type="text" />
+    <Property Name="seguro" Type="text" />
+    <Property Name="notarionum" Type="int" />
+    <Property Name="notarionom" Type="text" />
+    <Property Name="notariociu" Type="text" />
+    <Property Name="jurisdic" Type="text" />
+    <Property Name="serie_ini" Type="char" MaxLength="3" />
+    <Property Name="serie_ncc" Type="char" MaxLength="3" />
+    <Property Name="chd_serie" Type="char" MaxLength="3" />
+    <Property Name="u_notacc" Type="int" />
+    <Property Name="u_numchd" Type="decimal" Precision="6" />
+    <Property Name="u_folio" Type="int" />
+    <Property Name="com_prepag" Type="numeric" Precision="6" Scale="2" />
+    <Property Name="cierrecont" Type="bit" />
+    <Property Name="u_ficha" Type="int" />
+    <Property Name="regional" Type="int" />
+    <Property Name="correo_operativo" Type="char" MaxLength="50" />
+    <Property Name="u_caratula" Type="int" />
+    <Property Name="id_tren" Type="int" />
+    <Property Name="corto" Type="nchar" MaxLength="3" />
+    <Property Name="robot_sync" Type="datetime" />
+    <Property Name="difhorario" Type="int" />
+    <Property Name="id_plaza" Type="int" />
+    <Property Name="division" Type="char" MaxLength="4" />
+    <Property Name="cond_mora" Type="int" />
+    <Property Name="u_credito" Type="int" />
+    <Property Name="u_promotor" Type="int" />
+    <Property Name="u_proveedor" Type="int" />
+    <Property Name="u_factprov" Type="int" />
+    <Property Name="u_cfd" Type="int" />
+    <Property Name="fec_contra" Type="datetime" Nullable="false" />
+    <Property Name="u_efactura" Type="int" />
+    <Property Name="serie_efac" Type="char" MaxLength="3" />
+    <Property Name="orden_region" Type="int" />
+    <Property Name="run_process" Type="bit" />
+    <Property Name="firma_cred" Type="char" MaxLength="50" />
+    <Property Name="modalidad" Type="text" />
+    <Property Name="fec_actual" Type="datetime" />
+    <Property Name="serie_var" Type="char" MaxLength="3" />
+    <Property Name="rep_serie" Type="char" MaxLength="3" />
+    <Property Name="u_reprov" Type="int" />
+    <Property Name="fec_oper" Type="date" />
+    <Property Name="u_cuenta" Type="int" />
+    <Property Name="u_solicheq" Type="int" />
+    <Property Name="u_operacion" Type="int" />
+    <Property Name="banamexsel" Type="text" />
+    <Property Name="u_interfas" Type="int" />
+    <Property Name="puesto" Type="nchar" MaxLength="20" />
+    <Property Name="conomina" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.outbox' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="outbox">
+    <Key>
+      <PropertyRef Name="office" />
+      <PropertyRef Name="tag" />
+      <PropertyRef Name="llave" />
+      <PropertyRef Name="changes" />
+      <PropertyRef Name="fecalta" />
+      <PropertyRef Name="fecxfer" />
+      <PropertyRef Name="consfile" />
+      <PropertyRef Name="void" />
+    </Key>
+    <Property Name="office" Type="int" Nullable="false" />
+    <Property Name="archivo" Type="char" MaxLength="15" />
+    <Property Name="tag" Type="char" Nullable="false" MaxLength="15" />
+    <Property Name="llave" Type="text" Nullable="false" />
+    <Property Name="changes" Type="text" Nullable="false" />
+    <Property Name="fecalta" Type="datetime" Nullable="false" />
+    <Property Name="fecxfer" Type="datetime" Nullable="false" />
+    <Property Name="consfile" Type="char" Nullable="false" MaxLength="26" />
+    <Property Name="void" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'arrendadora.dbo.usuarios' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="folio" />
+      <PropertyRef Name="userid" />
+      <PropertyRef Name="nombre" />
+      <PropertyRef Name="password" />
+      <PropertyRef Name="activo" />
+      <PropertyRef Name="supervisor" />
+      <PropertyRef Name="trustees" />
+      <PropertyRef Name="email" />
+      <PropertyRef Name="lista_pass" />
+      <PropertyRef Name="fec_pass" />
+      <PropertyRef Name="jefe" />
+      <PropertyRef Name="user_job" />
+      <PropertyRef Name="acepta" />
+      <PropertyRef Name="historia" />
+      <PropertyRef Name="void" />
+      <PropertyRef Name="oficina" />
+      <PropertyRef Name="perfil" />
+    </Key>
+    <Property Name="folio" Type="decimal" Nullable="false" Precision="6" />
+    <Property Name="userid" Type="char" Nullable="false" MaxLength="20" />
+    <Property Name="nombre" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="password" Type="int" Nullable="false" />
+    <Property Name="activo" Type="bit" Nullable="false" />
+    <Property Name="supervisor" Type="bit" Nullable="false" />
+    <Property Name="trustees" Type="text" Nullable="false" />
+    <Property Name="email" Type="text" Nullable="false" />
+    <Property Name="lista_pass" Type="text" Nullable="false" />
+    <Property Name="fec_pass" Type="datetime" Nullable="false" />
+    <Property Name="jefe" Type="char" Nullable="false" MaxLength="50" />
+    <Property Name="user_job" Type="char" Nullable="false" MaxLength="30" />
+    <Property Name="acepta" Type="datetime" Nullable="false" />
+    <Property Name="historia" Type="text" Nullable="false" />
+    <Property Name="void" Type="bit" Nullable="false" />
+    <Property Name="oficina" Type="decimal" Nullable="false" Precision="2" />
+    <Property Name="perfil" Type="text" Nullable="false" />
+    <Property Name="sign" Type="text" />
+    <Property Name="promotor" Type="int" />
+    <Property Name="fecbaja" Type="datetime" />
+    <Property Name="regional" Type="int" />
+    <Property Name="id_regi" Type="nchar" MaxLength="15" />
+    <Property Name="ubicacion" Type="int" />
+    <Property Name="oficinas" Type="nvarchar" MaxLength="200" />
+    <Property Name="session" Type="text" />
+    <Property Name="token" Type="text" />
+    <Property Name="last_login" Type="datetime" />
+    <Property Name="userbncfisicas" Type="nvarchar" MaxLength="20" />
+    <Property Name="pwdbncfisicas" Type="nvarchar" MaxLength="20" />
+    <Property Name="userbncmorales" Type="nvarchar" MaxLength="20" />
+    <Property Name="pwdbncmorales" Type="nvarchar" MaxLength="20" />
+    <Property Name="firma" Type="varbinary(max)" />
+  </EntityType>
+</Schema>

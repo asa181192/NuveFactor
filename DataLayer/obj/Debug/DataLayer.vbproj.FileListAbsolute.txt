@@ -1,0 +1,51 @@
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\DataLayer.dll.config
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\DataLayer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\DataLayer.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\DataLayer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\Entidades.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\EntityFramework.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\Entidades.pdb
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\Entidades.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\EntityFramework.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.vbprojResolveAssemblyReference.cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.Resources.resources
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.vbproj.GenerateResource.Cache
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.dll
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.xml
+C:\Users\salvador.cardenas\Documents\Visual Studio 2012\Projects\nuve\DataLayer\obj\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\DataLayer.dll.config
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\Entidades.dll
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\Entidades.pdb
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\Entidades.xml
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.Resources.resources
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Desktop\nuve\DataLayer\obj\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\DataLayer.dll.config
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\DataLayer.pdb
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\Entidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Debug\DataLayer.pdb

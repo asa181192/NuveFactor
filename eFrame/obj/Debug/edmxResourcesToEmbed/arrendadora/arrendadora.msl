@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+  <Alias Key="Model" Value="arrendadora" />
+  <Alias Key="Target" Value="arrendadora.Store" />
+  <EntityContainerMapping CdmEntityContainer="arrendadoraContainer" StorageEntityContainer="arrendadoraStoreContainer">
+    <EntitySetMapping Name="bitacoras">
+      <EntityTypeMapping TypeName="arrendadora.bitacora">
+        <MappingFragment StoreEntitySet="bitacora">
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="llave" ColumnName="llave" />
+          <ScalarProperty Name="corte" ColumnName="corte" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+          <ScalarProperty Name="accion" ColumnName="accion" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="maquina" ColumnName="maquina" />
+          <ScalarProperty Name="usuario" ColumnName="usuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="controls">
+      <EntityTypeMapping TypeName="arrendadora.control">
+        <MappingFragment StoreEntitySet="control">
+          <ScalarProperty Name="enviar_domici" ColumnName="enviar_domici" />
+          <ScalarProperty Name="u_domici" ColumnName="u_domici" />
+          <ScalarProperty Name="u_interfas" ColumnName="u_interfas" />
+          <ScalarProperty Name="tasamorat" ColumnName="tasamorat" />
+          <ScalarProperty Name="run_robot" ColumnName="run_robot" />
+          <ScalarProperty Name="adlogon" ColumnName="adlogon" />
+          <ScalarProperty Name="aviso_privacidad" ColumnName="aviso_privacidad" />
+          <ScalarProperty Name="cfdi_source" ColumnName="cfdi_source" />
+          <ScalarProperty Name="folio_xm" ColumnName="folio_xm" />
+          <ScalarProperty Name="serie_xm" ColumnName="serie_xm" />
+          <ScalarProperty Name="antesquien" ColumnName="antesquien" />
+          <ScalarProperty Name="cpcedula" ColumnName="cpcedula" />
+          <ScalarProperty Name="cpgeneral" ColumnName="cpgeneral" />
+          <ScalarProperty Name="iva_cambio" ColumnName="iva_cambio" />
+          <ScalarProperty Name="fec_efactu" ColumnName="fec_efactu" />
+          <ScalarProperty Name="nocertif" ColumnName="nocertif" />
+          <ScalarProperty Name="anoaproba" ColumnName="anoaproba" />
+          <ScalarProperty Name="noaproba" ColumnName="noaproba" />
+          <ScalarProperty Name="edo_border" ColumnName="edo_border" />
+          <ScalarProperty Name="mpo_border" ColumnName="mpo_border" />
+          <ScalarProperty Name="cp_border" ColumnName="cp_border" />
+          <ScalarProperty Name="col_border" ColumnName="col_border" />
+          <ScalarProperty Name="dom_border" ColumnName="dom_border" />
+          <ScalarProperty Name="fira_dias" ColumnName="fira_dias" />
+          <ScalarProperty Name="op_relevnte" ColumnName="op_relevnte" />
+          <ScalarProperty Name="login_attempts" ColumnName="login_attempts" />
+          <ScalarProperty Name="sens_pass" ColumnName="sens_pass" />
+          <ScalarProperty Name="len_pass" ColumnName="len_pass" />
+          <ScalarProperty Name="hist_pass" ColumnName="hist_pass" />
+          <ScalarProperty Name="exp_pass" ColumnName="exp_pass" />
+          <ScalarProperty Name="interfasnew" ColumnName="interfasnew" />
+          <ScalarProperty Name="intevfp" ColumnName="intevfp" />
+          <ScalarProperty Name="opcongela" ColumnName="opcongela" />
+          <ScalarProperty Name="mincruzado" ColumnName="mincruzado" />
+          <ScalarProperty Name="pzomaxseg" ColumnName="pzomaxseg" />
+          <ScalarProperty Name="vencseguro" ColumnName="vencseguro" />
+          <ScalarProperty Name="venceauto" ColumnName="venceauto" />
+          <ScalarProperty Name="rangoaviso" ColumnName="rangoaviso" />
+          <ScalarProperty Name="dias_cont" ColumnName="dias_cont" />
+          <ScalarProperty Name="ftpserver" ColumnName="ftpserver" />
+          <ScalarProperty Name="mailserver" ColumnName="mailserver" />
+          <ScalarProperty Name="dominio" ColumnName="dominio" />
+          <ScalarProperty Name="homepage" ColumnName="homepage" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="u_layclabe" ColumnName="u_layclabe" />
+          <ScalarProperty Name="cfd_password" ColumnName="cfd_password" />
+          <ScalarProperty Name="cfd_privatekey" ColumnName="cfd_privatekey" />
+          <ScalarProperty Name="cfd_certificate" ColumnName="cfd_certificate" />
+          <ScalarProperty Name="cfd_source" ColumnName="cfd_source" />
+          <ScalarProperty Name="fec_oper" ColumnName="fec_oper" />
+          <ScalarProperty Name="trusteesfora" ColumnName="trusteesfora" />
+          <ScalarProperty Name="serie_ap" ColumnName="serie_ap" />
+          <ScalarProperty Name="folio_ap" ColumnName="folio_ap" />
+          <ScalarProperty Name="serie_ls" ColumnName="serie_ls" />
+          <ScalarProperty Name="folio_ls" ColumnName="folio_ls" />
+          <ScalarProperty Name="u_oficina" ColumnName="u_oficina" />
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="u_cuenta" ColumnName="u_cuenta" />
+          <ScalarProperty Name="expand" ColumnName="expand" />
+          <ScalarProperty Name="stop_robot" ColumnName="stop_robot" />
+          <ScalarProperty Name="etapa" ColumnName="etapa" />
+          <ScalarProperty Name="demanda" ColumnName="demanda" />
+          <ScalarProperty Name="abogado" ColumnName="abogado" />
+          <ScalarProperty Name="solicitud" ColumnName="solicitud" />
+          <ScalarProperty Name="cargo" ColumnName="cargo" />
+          <ScalarProperty Name="marca" ColumnName="marca" />
+          <ScalarProperty Name="requer" ColumnName="requer" />
+          <ScalarProperty Name="trustees" ColumnName="trustees" />
+          <ScalarProperty Name="fec_cobra" ColumnName="fec_cobra" />
+          <ScalarProperty Name="fec_cont" ColumnName="fec_cont" />
+          <ScalarProperty Name="filltasas" ColumnName="filltasas" />
+          <ScalarProperty Name="parametros" ColumnName="parametros" />
+          <ScalarProperty Name="folio_poli" ColumnName="folio_poli" />
+          <ScalarProperty Name="folio_la" ColumnName="folio_la" />
+          <ScalarProperty Name="serie_la" ColumnName="serie_la" />
+          <ScalarProperty Name="folio_oc" ColumnName="folio_oc" />
+          <ScalarProperty Name="serie_oc" ColumnName="serie_oc" />
+          <ScalarProperty Name="folio_rta" ColumnName="folio_rta" />
+          <ScalarProperty Name="serie_rta" ColumnName="serie_rta" />
+          <ScalarProperty Name="folio_fm" ColumnName="folio_fm" />
+          <ScalarProperty Name="serie_fm" ColumnName="serie_fm" />
+          <ScalarProperty Name="u_esquema" ColumnName="u_esquema" />
+          <ScalarProperty Name="tasas" ColumnName="tasas" />
+          <ScalarProperty Name="u_cliente" ColumnName="u_cliente" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="cp" ColumnName="cp" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="municipio" ColumnName="municipio" />
+          <ScalarProperty Name="colonia" ColumnName="colonia" />
+          <ScalarProperty Name="domicilio" ColumnName="domicilio" />
+          <ScalarProperty Name="rfc" ColumnName="rfc" />
+          <ScalarProperty Name="razon" ColumnName="razon" />
+          <ScalarProperty Name="compania" ColumnName="compania" />
+          <ScalarProperty Name="registro" ColumnName="registro" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="oficinas">
+      <EntityTypeMapping TypeName="arrendadora.oficina">
+        <MappingFragment StoreEntitySet="oficinas">
+          <ScalarProperty Name="conomina" ColumnName="conomina" />
+          <ScalarProperty Name="puesto" ColumnName="puesto" />
+          <ScalarProperty Name="u_interfas" ColumnName="u_interfas" />
+          <ScalarProperty Name="banamexsel" ColumnName="banamexsel" />
+          <ScalarProperty Name="u_operacion" ColumnName="u_operacion" />
+          <ScalarProperty Name="u_solicheq" ColumnName="u_solicheq" />
+          <ScalarProperty Name="u_cuenta" ColumnName="u_cuenta" />
+          <ScalarProperty Name="fec_oper" ColumnName="fec_oper" />
+          <ScalarProperty Name="u_reprov" ColumnName="u_reprov" />
+          <ScalarProperty Name="rep_serie" ColumnName="rep_serie" />
+          <ScalarProperty Name="serie_var" ColumnName="serie_var" />
+          <ScalarProperty Name="fec_actual" ColumnName="fec_actual" />
+          <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+          <ScalarProperty Name="firma_cred" ColumnName="firma_cred" />
+          <ScalarProperty Name="run_process" ColumnName="run_process" />
+          <ScalarProperty Name="orden_region" ColumnName="orden_region" />
+          <ScalarProperty Name="serie_efac" ColumnName="serie_efac" />
+          <ScalarProperty Name="u_efactura" ColumnName="u_efactura" />
+          <ScalarProperty Name="fec_contra" ColumnName="fec_contra" />
+          <ScalarProperty Name="u_cfd" ColumnName="u_cfd" />
+          <ScalarProperty Name="u_factprov" ColumnName="u_factprov" />
+          <ScalarProperty Name="u_proveedor" ColumnName="u_proveedor" />
+          <ScalarProperty Name="u_promotor" ColumnName="u_promotor" />
+          <ScalarProperty Name="u_credito" ColumnName="u_credito" />
+          <ScalarProperty Name="cond_mora" ColumnName="cond_mora" />
+          <ScalarProperty Name="division" ColumnName="division" />
+          <ScalarProperty Name="id_plaza" ColumnName="id_plaza" />
+          <ScalarProperty Name="difhorario" ColumnName="difhorario" />
+          <ScalarProperty Name="robot_sync" ColumnName="robot_sync" />
+          <ScalarProperty Name="corto" ColumnName="corto" />
+          <ScalarProperty Name="id_tren" ColumnName="id_tren" />
+          <ScalarProperty Name="u_caratula" ColumnName="u_caratula" />
+          <ScalarProperty Name="correo_operativo" ColumnName="correo_operativo" />
+          <ScalarProperty Name="regional" ColumnName="regional" />
+          <ScalarProperty Name="u_ficha" ColumnName="u_ficha" />
+          <ScalarProperty Name="cierrecont" ColumnName="cierrecont" />
+          <ScalarProperty Name="com_prepag" ColumnName="com_prepag" />
+          <ScalarProperty Name="u_folio" ColumnName="u_folio" />
+          <ScalarProperty Name="u_numchd" ColumnName="u_numchd" />
+          <ScalarProperty Name="u_notacc" ColumnName="u_notacc" />
+          <ScalarProperty Name="chd_serie" ColumnName="chd_serie" />
+          <ScalarProperty Name="serie_ncc" ColumnName="serie_ncc" />
+          <ScalarProperty Name="serie_ini" ColumnName="serie_ini" />
+          <ScalarProperty Name="jurisdic" ColumnName="jurisdic" />
+          <ScalarProperty Name="notariociu" ColumnName="notariociu" />
+          <ScalarProperty Name="notarionom" ColumnName="notarionom" />
+          <ScalarProperty Name="notarionum" ColumnName="notarionum" />
+          <ScalarProperty Name="seguro" ColumnName="seguro" />
+          <ScalarProperty Name="salidas" ColumnName="salidas" />
+          <ScalarProperty Name="placas" ColumnName="placas" />
+          <ScalarProperty Name="testigo2" ColumnName="testigo2" />
+          <ScalarProperty Name="testigo1" ColumnName="testigo1" />
+          <ScalarProperty Name="apoderado" ColumnName="apoderado" />
+          <ScalarProperty Name="u_orden" ColumnName="u_orden" />
+          <ScalarProperty Name="u_linea" ColumnName="u_linea" />
+          <ScalarProperty Name="u_abogado" ColumnName="u_abogado" />
+          <ScalarProperty Name="u_etapa" ColumnName="u_etapa" />
+          <ScalarProperty Name="u_demanda" ColumnName="u_demanda" />
+          <ScalarProperty Name="u_poliza" ColumnName="u_poliza" />
+          <ScalarProperty Name="u_riesgo" ColumnName="u_riesgo" />
+          <ScalarProperty Name="u_refer" ColumnName="u_refer" />
+          <ScalarProperty Name="u_cliente" ColumnName="u_cliente" />
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="raticalc" ColumnName="raticalc" />
+          <ScalarProperty Name="ratimillar" ColumnName="ratimillar" />
+          <ScalarProperty Name="ratibase" ColumnName="ratibase" />
+          <ScalarProperty Name="ratifija" ColumnName="ratifija" />
+          <ScalarProperty Name="expediente" ColumnName="expediente" />
+          <ScalarProperty Name="fec_tesore" ColumnName="fec_tesore" />
+          <ScalarProperty Name="lista_conts" ColumnName="lista_conts" />
+          <ScalarProperty Name="fec_cont" ColumnName="fec_cont" />
+          <ScalarProperty Name="cons_out" ColumnName="cons_out" />
+          <ScalarProperty Name="cons_in" ColumnName="cons_in" />
+          <ScalarProperty Name="bncgenera" ColumnName="bncgenera" />
+          <ScalarProperty Name="path_xch_sent" ColumnName="path_xch_sent" />
+          <ScalarProperty Name="path_xch_out" ColumnName="path_xch_out" />
+          <ScalarProperty Name="path_bnc_loaded" ColumnName="path_bnc_loaded" />
+          <ScalarProperty Name="path_bnc_in" ColumnName="path_bnc_in" />
+          <ScalarProperty Name="path_sucur" ColumnName="path_sucur" />
+          <ScalarProperty Name="print_ofic" ColumnName="print_ofic" />
+          <ScalarProperty Name="c_telefonos" ColumnName="c_telefonos" />
+          <ScalarProperty Name="correo_repre" ColumnName="correo_repre" />
+          <ScalarProperty Name="representante" ColumnName="representante" />
+          <ScalarProperty Name="c_cp" ColumnName="c_cp" />
+          <ScalarProperty Name="c_estado" ColumnName="c_estado" />
+          <ScalarProperty Name="c_municipio" ColumnName="c_municipio" />
+          <ScalarProperty Name="c_ciudad" ColumnName="c_ciudad" />
+          <ScalarProperty Name="c_colonia" ColumnName="c_colonia" />
+          <ScalarProperty Name="c_domic" ColumnName="c_domic" />
+          <ScalarProperty Name="s_emitido" ColumnName="s_emitido" />
+          <ScalarProperty Name="s_ciudad" ColumnName="s_ciudad" />
+          <ScalarProperty Name="s_colonia" ColumnName="s_colonia" />
+          <ScalarProperty Name="s_domic" ColumnName="s_domic" />
+          <ScalarProperty Name="tasaiva" ColumnName="tasaiva" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+          <ScalarProperty Name="oficina1" ColumnName="oficina" />
+          <ScalarProperty Name="origen" ColumnName="origen" />
+          <ScalarProperty Name="clave" ColumnName="clave" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="outboxes">
+      <EntityTypeMapping TypeName="arrendadora.outbox">
+        <MappingFragment StoreEntitySet="outbox">
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="consfile" ColumnName="consfile" />
+          <ScalarProperty Name="fecxfer" ColumnName="fecxfer" />
+          <ScalarProperty Name="fecalta" ColumnName="fecalta" />
+          <ScalarProperty Name="changes" ColumnName="changes" />
+          <ScalarProperty Name="llave" ColumnName="llave" />
+          <ScalarProperty Name="tag" ColumnName="tag" />
+          <ScalarProperty Name="archivo" ColumnName="archivo" />
+          <ScalarProperty Name="office" ColumnName="office" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuarios">
+      <EntityTypeMapping TypeName="arrendadora.usuario">
+        <MappingFragment StoreEntitySet="usuarios">
+          <ScalarProperty Name="firma" ColumnName="firma" />
+          <ScalarProperty Name="pwdbncmorales" ColumnName="pwdbncmorales" />
+          <ScalarProperty Name="userbncmorales" ColumnName="userbncmorales" />
+          <ScalarProperty Name="pwdbncfisicas" ColumnName="pwdbncfisicas" />
+          <ScalarProperty Name="userbncfisicas" ColumnName="userbncfisicas" />
+          <ScalarProperty Name="last_login" ColumnName="last_login" />
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="session" ColumnName="session" />
+          <ScalarProperty Name="oficinas" ColumnName="oficinas" />
+          <ScalarProperty Name="ubicacion" ColumnName="ubicacion" />
+          <ScalarProperty Name="id_regi" ColumnName="id_regi" />
+          <ScalarProperty Name="regional" ColumnName="regional" />
+          <ScalarProperty Name="fecbaja" ColumnName="fecbaja" />
+          <ScalarProperty Name="promotor" ColumnName="promotor" />
+          <ScalarProperty Name="sign" ColumnName="sign" />
+          <ScalarProperty Name="perfil" ColumnName="perfil" />
+          <ScalarProperty Name="oficina" ColumnName="oficina" />
+          <ScalarProperty Name="void" ColumnName="void" />
+          <ScalarProperty Name="historia" ColumnName="historia" />
+          <ScalarProperty Name="acepta" ColumnName="acepta" />
+          <ScalarProperty Name="user_job" ColumnName="user_job" />
+          <ScalarProperty Name="jefe" ColumnName="jefe" />
+          <ScalarProperty Name="fec_pass" ColumnName="fec_pass" />
+          <ScalarProperty Name="lista_pass" ColumnName="lista_pass" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="trustees" ColumnName="trustees" />
+          <ScalarProperty Name="supervisor" ColumnName="supervisor" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="fdu_ParametrosControl" FunctionName="arrendadora.Store.fdu_ParametrosControl">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="arrendadora.fdu_ParametrosControl_Result">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
