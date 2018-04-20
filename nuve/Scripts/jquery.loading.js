@@ -5,14 +5,6 @@
     var methods = {
 
             init : function(option) {
-                //$(document).on({
-                //    ajaxStart: function() {
-                //        helpers.start();
-                //    },
-                //    ajaxStop: function() {
-                //        helpers.stop();
-                //    }
-                //});
                 if (options === true) {
                     helpers.start();
                 } else {

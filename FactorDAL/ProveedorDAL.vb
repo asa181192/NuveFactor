@@ -1,5 +1,8 @@
 ﻿Imports System.Data.Entity
+Imports System.Data.Entity.Infrastructure
+Imports System.Data.Entity.Validation
 Imports FactorEntidades
+Imports Nelibur.ObjectMapper
 
 Public Class ProveedorDAL
 #Region "Constructor"
@@ -7,14 +10,13 @@ Public Class ProveedorDAL
 #End Region
 
 #Region "Metodos de consulta"
-	Public Function ConsultaProveedorDAL(ByRef model As List(Of ProveedorEntidad)) As Result
+	Public Function ConsultaProveedorDAL(sucursal As Int16, ByRef model As List(Of ProveedorEntidad)) As Result
 
 		Dim respuesta = New Result(False)
 
 		Using context As New FactorContext
-
 			Try
-				model = (From p In context.proveedor Select New ProveedorEntidad With {.deudor = p.deudor, .nombre = p.nombre}).AsNoTracking().ToList()
+				model = (From p In context.proveedor Where (p.sucursal = sucursal Or 0 = sucursal) Select New ProveedorEntidad With {.deudor = p.deudor, .nombre = p.nombre.TrimEnd()}).ToList()
 				respuesta.Ok = True
 			Catch e As Exception
 				respuesta.Detalle = e.Message
@@ -26,10 +28,74 @@ Public Class ProveedorDAL
 
 	End Function
 
+	Function ConsultaDetalleProveedorDAL(deudor As Int32, ByRef model As proveedor) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model = (From p In context.proveedor
+						Where p.deudor = deudor).SingleOrDefault()
+
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+				
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
 #End Region
 
 #Region "Metodos Transaccionales"
 
+	Public Function AltaProveedor(model As proveedor) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				context.proveedor.Add(model)
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarProveedor(model As proveedor) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				context.proveedor.Attach(model)
+				context.Entry(model).State = EntityState.Modified
+				context.SaveChanges()
+
+				respuesta.Ok = True
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
 
 #End Region
 End Class

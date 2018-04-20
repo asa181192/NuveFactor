@@ -1883,11 +1883,7 @@ Partial Public Class FactorContext
             .Property(Function(e) e.idtransact) _
             .IsFixedLength() _
             .IsUnicode(False)
-
-        modelBuilder.Entity(Of proveedor)() _
-            .Property(Function(e) e.timestamp_column) _
-            .IsFixedLength()
-
+		
         modelBuilder.Entity(Of siniestros)() _
             .Property(Function(e) e.contratos) _
             .IsFixedLength() _

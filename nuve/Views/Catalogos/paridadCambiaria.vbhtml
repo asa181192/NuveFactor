@@ -17,7 +17,7 @@ End Section
     </div>  
   </div>
 
-<div id="tableContainer">
+<div id="tableContainer" class="tableContainer">
     <div class="panel-heading">
         <div class="topmargin" >
             <div class="form-inline">
@@ -36,7 +36,7 @@ End Section
     <div class="panel-body">
             <div class="jumbotron">     
                 <div class="table-responsive">        
-                   <table id="tableParidad"  class ="table cell-border compact" style="width:100%" > 
+                   <table id="tableParidad"  class ="table cell-border compact hover" style="width:100%" > 
 
                            <thead>
                               <tr>
@@ -44,7 +44,7 @@ End Section
                                         @Html.DisplayNameFor(Function(model) model.fecha)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(Function(model) model.paridad)
+                                        @Html.DisplayNameFor(Function(model) model.paridad1)
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(Function(model) model.udis)

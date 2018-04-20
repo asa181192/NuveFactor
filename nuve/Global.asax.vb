@@ -13,7 +13,11 @@ Public Class MvcApplication
     AreaRegistration.RegisterAllAreas()
     FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters)
     RouteConfig.RegisterRoutes(RouteTable.Routes)
-    BundleConfig.RegisterBundles(BundleTable.Bundles)    
+		BundleConfig.RegisterBundles(BundleTable.Bundles)
+
+		ClientDataTypeModelValidatorProvider.ResourceClassKey = "Messages"
+		DefaultModelBinder.ResourceClassKey = "Messages"
+
   End Sub
 
 End Class

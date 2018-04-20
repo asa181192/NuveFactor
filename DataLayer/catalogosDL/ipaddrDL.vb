@@ -36,8 +36,8 @@ Namespace catalogosDL
       Dim oIpaddr As List(Of ipaddr) = Nothing
       Try
         MyBase.Start_context()
-        Dim oVar = From ips As ipaddr In context.ipaddr
-                   Select ips
+				Dim oVar = From ips As ipaddr In context.ipaddr
+						   Select ips
 
         If (oVar.Count() > 0) Then
           oIpaddr = oVar.ToList()

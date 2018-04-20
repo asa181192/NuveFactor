@@ -11,7 +11,7 @@
 @Using Html.BeginForm("GuardarParidad", "Catalogos", FormMethod.Post ,New With {.id="popupForm" } )
     @Html.ValidationSummary(true)
         
-    If Model.fecha Is Nothing Then
+    If Model.fecha.Equals(Nothing) Then
           @Html.HiddenFor(Function(model) model.add , New With{.Value = True })     
           @<div class="form-group">
             <label>Fecha</label>
@@ -28,8 +28,8 @@
 
    @<div class="form-group">
         <label>Paridad</label>
-        @Html.TextBoxFor(Function(model) model.paridad ,New With {.Class="form-control"})   
-        @Html.ValidationMessageFor(Function(model) model.paridad)
+        @Html.TextBoxFor(Function(model) model.paridad1 ,New With {.Class="form-control"})   
+        @Html.ValidationMessageFor(Function(model) model.paridad1)
 
     </div>
    @<div class="form-group">

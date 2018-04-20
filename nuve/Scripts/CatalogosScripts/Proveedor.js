@@ -1,19 +1,17 @@
-﻿$.Loading(true);
-//Inicializacion de variables
+﻿//Inicializacion de variables
+
+var dropdownSucursal = $("#dropdownSucursal");
 var tablaParidad;
 var proveedor =
 {
-    inicializarTabla: function () {
+    inicializarTabla: function (sucursal) {
 
-        tablaParidad = $('#tableProveedor').
-            on('init.dt', function () {
-                $.Loading(false);
-            })// Evento se dispara cuando se ha cargado la taba con la informacion de ajax y se na inicializado 
-            .DataTable({
-                "ajax": {
+        tablaParidad = $('#tableProveedor')// Evento se dispara cuando se ha cargado la taba con la informacion de ajax y se na inicializado 
+              .DataTable({
+                ajax: {
                     "url": "/Catalogos/ObtenerListaProveedores/", // url del controlador a consultar 
                     "Type": "GET",
-                    "data": "", // parametros a enviar al controlador 
+                    "data": function (d) { d.sucursal = sucursal }, // parametros a enviar al controlador 
                     "dataSrc": function (json) {
                         if (typeof (json.Mensaje) != 'undefined') {
                             $.Loading(false);
@@ -23,15 +21,16 @@ var proveedor =
                         }
                     }
                 },
-                dom: "lfrtBip",
+                dom: "lfrtBip", //cambia el order de los controles en el datatable 
                 buttons: [
                       'excel', 'pdf', 'print' // permiten agregar botones para exportar a excel 
                 ],
+                deferRender:    true,
                 paging: true, // permite la paginacion en la tabla .
                 lengthMenu: [10,15,30], // Cantidad de registros mostrados por pantalla 
                 searching: true, // genera cuadro de busqueda
-                ordering: true, // genera ordenamiento de columnas 
-                order: [[0, 'desc']], // ordena la primer columna
+                ordering: false, // genera ordenamiento de columnas 
+                //order: [[0, 'desc']], // ordena la primer columna
                 responsive: true, // realiza la tabla responsiva en moviles
                 destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
                 columns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
@@ -52,37 +51,38 @@ var proveedor =
     }, //Funcion que inicializa la tabla 
     openPopUp: function (pageUrl) {
         var $pageContent = $('<div>');
+
         $pageContent.load(pageUrl,
             function() {
                 $pageContent.dialog({
-                    width: 'auto',
-                    height: 'auto',
+                    width: 1200,
+                    height: 750,
                     modal: true,
                     show: 'fade',
-                    title : 'prueba',
                     hide: 'fade',
                     fluid: true, //new option
                     resizable: false,
-                    create: function( event, ui ) {
-                        // Seteat elementos internos del popup
+                    create: function(event, ui) { // setea elementos internos del popup 
+
                         var form = $("#popupForm").closest("form");
                         form.removeData(
                             'validator'); //permite reiniciar el validado de informacion al despelgar una ventana modal
                         form.removeData('unobtrusiveValidation');
                         $.validator.unobtrusive.parse(form);
 
-                        $("#fec_alta").datetimepicker({ locale: 'es', format: 'DD/MM/YYYY' });
+                        proveedor.validacionCampos();
                         //  Setear anchura minima y maxima 
                         $(this).css("maxWidth", "1200px");
                         $(this).css("minWidth", "400px");
                     },
-                    close: function () {
+                    close: function() {
                         $pageContent.dialog('destroy').remove();
                     }
                 });
 
             });
-        $('.popupWindow').on('submit',
+
+        $pageContent.on('submit',
             '#popupForm',
             function (e) {
                 var url = $('#popupForm')[0].action;
@@ -90,43 +90,30 @@ var proveedor =
                     type: "POST",
                     url: url,
                     data: $('#popupForm').serialize(),
+                    beforeSend :function() {
+                        $.Loading(true);
+                    },
                     success: function (data) {
                         if (data.Result) {
                             mensajemodal(data.Text, 'success');
-                            tablaParidad.ajax.reload();
+                            tablaParidad.ajax.reload(null,false); // False- permite quedarte en la misma pagina despues de actualizar
                         } else {
                             mensajemodal(data.Text, 'warning');
                         }
-                        $dialog.dialog('close');
+                        $pageContent.dialog('close');
+                    },
+                    error: function () {
+                        mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+                        
+                    },
+                    complete :function() {
+                        $.Loading(false);
                     }
                 });
 
                 e.preventDefault();
             });
-
-        //$dialog = $('<div class="popupWindow" style="overflow:auto"></div>').html($pageContent);
-     
-
-        //$dialog.dialog({
-        //        width: 'auto', // overcomes width:'auto' and maxWidth bug
-        //        height: 'auto',
-        //        modal: true,
-        //        maxWidth: 1200,
-        //        show: 'fade',   
-        //        hide: 'fade',
-        //        fluid: true, //new option
-        //        resizable: false,
-        //        close: function () {
-        //            $dialog.dialog('destroy').remove();
-        //        }
-        //    });
-
-       
-
-        //$pageContent.dialog('open');
-        
-
-    },
+    }, // popup
     fluidDialog:function() {
         var $visible = $(".ui-dialog:visible");
         // each open dialog
@@ -149,14 +136,37 @@ var proveedor =
             }
         });
 
-    }
+    }, //popup responsivo
+    validacionCampos: function () {
+        
+         
+
+         jQuery.validator.addMethod(
+                'date',
+                function (value, element, params) {
+                    if (this.optional(element)) {
+                        return true;
+                    };
+                    var result = false;
+                    try {
+                        $.datepicker.parseDate("dd/mm/yy", value);
+                        result = true;
+                    } catch (err) {
+                        result = false;
+                    }
+                    return result;
+                },
+                ''
+            );
+    } // validacion de campos 
 }
 
 $(document).ready(function (e) {
 
-    proveedor.inicializarTabla();
-
-    
+    $('#tableProveedor').DataTable();
+    dropdownSucursal.change(function(e) {
+        proveedor.inicializarTabla(dropdownSucursal.val());
+    });
 
     $("#tableContainer").on('click', 'a.popup',
         function (e) {
@@ -164,10 +174,8 @@ $(document).ready(function (e) {
             proveedor.openPopUp($(this).attr('href'));
 
         });
-
     $(window).resize(function () {
          proveedor.fluidDialog();
-      
     });
 
 

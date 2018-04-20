@@ -17,15 +17,6 @@ Public Class ParidadDAL
 
 			Try
 
-				'Dim value = (From p In context.paridad
-				'			Where p.fecha.Value.Year = fechaAnio AndAlso p.fecha.Value.Month = fechaMes
-				'			Select p).ToList()
-				'model = value.Select(Function(x) New ParidadEntidad With {.fecha = x.fecha.Value.ToShortDateString(),
-				'						 .paridad = x.paridad1,
-				'						 .udis = x.udis,
-				'						 .void = False})
-
-
 				Dim values = (From p In context.paridad
 						Where p.fecha.Value.Year = fechaAnio AndAlso p.fecha.Value.Month = fechaMes
 						Select p).ToList()
@@ -51,22 +42,16 @@ Public Class ParidadDAL
 
 	End Function
 
-	Function ConsultaParidadDetalleDAL(fecha As String, ByRef model As ParidadEntidad) As Result
+	Function ConsultaParidadDetalleDAL(fecha As String, ByRef model As paridad) As Result
 		Dim respuesta = New Result(False)
 		Using context As New FactorContext
 
 			Try
-				Dim consulta = (From p In context.paridad
+				model = (From p In context.paridad
 									Where p.fecha = fecha).SingleOrDefault()
-
-
-				model.fecha = consulta.fecha.ToString()
-				model.paridad = consulta.paridad1
-				model.udis = consulta.udis
-
-
+				
 				respuesta.Ok = True
-			Catch e As DbUpdateException
+			Catch e As Exception
 				respuesta.Detalle = e.Message
 			End Try
 
@@ -90,7 +75,7 @@ Public Class ParidadDAL
 				context.SaveChanges()
 				respuesta.Ok = True
 
-			Catch e As DbUpdateException
+			Catch e As Exception
 				respuesta.Detalle = e.Message
 			End Try
 
@@ -116,7 +101,7 @@ Public Class ParidadDAL
 					context.SaveChanges()
 				End If
 
-			Catch e As DbUpdateException
+			Catch e As Exception
 				respuesta.Detalle = e.Message
 			End Try
 
@@ -140,7 +125,7 @@ Public Class ParidadDAL
 
 				End If
 
-			Catch e As SqlException
+			Catch e As Exception
 				respuesta.Detalle = "Ocurrio un problema al eliminar registro !!"
 			End Try
 

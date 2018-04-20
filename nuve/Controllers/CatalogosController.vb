@@ -1,14 +1,11 @@
-﻿
-Imports System.ComponentModel.DataAnnotations
-Imports AutoMapper
-Imports FactorEntidades
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
 Imports nuve.Models
 
 Namespace nuve
 	Public Class CatalogosController
-		Inherits BaseController
-
-
+		Inherits Controller
+		
 #Region "Views"	'*****VIEW*****
 
 #Region "Paridad Cambiaria"
@@ -27,6 +24,7 @@ Namespace nuve
 		Function Proveedores() As ViewResult
 
 			Dim model = New ModeloProveedor()
+
 
 			Return View(model)
 		End Function
@@ -138,17 +136,15 @@ Namespace nuve
 
 			Dim model = New ModeloPar
 			Dim consulta = New FactorBAL.Manager()
-			Dim paridad = New FactorEntidades.ParidadEntidad()
+			Dim paridad = New paridad
 
 			If fecha IsNot Nothing Then
 				Dim resultado = consulta.ConsultaParidadDetalleBAL(fecha, paridad)
 
 				If resultado.Ok And resultado IsNot Nothing Then
-					model.fecha = paridad.fecha
-					model.paridad = paridad.paridad
-					model.udis = paridad.udis
+					TinyMapper.Bind(Of paridad, ModeloPar)()	'Mapeo de propiedad para modelo.
+					model = TinyMapper.Map(Of ModeloPar)(paridad)
 				End If
-
 
 			End If
 
@@ -160,15 +156,16 @@ Namespace nuve
 #Region "Proveedores"
 
 		<HttpGet()>
-		Public Function ObtenerListaProveedores() As ActionResult
+		Public Function ObtenerListaProveedores(sucursal As Int16) As ActionResult
 
 			Dim jresult = New JsonResult()
 			Dim resultado
 			Dim consulta = New FactorBAL.Manager()
 
+
 			Dim listaProveedor = New List(Of ProveedorEntidad)
 
-			resultado = consulta.ConsultaProveedorBAL(listaProveedor)
+			resultado = consulta.ConsultaProveedorBAL(sucursal, listaProveedor)
 
 			If resultado.Ok And resultado IsNot Nothing Then
 				jresult = Json(New With {Key .Results = listaProveedor}, JsonRequestBehavior.AllowGet)
@@ -183,23 +180,17 @@ Namespace nuve
 		End Function
 
 		<HttpGet>
-		Public Function GuardarProveedor(deudor As Int16) As ActionResult
+		Public Function GuardarProveedor(deudor As Int32) As ActionResult
 
 			Dim model = New ModeloProveedor()
 			Dim consulta = New FactorBAL.Manager()
-			Dim proveedor = New ProveedorEntidad
+			Dim proveedor = New proveedor
 
-			
-			If deudor > 0 Then
-				'Dim resultado = consulta.ConsultaDetalleProveedorBAL(deudor, proveedor)
+			Dim resultado = consulta.ConsultaDetalleProveedorBAL(deudor, proveedor)
 
-				'If resultado.Ok And resultado IsNot Nothing Then
-				'	model.fecha = paridad.fecha
-				'	model.paridad = paridad.paridad
-				'	model.udis = paridad.udis
-				'End If
-
-
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of proveedor, ModeloProveedor)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloProveedor)(proveedor)
 			End If
 
 			Return PartialView(model)
@@ -218,11 +209,9 @@ Namespace nuve
 
 			Dim resultado
 			Dim bs = New FactorBAL.Manager()
-
-
-			Dim model = New FactorEntidades.paridad() With {.fecha = modelP.fecha,
-					.paridad1 = modelP.paridad,
-					.udis = modelP.udis, .void = modelP.void}
+			
+			TinyMapper.Bind(Of ModeloPar, paridad)()'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of paridad)(modelP)
 
 			If Boolean.Parse(modelP.add) Then
 
@@ -252,39 +241,39 @@ Namespace nuve
 #End Region
 
 #Region "Proveedor"
-		'<HttpPost>
-		'Public Function GuardarProveedor(modelProveedor As ModeloProveedor) As ActionResult
+		<HttpPost>
+		Public Function GuardarProveedor(proveedor As ModeloProveedor) As ActionResult
 
-		'	Dim resultado
-		'	Dim bs = New FactorBAL.Manager()
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
 
-		'	Dim model = New proveedor()
+			TinyMapper.Bind(Of ModeloProveedor, proveedor)() 'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of proveedor)(proveedor)
 
-		'	If Boolean.Parse(modelP.add) Then
+			If proveedor.deudor > 0 Then
+				resultado = bs.ActualizarProveedor(model)
 
-		'		resultado = bs.AltaParidad(model)
-
-		'		If resultado.Ok And resultado IsNot Nothing Then
-		'			resultado.Mensaje = "Registro Guardado"
-		'		Else
-		'			resultado.Mensaje = "Ocurrio un error al tratar de guardar el registro!! "
-		'		End If
-
-		'	Else
-
-		'		resultado = bs.ActualizarParidad(model)
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Actualizado"
+				Else
+					resultado.Mensaje = "Ocurrio un error al tratar de actualizar el registro!! "
+				End If
 
 
-		'		If resultado.Ok And resultado IsNot Nothing Then
-		'			resultado.Mensaje = "Registro Actualizado"
-		'		Else
-		'			resultado.Mensaje = "Ocurrio un error al tratar de actualizar el registro!! "
-		'		End If
+			Else
 
-		'	End If
-		'	Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje})
+				resultado = bs.AltaProveedor(model)
 
-		'End Function
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Guardado"
+				Else
+					resultado.Mensaje = "Ocurrio un error al tratar de guardar el registro!! "
+				End If
+
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje})
+
+		End Function
 #End Region
 
 #End Region

@@ -33,10 +33,10 @@ Public Class AccountController
             Dim ocontrol As Entidades.arrendadora.control = Nothing
             Try
 
-                If Not isIPAdmitida() Then
-                    ModelState.AddModelError("", "Acceso denegado")
-                    Return View(model)
-                End If
+				'If Not isIPAdmitida() Then
+				'    ModelState.AddModelError("", "Acceso denegado")
+				'    Return View(model)
+				'End If
 
                 ousuarioBL = New usuarioBL()
                 ousuario = ousuarioBL.Selectusuario(model.user)
@@ -387,14 +387,14 @@ Public Class AccountController
     Public Property dias_pass As Integer
   End Class
 
-  <AllowAnonymous()> _
-  <HttpGet> _
-  Public Function ConsultaSessionDiasPass() As JsonResult
-    Dim odp_pe As New l_pexpires_diaspass
-    odp_pe.dias_pass = CType(Session("DIAS_PASS"), Integer)
-    odp_pe.password_expires = PASSWORD_EXPIRES
-    Return Json(SerializaJSon(odp_pe), JsonRequestBehavior.AllowGet)
-  End Function
+	'<AllowAnonymous()> _
+	'<HttpGet> _
+	'Public Function ConsultaSessionDiasPass() As JsonResult
+	'  Dim odp_pe As New l_pexpires_diaspass
+	'  odp_pe.dias_pass = CType(Session("DIAS_PASS"), Integer)
+	'  odp_pe.password_expires = PASSWORD_EXPIRES
+	'  Return Json(SerializaJSon(odp_pe), JsonRequestBehavior.AllowGet)
+	'End Function
 
 #Region "Helpers"
   Private Function FormsAuth(ByRef ousuario As Entidades.arrendadora.usuario) As Boolean

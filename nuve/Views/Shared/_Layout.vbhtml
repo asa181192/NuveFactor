@@ -91,7 +91,7 @@
       };
       
       $(document).on('ready', function () {
-        consultadiaspass();
+        //consultadiaspass();
       });
 
       function consultadiaspass() {

@@ -1,5 +1,4 @@
-﻿$.Loading(true);
-//Inicializacion de variables
+﻿//Inicializacion de variables
 var tablaParidad;
 var btnConsulta = $('#btnConsultar');
 var fecha = $('#month');
@@ -9,24 +8,23 @@ var paridad =
 {
     inicializarTabla: function (fechaMes, fechaAnio) {
 
-        tablaParidad = $('#tableParidad').
-            on('init.dt', function () {
-                $.Loading(false);
-            })// Evento se dispara cuando se ha cargado la taba con la informacion de ajax y se na inicializado 
+        tablaParidad = $('#tableParidad')
             .DataTable({
-                "ajax": {
+                ajax: {
                     "url": "/Catalogos/obtenerListaParidad/", // url del controlador a consultar 
                     "Type": "GET",
                     "data": function (d) { d.fechaMes = fechaMes, d.fechaAnio = fechaAnio }, // parametros a enviar al controlador 
                     "dataSrc": function (json) {
                         if (typeof (json.Mensaje) != 'undefined') {
-                            $.Loading(false);
                             //mensajemodal(json.Mensaje, 'warning');
                             return {};
                         } else {
                              return json.Results;
                         }
                     }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
                 },
                 dom: "Bfrtip",
                 buttons: [
@@ -77,6 +75,7 @@ var paridad =
                         form.removeData('unobtrusiveValidation');
                         $.validator.unobtrusive.parse(form);
 
+                        paridad.validacionCampos();
                         // propiedades para el maximo y mino de anchura
                         $(this).css("maxWidth", "1200px");
                         $(this).css("minWidth", "400px");
@@ -85,26 +84,7 @@ var paridad =
                         $pageContent.dialog('destroy').remove();
                     }
                 });
-
-                //$pageContent.dialog({
-                //    draggable: false,
-                //    autoOpen: false,
-                //    resizable: false,
-                //    model: true,
-                //    title: '',
-                //    height: 400,
-                //    width: 600,
-                //    close: function () {
-                //        $dialog.dialog('destroy').remove();
-                //    }
-                //});
-
-        
         });
-
-        //$dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
-            //.html($pageContent)
-            
 
          $pageContent.on('submit',
             '#popupForm',
@@ -154,7 +134,29 @@ var paridad =
             }
         });
 
-    }
+    },
+    validacionCampos: function () {
+        
+         
+
+        jQuery.validator.addMethod(
+            'date',
+            function (value, element, params) {
+                if (this.optional(element)) {
+                    return true;
+                };
+                var result = false;
+                try {
+                    $.datepicker.parseDate("dd/mm/yy", value);
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                return result;
+            },
+            ''
+        );
+    } // validacion de campos 
 }
 
 $(document).ready(function (e) {
@@ -166,7 +168,6 @@ $(document).ready(function (e) {
     paridad.inicializarTabla(date.getMonth() + 1, date.getFullYear()); // Realiza consulta al mes actual y año actual al carga la pagina pro primera vez 
 
     btnConsulta.click(function (e) {
-        $.Loading(true);
         e.preventDefault();
         var split = fecha.val().split(/\//g);
         var fechaMes = split[0];

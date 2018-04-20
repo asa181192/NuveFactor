@@ -105,11 +105,7 @@ Partial Public Class proveedor
     <Column(TypeName:="numeric")>
     Public Property fira_idcon As Decimal?
 
-    <StringLength(36)>
-    Public Property idtransact As String
+	<StringLength(36)>
+	Public Property idtransact As String
 
-    <Column(TypeName:="timestamp")>
-    <MaxLength(8)>
-    <Timestamp>
-    Public Property timestamp_column As Byte()
 End Class

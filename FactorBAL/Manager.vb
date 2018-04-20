@@ -12,11 +12,11 @@ Public Class Manager
 
 	End Function
 
-	Function ConsultaParidadDetalleBAL(fecha As String, ByRef model As ParidadEntidad) As Result
+	Function ConsultaParidadDetalleBAL(fecha As String, ByRef model As paridad) As Result
 
 		Dim paridad = New ParidadDAL()
 		Return paridad.ConsultaParidadDetalleDAL(fecha, model)
-	
+
 
 	End Function
 
@@ -48,12 +48,45 @@ Public Class Manager
 #End Region
 
 #Region "Proveedores"
-	Function ConsultaProveedorBAL(ByRef model As List(Of ProveedorEntidad)) As Result
+	Function ConsultaProveedorBAL(sucursal As Int16, ByRef model As List(Of ProveedorEntidad)) As Result
 
 		Dim proveedor = New ProveedorDAL()
-		Return proveedor.ConsultaProveedorDAL(model)
+		Return proveedor.ConsultaProveedorDAL(sucursal, model)
 
 	End Function
+
+	Function AltaProveedor(model As proveedor) As Result
+		Dim proveedor = New ProveedorDAL()
+
+		Return proveedor.AltaProveedor(model)
+
+	End Function
+
+	Function ConsultaDetalleProveedorBAL(deudor As Int32, ByRef model As proveedor) As Result
+
+		Dim proveedor = New ProveedorDAL()
+		Return proveedor.ConsultaDetalleProveedorDAL(deudor, model)
+
+	End Function
+
+	Function ActualizarProveedor(model As proveedor) As Result
+		Dim proveedor = New ProveedorDAL()
+		Return proveedor.ActualizarProveedor(model)
+
+
+	End Function
+
+#End Region
+
+#Region "Utilities Dropdown"
+
+	Function ConsultaSucursal(ByRef listaSucursal As List(Of SucursalEntidad)) As Result
+
+		Dim sucursal = New SucursalDAL()
+		Return sucursal.ConsultaSucursal(listaSucursal)
+
+	End Function
+
 #End Region
 
 End Class

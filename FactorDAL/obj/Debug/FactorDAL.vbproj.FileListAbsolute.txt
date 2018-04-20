@@ -14,3 +14,4 @@ C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Debug\FactorDAL.vbproj.Ge
 C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Debug\FactorDAL.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Debug\FactorDAL.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Debug\FactorDAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Debug\TinyMapper.dll

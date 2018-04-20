@@ -340,5 +340,4 @@ C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.vbproj.GenerateReso
 C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.dll
 C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.xml
 C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.pdb
-C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\AutoMapper.dll
-C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\AutoMapper.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\TinyMapper.dll

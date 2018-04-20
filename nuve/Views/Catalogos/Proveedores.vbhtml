@@ -18,22 +18,30 @@ End Section
       </div>       
     </div>  
   </div>
-<div id="tableContainer">
+<div id="tableContainer" class="tableContainer">
     <div class="panel-heading">
         <div class="topmargin" >
             <div class="form-inline">
-                  <div class="form-group">
-                       <p>
-                        @Html.ActionLink("Nuevo Proveedor", "GuardarProveedor", New With {.deudor = 0},New With{.Class="popup btn bold"})
-                       </p>
-                  </div>
+                 <div class="form-group">                       
+                      @Html.ActionLink("Nuevo Proveedor", "GuardarProveedor", New With {.deudor = 0},New With{.Class="popup btn bold"})                              
+                 </div>
+                 <div class="form-group">
+                      @Code
+                          Model.SucursalDropDown.Insert(0, New SelectListItem With {.Value = "0", .Text = "---Todos---"})
+                      End Code
+
+                      @Html.LabelFor(Function(model) model.sucursal,New With {.class = "control-label" })
+
+                      @Html.DropDownListFor(Function(model) model.sucursal, Model.SucursalDropDown , New With {.Class = "form-control dropdown", .id = "dropdownSucursal"})
+                 </div>
             </div>
         </div>
+
     </div>
     <div class="panel-body">
             <div class="jumbotron">     
                 <div class="table-responsive">        
-                    <table id="tableProveedor"  class ="table cell-border compact" style="width:100%">
+                    <table id="tableProveedor"  class ="table cell-border compact hover" style="width:100%">
                        <thead>
                              <tr>
                                 <th>
