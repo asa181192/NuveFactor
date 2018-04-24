@@ -94,6 +94,9 @@ var paridad =
                     type: "POST",
                     url: url,
                     data: $('#popupForm').serialize(),
+                    beforeSend: function () {
+                        $.Loading(true);
+                    },
                     success: function (data) {
                         if (data.Result) {
                             mensajemodal(data.Text, 'success');
@@ -102,6 +105,13 @@ var paridad =
                             mensajemodal(data.Text, 'warning');
                         }
                         $pageContent.dialog('close');
+                    },
+                    error: function () {
+                        mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+
+                    },
+                    complete: function () {
+                        $.Loading(false);
                     }
                 });
 
@@ -137,8 +147,7 @@ var paridad =
     },
     validacionCampos: function () {
         
-         
-
+        
         jQuery.validator.addMethod(
             'date',
             function (value, element, params) {

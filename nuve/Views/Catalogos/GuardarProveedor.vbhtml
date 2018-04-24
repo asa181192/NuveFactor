@@ -1,10 +1,5 @@
 ﻿@ModelType nuve.Models.ModeloProveedor
 
-@section scripts
-    <script src="~/Scripts/jquery.validate.messages_es.js"></script>
-End Section
-
-
 @Using Html.BeginForm("GuardarProveedor", "Catalogos", FormMethod.Post ,New With {.id="popupForm"} )
 
 @<div class="panel panel-default">
@@ -88,11 +83,11 @@ End Section
 
                                       
                                             @Html.LabelFor(Function(model) model.sirac)
-                                            @Html.TextBoxFor(Function(model) model.sirac ,New With {.Class = "form-control" ,.data_val_number = "sirac debe ser numerico" })
+                                            @Html.TextBoxFor(Function(model) model.sirac ,New With {.Class = "form-control" })
                                             @Html.ValidationMessageFor(Function(model) model.sirac)
                                         
                                             @Html.LabelFor(Function(model) model.fira_idcon)
-                                            @Html.TextBoxFor(Function(model) model.fira_idcon ,New With {.Class = "form-control"})
+                                            @Html.TextBoxFor(Function(model) model.fira_idcon ,New With {.Class = "form-control" })
                                             @Html.ValidationMessageFor(Function(model) model.fira_idcon)
                                  
                             </div>

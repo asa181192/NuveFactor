@@ -10,6 +10,7 @@ Public Class ProveedorDAL
 #End Region
 
 #Region "Metodos de consulta"
+
 	Public Function ConsultaProveedorDAL(sucursal As Int16, ByRef model As List(Of ProveedorEntidad)) As Result
 
 		Dim respuesta = New Result(False)
@@ -41,7 +42,7 @@ Public Class ProveedorDAL
 					respuesta.Ok = True
 				End If
 
-				
+
 			Catch e As Exception
 				respuesta.Detalle = e.Message
 			End Try

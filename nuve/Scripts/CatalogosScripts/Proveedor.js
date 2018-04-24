@@ -64,9 +64,8 @@ var proveedor =
                     resizable: false,
                     create: function(event, ui) { // setea elementos internos del popup 
 
-                        var form = $("#popupForm").closest("form");
-                        form.removeData(
-                            'validator'); //permite reiniciar el validado de informacion al despelgar una ventana modal
+                        var form = $("#popupForm")
+                        form.removeData('validator'); //permite reiniciar el validado de informacion al despelgar una ventana modal
                         form.removeData('unobtrusiveValidation');
                         $.validator.unobtrusive.parse(form);
 
@@ -139,8 +138,6 @@ var proveedor =
     }, //popup responsivo
     validacionCampos: function () {
         
-         
-
          jQuery.validator.addMethod(
                 'date',
                 function (value, element, params) {

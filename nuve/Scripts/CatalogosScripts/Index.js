@@ -7,4 +7,8 @@
     $('#dvflexProveedores').click(function () {
         window.location.href = '/Catalogos/Proveedores';
     });
+
+    $('#dvflexCompradores').click(function () {
+        window.location.href = '/Catalogos/Compradores';
+    });
 });

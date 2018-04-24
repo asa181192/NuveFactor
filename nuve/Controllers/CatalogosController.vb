@@ -12,7 +12,6 @@ Namespace nuve
 
 		<HttpGet>
 		Function paridadCambiaria() As ViewResult
-
 			Dim model = New ModeloPar()
 			Return View(model)
 		End Function
@@ -29,6 +28,14 @@ Namespace nuve
 			Return View(model)
 		End Function
 
+#End Region
+
+#Region "Compradores"
+		<HttpGet>
+		Function Compradores() As ViewResult
+			Dim model = New ModeloComprador()
+			Return View(model)
+		End Function
 #End Region
 
 #Region "Menu"
@@ -83,7 +90,7 @@ Namespace nuve
 			model.sMenu &= "</div>"
 			model.sMenu &= "</div>"
 
-			model.sMenu &= "<div class=""BoxFlex"" id="""" >"
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCompradores"" >"
 			model.sMenu &= "<div class=""BoxFlexShadow"">"
 			model.sMenu &= "<p>Compradores</p>"
 			model.sMenu &= "</div>"
@@ -198,6 +205,50 @@ Namespace nuve
 
 #End Region
 
+#Region "Compradores"
+		<HttpGet()>
+		Public Function ObtenerListaCompradores(sucursal As Int16) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+
+			Dim listaComprador = New List(Of ProveedorEntidad)
+
+			resultado = consulta.ConsultaCompradorBAL(sucursal, listaComprador)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaComprador}, JsonRequestBehavior.AllowGet)
+				jresult.MaxJsonLength = 500000000
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarComprador(deudor As Int32) As ActionResult
+
+			Dim model = New ModeloComprador()
+			Dim consulta = New FactorBAL.Manager()
+			Dim comprador = New comprador
+
+			Dim resultado = consulta.ConsultaDetalleCompradorBAL(deudor, comprador)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of comprador, ModeloProveedor)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloComprador)(comprador)
+			End If
+
+			Return PartialView(model)
+		End Function
+#End Region
+
+
 #End Region
 
 #Region "Post"	'*****POST*****
@@ -263,6 +314,42 @@ Namespace nuve
 			Else
 
 				resultado = bs.AltaProveedor(model)
+
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Guardado"
+				Else
+					resultado.Mensaje = "Ocurrio un error al tratar de guardar el registro!! "
+				End If
+
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje})
+
+		End Function
+#End Region
+
+#Region "Comprador"
+		<HttpPost>
+		Public Function GuardarComprador(comprador As ModeloComprador) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+
+			TinyMapper.Bind(Of ModeloComprador, comprador)() 'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of comprador)(comprador)
+
+			If comprador.deudor > 0 Then
+				resultado = bs.ActualizarComprador(model)
+
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Actualizado"
+				Else
+					resultado.Mensaje = "Ocurrio un error al tratar de actualizar el registro!! "
+				End If
+
+
+			Else
+
+				resultado = bs.AltaComprador(model)
 
 				If resultado.Ok And resultado IsNot Nothing Then
 					resultado.Mensaje = "Registro Guardado"

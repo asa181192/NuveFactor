@@ -51,6 +51,10 @@ Namespace Models
 		<Display(Name:="Internet")>
 		Public Overloads Property internet() As Boolean
 
+		<Display(Name:="Fira")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico")>
+		Public Overloads Property fira_idcon As Decimal?
+
 		Public SucursalDropDown As List(Of SelectListItem)
 
 		Public RegimenDropDown As List(Of SelectListItem)
@@ -115,6 +119,19 @@ Namespace Models
 		<Display(Name:="No. Int")>
 		Public Property noint As String
 
+	End Class
+
+	Public Class ModeloComprador
+		Inherits comprador
+
+		Sub New()
+			SucursalDropDown = New controles().CargaSucursales()
+			RegimenDropDown = New controles().CargaRegimen()
+		End Sub
+
+		Public SucursalDropDown As List(Of SelectListItem)
+
+		Public RegimenDropDown As List(Of SelectListItem)
 	End Class
 
 End Namespace
