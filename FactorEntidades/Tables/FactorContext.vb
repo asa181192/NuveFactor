@@ -778,6 +778,10 @@ Partial Public Class FactorContext
             .IsFixedLength() _
             .IsUnicode(False)
 
+        modelBuilder.Entity(Of comprador)() _
+            .Property(Function(e) e.timestamp_column) _
+            .IsFixedLength()
+
         modelBuilder.Entity(Of contratos)() _
             .Property(Function(e) e.codigo) _
             .IsFixedLength() _

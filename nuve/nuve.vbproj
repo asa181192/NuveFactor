@@ -340,15 +340,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Images\icon.gif" />
     <Content Include="Images\list.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-0-0.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-0-1.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-0-2.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-1-0.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-1-1.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-1-2.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-2-0.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-2-1.png" />
-    <Content Include="Images\loading\bpormas [www.imagesplitter.net]-2-2.png" />
     <Content Include="Images\menu\alert_bg.png" />
     <Content Include="Images\menu\alert_bv.png" />
     <Content Include="Images\menu\alert_vb.png" />
@@ -707,7 +698,6 @@
     <Content Include="Scripts\Buttons-1.5.1\js\dataTables.buttons.js" />
     <Content Include="Scripts\Buttons-1.5.1\js\dataTables.buttons.min.js" />
     <Content Include="Scripts\Buttons-1.5.1\swf\flashExport.swf" />
-    <Content Include="Scripts\CatalogosScripts\Comprador.js" />
     <Content Include="Scripts\CatalogosScripts\Index.js" />
     <Content Include="Scripts\CatalogosScripts\paridadCambiaria.js" />
     <Content Include="Scripts\CatalogosScripts\Proveedor.js" />
@@ -813,10 +803,13 @@
     <Content Include="Views\Catalogos\GuardarParidad.vbhtml" />
     <Content Include="Views\Catalogos\Proveedores.vbhtml" />
     <Content Include="Views\Catalogos\GuardarProveedor.vbhtml" />
+<<<<<<< HEAD
     <Content Include="Views\Catalogos\Compradores.vbhtml" />
     <Content Include="Views\Catalogos\GuardarComprador.vbhtml" />
     <Content Include="Views\Catalogos\Monitor.vbhtml" />
     <Content Include="Scripts\jquery.validate.mvc.js" />
+=======
+>>>>>>> parent of 05b60a6... Actualizado Catalogo Comprador
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -856,7 +849,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
-    <Folder Include="App_Start\App_Data\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
