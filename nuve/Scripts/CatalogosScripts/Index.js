@@ -11,8 +11,4 @@
     $('#dvflexCompradores').click(function () {
         window.location.href = '/Catalogos/Compradores';
     });
-
-    $('#dvflexMonitor').click(function () {
-        window.location.href = '/Catalogos/Monitor';
-    });
 });

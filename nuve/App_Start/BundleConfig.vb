@@ -37,8 +37,7 @@ Public Class BundleConfig
 		bundles.Add(New ScriptBundle("~/bundles/validation").Include(
 			"~/Scripts/jquery.validate.js",
 			"~/Scripts/jquery.validate.unobtrusive.js",
-			"~/Scripts/jquery.validate.messages_es.js",
-			"~/Scripts/jquery.validate.mvc.js"))
+			"~/Scripts/jquery.validate.messages_es.js"))
 
 
 

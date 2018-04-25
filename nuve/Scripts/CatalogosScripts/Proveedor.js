@@ -70,11 +70,6 @@ var proveedor =
                         $.validator.unobtrusive.parse(form);
 
                         proveedor.validacionCampos();
-
-                        //$("#fira_idcon").tooltip({
-                        //    title: "Hooray!"
-                        //});
-                        //$("form input").tooltipValidation();
                         //  Setear anchura minima y maxima 
                         $(this).css("maxWidth", "1200px");
                         $(this).css("minWidth", "400px");
@@ -176,10 +171,10 @@ $(document).ready(function (e) {
             proveedor.openPopUp($(this).attr('href'));
 
         });
-
     $(window).resize(function () {
          proveedor.fluidDialog();
     });
+
 
 });
 
