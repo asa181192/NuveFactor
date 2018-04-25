@@ -341,3 +341,9 @@ C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.dll
 C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.xml
 C:\Users\alfredo.santiago\Documents\nuve\nuve\obj\Debug\nuve.pdb
 C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\TinyMapper.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\alfredo.santiago\Documents\nuve\nuve\bin\Microsoft.Owin.Host.SystemWeb.xml

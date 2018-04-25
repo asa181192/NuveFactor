@@ -11,11 +11,11 @@
 
     <meta name="viewport" content="width=device-width" />
     
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")    
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/datetimepicker")    
     @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/monthpicker")
     @Scripts.Render("~/bundles/datatables")
     @Scripts.Render("~/bundles/jqueryLoading")

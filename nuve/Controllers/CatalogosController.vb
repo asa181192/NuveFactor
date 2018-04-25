@@ -1,7 +1,6 @@
 ﻿Imports FactorEntidades
 Imports Nelibur.ObjectMapper
 Imports nuve.Models
-
 Namespace nuve
 	Public Class CatalogosController
 		Inherits Controller
@@ -37,6 +36,13 @@ Namespace nuve
 			Return View(model)
 		End Function
 #End Region
+
+		<HttpGet>
+		Function Monitor() As ViewResult
+
+
+			Return View()
+		End Function
 
 #Region "Menu"
 
@@ -93,6 +99,13 @@ Namespace nuve
 			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCompradores"" >"
 			model.sMenu &= "<div class=""BoxFlexShadow"">"
 			model.sMenu &= "<p>Compradores</p>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexMonitor"" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<p>Monitor</p>"
 			model.sMenu &= "</div>"
 			model.sMenu &= "</div>"
 
@@ -281,6 +294,9 @@ Namespace nuve
 
 				If resultado.Ok And resultado IsNot Nothing Then
 					resultado.Mensaje = "Registro Actualizado"
+					Dim msg = New NotificationHub()
+					msg.SendMess("Paridad Actualizada fecha" + modelP.fecha.ToString()
+								 )
 				Else
 					resultado.Mensaje = "Ocurrio un error al tratar de actualizar el registro!! "
 				End If
