@@ -337,3 +337,7 @@
 		-moz-transform:scale(.3);
 	}
 }
+
+span.field-validation-error {
+    display:none
+}

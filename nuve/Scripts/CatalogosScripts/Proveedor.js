@@ -70,6 +70,13 @@ var proveedor =
                         $.validator.unobtrusive.parse(form);
 
                         proveedor.validacionCampos();
+                      
+                        $pageContent.tooltip({
+                            items: ".input-validation-error",
+                            content: function () {
+                                return $("[data-valmsg-for='" + $(this).attr('id') + "']").text();
+                            }
+                        });
                         //  Setear anchura minima y maxima 
                         $(this).css("maxWidth", "1200px");
                         $(this).css("minWidth", "400px");
