@@ -78,6 +78,36 @@ Public Class Manager
 
 #End Region
 
+#Region "Comprador"
+
+	Function ConsultaCompradorBAL(sucursal As Int16, ByRef model As List(Of ProveedorEntidad)) As Result
+
+		Dim comprador = New CompradorDAL()
+		Return comprador.ConsultaCompradorDAL(sucursal, model)
+
+	End Function
+
+	Function ConsultaDetalleCompradorBAL(deudor As Int32, ByRef model As comprador) As Result
+
+		Dim comprador = New CompradorDAL()
+		Return comprador.ConsultaDetalleCompradorDAL(deudor, model)
+
+	End Function
+
+	Function ActualizarComprador(model As comprador) As Result
+		Dim comprador = New CompradorDAL()
+		Return comprador.ActualizarComprador(model)
+	End Function
+
+	Function Altacomprador(model As comprador) As Result
+		Dim comprador = New CompradorDAL()
+
+		Return comprador.AltaComprador(model)
+
+	End Function
+
+#End Region
+
 #Region "Utilities Dropdown"
 
 	Function ConsultaSucursal(ByRef listaSucursal As List(Of SucursalEntidad)) As Result

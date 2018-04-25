@@ -103,8 +103,4 @@ Partial Public Class comprador
     <StringLength(36)>
     Public Property idtransact As String
 
-    <Column(TypeName:="timestamp")>
-    <MaxLength(8)>
-    <Timestamp>
-    Public Property timestamp_column As Byte()
 End Class

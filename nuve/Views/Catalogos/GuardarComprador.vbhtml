@@ -1,6 +1,7 @@
-﻿@ModelType nuve.Models.ModeloProveedor
+﻿@ModelType nuve.Models.ModeloComprador
 
-@Using Html.BeginForm("GuardarProveedor", "Catalogos", FormMethod.Post ,New With {.id="popupForm"} )
+
+@Using Html.BeginForm("GuardarComprador", "Catalogos", FormMethod.Post ,New With {.id="popupForm"} )
 
 @<div class="panel panel-default">
     <div class="panel-body highlight">
@@ -71,49 +72,17 @@
                     </div>                    
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">                                   
-                            
+                            <div class="form-group">    
                                             @Html.LabelFor(Function(model) model.rfc)
                                             @Html.TextBoxFor(Function(model) model.rfc ,New With {.Class = "form-control"})
                                             @Html.ValidationMessageFor(Function(model) model.rfc)
                                       
-                                            @Html.LabelFor(Function(model) model.curp)                                       
-                                            @Html.TextBoxFor(Function(model) model.curp, New With {.Class = "form-control"})
-                                            @Html.ValidationMessageFor(Function(model) model.curp )                                
-
-                                      
-                                            @Html.LabelFor(Function(model) model.sirac)
-                                            @Html.TextBoxFor(Function(model) model.sirac ,New With {.Class = "form-control" })
-                                            @Html.ValidationMessageFor(Function(model) model.sirac)
-                                        
-                                            @Html.LabelFor(Function(model) model.fira_idcon)
-                                            @Html.TextBoxFor(Function(model) model.fira_idcon ,New With {.Class = "form-control" })
-                                            @Html.ValidationMessageFor(Function(model) model.fira_idcon)
-                                 
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group" style="padding-top:40px">
-                                <div class="form-check">                                    
-                                        @Html.LabelFor(Function(model) model.elaborado, New With {.class = "form-check-label"})                                   
-                                        @Html.CheckBoxFor(Function(model) model.elaborado, New With {.class = "form-check-input"} )
-                                        @Html.ValidationMessageFor(Function(model) model.elaborado )                                    
-                                </div>                                
-                                <div class="form-check">                                    
-                                        @Html.LabelFor(Function(model) model.firmado,New With {.class = "form-check-label"})
-                                        @Html.CheckBoxFor(Function(model) model.firmado,New With {.class = "form-check-input"})
-                                        @Html.ValidationMessageFor(Function(model) model.firmado)
-                                 
-                                </div>                                  
-                                <div class="form-check">                                        
-                                        @Html.LabelFor(Function(model) model.rectificado,New With {.class = "form-check-label"})                                    
-                                        @Html.CheckBoxFor(Function(model) model.rectificado,New With {.class = "form-check-input"})
-                                        @Html.ValidationMessageFor(Function(model) model.rectificado)                                    
-                                </div>
-                                 
-
-                                 
-                            </div>
+                                            @Html.LabelFor(Function(model) model.curp)                                       
+                                            @Html.TextBoxFor(Function(model) model.curp, New With {.Class = "form-control"})
+                                            @Html.ValidationMessageFor(Function(model) model.curp )    
                         </div>
                     </div>                                                    
                 </div>
@@ -149,10 +118,7 @@
                                   @Html.LabelFor(Function(model) model.telefono ,new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.telefono,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.telefono)
-                                   
-                                  @Html.LabelFor(Function(model) model.password, new with {.class = "control-label"})
-                                  @Html.PasswordFor(Function(model) model.password,New With {.Class = "form-control"})
-                                  @Html.ValidationMessageFor(Function(model) model.password)        
+                                      
                                 
                                </div>
                         </div>
@@ -174,10 +140,7 @@
                                   @Html.LabelFor(Function(model) model.email, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.email,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.email)  
-                                    
-                                  @Html.LabelFor(Function(model) model.internet, new with {.class = "control-label"})
-                                  @Html.CheckBoxFor(Function(model) model.internet,False)
-                                  @Html.ValidationMessageFor(Function(model) model.internet)  
+
                                 </div>
                         </div>
                     </div>                   
@@ -211,10 +174,7 @@
                     <div class="row">
                         <div class="col-md-6">
 
-                                @Html.LabelFor(Function(model) model.repeco  , new with {.class = "control-label"})
-                                @Html.TextBoxFor(Function(model) model.repeco ,New With {.Class = "form-control"})
-                                @Html.ValidationMessageFor(Function(model) model.repeco)                   
-
+                              
                         </div>
                         <div class="col-md-6">
                                 @Html.LabelFor(Function(model) model.regiva, new with {.class = "control-label"})                                
