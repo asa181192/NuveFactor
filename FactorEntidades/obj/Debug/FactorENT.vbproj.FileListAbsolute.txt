@@ -11,4 +11,3 @@ C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorENT.vbp
 C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorEntidades.pdb
-C:\Users\alfredo.santiago\Documents\nuve\FactorEntidades\obj\Debug\FactorENT.vbprojResolveAssemblyReference.cache

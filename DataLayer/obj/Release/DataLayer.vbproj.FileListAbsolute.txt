@@ -1,0 +1,17 @@
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\DataLayer.dll.config
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\DataLayer.pdb
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\Entidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.dll
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.xml
+C:\Users\alfredo.santiago\Documents\nuve\DataLayer\obj\Release\DataLayer.pdb

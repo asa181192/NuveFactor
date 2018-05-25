@@ -1,0 +1,126 @@
+﻿@ModelType nuve.Models.ModeloSucursal
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData("Title")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Images/favicon.ico" type="image/x-icon">   
+    <meta name="viewport" content="width=device-width" />   
+   <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
+     </head>
+  <style>
+    .form-group, input {
+        font-size:12px
+    } 
+    </style>
+
+@Using Html.BeginForm("GuardarSucursal", "Catalogos", FormMethod.Post ,New With {.id="popupForm"} )
+
+@<div class="panel panel-default">
+    <div class="panel-body highlight">
+      
+            @Html.ValidationSummary(True)
+            
+            @If Model IsNot Nothing And Model.sucursal1 > 0 Then
+                    @Html.HiddenFor(Function(model) model.sucursal1)
+            End If             
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#General" class="nav-link" aria-controls="Generales" role="tab" data-toggle="tab">Generales</a></li>
+                <li role="presentation" class="nav-item" ><a href="#Firmante" class="nav-link" aria-controls="Domicilio" role="tab" data-toggle="tab">Firmante</a></li>
+                <li role="presentation" class="nav-item"><a href="#Parametros" class="nav-link" aria-controls="Contacto" role="tab" data-toggle="tab">Párametros</a></li>
+              </ul>             
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="General" style="margin-top:50px">                    
+                    <div class="row">
+                        <div class="col-md-12">                             
+                            <div class="form-group">       
+                                    @Html.LabelFor(Function(model) model.abrev_suc , new with {.class = "control-label"} )                                    
+                                    @Html.TextBoxFor(Function(model) model.abrev_suc, New With {.Class = "form-control"})    
+                                    @Html.ValidationMessageFor(Function(model) model.abrev_suc)
+
+                                     
+                                    @Html.LabelFor(Function(model) model.nombre , new with {.class = "control-label"} )                                    
+                                    @Html.TextBoxFor(Function(model) model.nombre, New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.nombre)
+                                
+                                    @Html.LabelFor(Function(model) model.domicilio , new with {.class = "control-label"})                                
+                                    @Html.TextBoxFor(Function(model) model.domicilio, New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.domicilio)
+                                
+                                    @Html.LabelFor(Function(model) model.colonia)                             
+                                    @Html.TextBoxFor(Function(model) model.colonia ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.colonia)   
+                                
+                                    @Html.LabelFor(Function(model) model.municipio)
+                                    @Html.TextBoxFor(Function(model) model.municipio ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.municipio)
+                                
+                                    @Html.LabelFor(Function(model) model.estado)
+                                    @Html.TextBoxFor(Function(model) model.estado ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.estado) 
+                                
+                                    @Html.LabelFor(Function(model) model.cp)
+                                    @Html.TextBoxFor(Function(model) model.cp ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.cp)     
+                                
+                                    @Html.LabelFor(Function(model) model.telefono)
+                                    @Html.TextBoxFor(Function(model) model.telefono ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.telefono)                              
+                            </div>                                       
+                        </div>
+                  
+                    </div>                                                         
+                </div>
+                <div role="tabpanel" class="tab-pane" id="Firmante">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                  @Html.LabelFor(Function(model) model.apoderado1, new with {.class = "control-label"})
+                                  @Html.TextBoxFor(Function(model) model.apoderado1,New With {.Class = "form-control"})
+                                  @Html.ValidationMessageFor(Function(model) model.apoderado1)  
+                                
+                                 @Html.LabelFor(Function(model) model.apoderado2, new with {.class = "control-label"})
+                                  @Html.TextBoxFor(Function(model) model.apoderado2, New With {.Class = "form-control"})
+                                  @Html.ValidationMessageFor(Function(model) model.apoderado2)   
+                                
+                                 @Html.LabelFor(Function(model) model.testigo1, new with {.class = "control-label"})
+                                  @Html.TextBoxFor(Function(model) model.testigo1,New With {.Class = "form-control"})
+                                  @Html.ValidationMessageFor(Function(model) model.testigo1) 
+                                
+                                 @Html.LabelFor(Function(model) model.testigo2, new with {.class = "control-label"})
+                                  @Html.TextBoxFor(Function(model) model.testigo2,New With {.Class = "form-control"})
+                                  @Html.ValidationMessageFor(Function(model) model.testigo2)         
+                                                                                                
+                                    
+                            </div>
+                        </div>                     
+                    </div>          
+      
+                    </div>                
+                <div role="tabpanel" class="tab-pane" id="Parametros">
+                   
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(Function(model) model.iva  , new with {.class = "control-label"})
+                                    @Html.TextBoxFor(Function(model) model.iva ,New With {.Class = "form-control"})
+                                    @Html.ValidationMessageFor(Function(model) model.iva)                   
+
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                </div>          
+              </div>       
+       
+    </div>
+</div>
+
+    @<p>
+        <input type="submit" value="Guardar" class="btn bold" />
+    </p>  
+    
+End Using

@@ -1,0 +1,77 @@
+﻿
+
+@code
+  
+    'Dim oOficinaBL As New oficinaBL
+    'Dim oOficina As oficina = Nothing   
+    'Dim oUsuarioBL As New usuarioBL
+    'Dim oUsuario As usuario = Nothing
+    'Dim FechaActual As Date = Nothing   
+  
+  Try
+    'FechaActual = Date.Now
+  
+    Dim ip As String = Request.ServerVariables("REMOTE_ADDR")
+    Dim aIP() As String = ip.ToString.Split(".")      
+    Dim ipMaquinaCliente As String = ""
+    
+    If aIP.Length = 4 Then
+      If IsNumeric(aIP(0)) And IsNumeric(aIP(1)) And IsNumeric(aIP(2)) And IsNumeric(aIP(3)) Then
+        ipMaquinaCliente = Server.HtmlEncode(aIP(0) & "." & aIP(1) & "." & aIP(2) & "." & aIP(3))
+      End If
+    Else
+      Dim strHostName As String = Dns.GetHostName()
+      Dim ipEntry As IPHostEntry = Dns.GetHostEntry(strHostName)
+      Dim cadenaip As String
+
+      cadenaip = Convert.ToString(ipEntry.AddressList(ipEntry.AddressList.Length - 1))
+
+      Dim arrIp() As String
+      arrIp = cadenaip.Split(".")
+      If arrIp.Length = 4 Then
+        If IsNumeric(arrIp(0)) And IsNumeric(arrIp(1)) And IsNumeric(arrIp(2)) And IsNumeric(arrIp(3)) Then
+          ipMaquinaCliente = cadenaip
+        End If
+      End If
+    End If
+  
+        'oUsuario = oUsuarioBL.Selectusuario(Session("USERID"))
+        'If oUsuarioBL.hayErr Then Throw oUsuarioBL.Err
+  
+        'oOficina = oOficinaBL.SelectOficina(oUsuario.oficina)
+        'If oOficinaBL.hayErr Then Throw oOficinaBL.Err
+          
+    @<footer class="footer">                
+@*      &nbsp;@oUsuario.userid.Trim&#64;@ipMaquinaCliente 
+      <b>|</b>@oOficina.nombre.Trim 
+      @If oOficina.fec_contra > #1/1/1900# Then
+          @*@<b>|</b>@* 
+            @<span>Contrataci&oacute;n</span>
+            @oOficina.fec_contra.ToString("MMMM dd, yyyy")
+        End If*@
+      <b>|</b>
+      <span style="float: right;">
+@*        @FechaActual.ToString("dddd")&#44;
+        @FechaActual.ToString("dd")
+        de
+        @FechaActual.ToString("MMMM")
+        de
+        @FechaActual.ToString("yyyy")        
+        @FechaActual.ToString("hh:mm tt")   *@     
+      </span>
+    </footer>
+    
+  Catch ex As Exception
+    @<footer class="footer">
+      <b> | </b> Error cargando el pie de p&aacute;gina <b> | </b> 
+    </footer>
+  Finally
+    'If oOficinaBL IsNot Nothing Then oOficinaBL.Dispose()
+    'If oOficinaBL IsNot Nothing Then oOficinaBL = Nothing
+    'If oOficina IsNot Nothing Then oOficina = Nothing
+    'If oUsuarioBL IsNot Nothing Then oUsuarioBL.Dispose()
+    'If oUsuarioBL IsNot Nothing Then oUsuarioBL = Nothing
+    'If oUsuario IsNot Nothing Then oUsuario = Nothing
+    'FechaActual = Nothing    
+  End Try      
+End Code

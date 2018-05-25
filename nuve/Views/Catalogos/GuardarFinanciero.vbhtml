@@ -1,0 +1,113 @@
+﻿@ModelType nuve.Models.ModeloFinanciero
+
+    
+    <head>
+    <meta charset="utf-8" />
+    <title>@ViewData("Title")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Images/favicon.ico" type="image/x-icon">   
+    <meta name="viewport" content="width=device-width" />   
+   <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
+     </head>
+
+  <style>
+    .form-group, input {
+        font-size:12px
+    } 
+    </style>
+
+@Using Html.BeginForm("GuardarFinanciero", "Catalogos", FormMethod.Post ,New With {.id="popupForm" } )
+    @Html.ValidationSummary(true)
+        
+If Model.fecha.Equals(Nothing) Then
+          @Html.HiddenFor(Function(model) model.add , New With{.Value = True })     
+          @<div class="form-group">
+            <label>Fecha</label>
+          @Html.TextBoxFor(Function(model) model.fecha, New With {.class = "form-control", .Value = Today.Date.ToShortDateString(), .ReadOnly = True})
+        </div>    
+Else
+          @Html.HiddenFor(Function(model) model.add , New With{.Value = false }) 
+          @<div class="form-group">
+            <label>Fecha</label>
+          @Html.TextBoxFor(Function(model) model.fecha, New With {.class = "form-control" , .ReadOnly= True}) 
+                                                                       
+        </div>
+End If
+
+
+    @<div class="row">
+        <div class="col-md-6"> 
+                <div class="form-group">
+                @Html.LabelFor(Function(model) model.cetes28 , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.cetes28 ,New With {.Class="form-control"})   
+                @Html.ValidationMessageFor(Function(model) model.cetes28)
+                </div>  
+                 <div class="form-group">
+                @Html.LabelFor(Function(model) model.cpp , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.cpp ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.cpp)  
+                </div>
+                <div class="form-group">
+                @Html.LabelFor(Function(model) model.tiie91 , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.tiie91 ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.tiie91)  
+                </div>
+                <div class="form-group">
+                @Html.LabelFor(Function(model) model.fondeo , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.fondeo ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.fondeo)  
+                </div>
+                <div class="form-group">
+                @Html.LabelFor(Function(model) model.libor3m, New With {.class = "control-label"}) 
+                @Html.TextBoxFor(Function(model) model.libor3m ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.libor3m)  
+                </div>
+                <div class="form-group">
+                @Html.LabelFor(Function(model) model.libor12m, New With {.class = "control-label"}) 
+                @Html.TextBoxFor(Function(model) model.libor12m ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.libor12m)  
+                </div>
+        </div>
+         <div class="col-md-6"> 
+            <div class="form-group">
+                @Html.LabelFor(Function(model) model.cetes91 , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.cetes91 ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.cetes91)  
+             </div>
+              <div class="form-group">
+                @Html.LabelFor(Function(model) model.tiie , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.tiie ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.tiie)  
+              </div>
+              <div class="form-group">
+                @Html.LabelFor(Function(model) model.tiip , new with {.class = "control-label"} ) 
+                @Html.TextBoxFor(Function(model) model.tiip ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.tiip)  
+              </div>
+             <div class="form-group">
+                @Html.LabelFor(Function(model) model.libor, New With {.class = "control-label"}) 
+                @Html.TextBoxFor(Function(model) model.libor ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.libor)  
+             </div>
+             <div class="form-group">
+                @Html.LabelFor(Function(model) model.libor6m, New With {.class = "control-label"}) 
+                @Html.TextBoxFor(Function(model) model.libor6m ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.libor6m)  
+              </div>
+              <div class="form-group">
+                @Html.LabelFor(Function(model) model.fondeousd, New With {.class = "control-label"}) 
+                @Html.TextBoxFor(Function(model) model.fondeousd ,New With {.Class="form-control"}) 
+                @Html.ValidationMessageFor(Function(model) model.fondeousd)  
+              </div>
+        </div>
+     </div>
+           
+   @<div>
+        <input type="submit" value="Guardar" class="btn bold" />
+    </div>
+
+    
+End Using
+
+

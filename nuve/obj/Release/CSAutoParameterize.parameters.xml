@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="FactorContext-Web.config Connection String" description="FactorContext Connection String used in web.config by the application to access the database." defaultValue="data source=192.168.121.233;initial catalog=Factor;user id=VPM_FACTOR;password=Punchout;MultipleActiveResultSets=True;App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='FactorContext']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGCONFORME-Web.config Connection String" description="SQLSTRINGCONFORME Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=arrendadora20171218;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGCONFORME']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGCATALOGOS-Web.config Connection String" description="SQLSTRINGCATALOGOS Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=catalogos;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGCATALOGOS']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGWAREHOUSE-Web.config Connection String" description="SQLSTRINGWAREHOUSE Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=warehouse;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGWAREHOUSE']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGINVANTARIO-Web.config Connection String" description="SQLSTRINGINVANTARIO Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=inventory;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGINVANTARIO']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGWORLDCHECK-Web.config Connection String" description="SQLSTRINGWORLDCHECK Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=worldcheck;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGWORLDCHECK']/@connectionString" />
+  </parameter>
+  <parameter name="SQLSTRINGCOTIZADOR-Web.config Connection String" description="SQLSTRINGCOTIZADOR Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=dbcotizador;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQLSTRINGCOTIZADOR']/@connectionString" />
+  </parameter>
+  <parameter name="ConnectionStringFASTSQL-Web.config Connection String" description="ConnectionStringFASTSQL Connection String used in web.config by the application to access the database." defaultValue="Data Source=briver;Initial Catalog=fast2010a;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\alfredo\.santiago\\Documents\\nuve\\nuve\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ConnectionStringFASTSQL']/@connectionString" />
+  </parameter>
+</parameters>

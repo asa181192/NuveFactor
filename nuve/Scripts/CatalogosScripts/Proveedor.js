@@ -9,7 +9,7 @@ var proveedor =
         tablaParidad = $('#tableProveedor')// Evento se dispara cuando se ha cargado la taba con la informacion de ajax y se na inicializado 
               .DataTable({
                 ajax: {
-                    "url": "/Catalogos/ObtenerListaProveedores/", // url del controlador a consultar 
+                    "url": "../Catalogos/ObtenerListaProveedores/", // url del controlador a consultar 
                     "Type": "GET",
                     "data": function (d) { d.sucursal = sucursal }, // parametros a enviar al controlador 
                     "dataSrc": function (json) {
@@ -38,7 +38,7 @@ var proveedor =
            { data: "nombre", orderable: false },
            {
                data: "deudor", "width": "50px", "render": function (data) {
-                   return '<a class="popup" href="/Catalogos/GuardarProveedor?deudor=' + data + '"><button type="button" class="btn glyphicon glyphicon-pencil"></button></a>';
+                   return '<a class="popup" href="../Catalogos/GuardarProveedor?deudor=' + data + '"><button type="button" class="btn glyphicon glyphicon-pencil"></button></a>';
                }, orderable: false
            } // Hace referencia al boton de Editar
                 ],
@@ -55,8 +55,8 @@ var proveedor =
         $pageContent.load(pageUrl,
             function() {
                 $pageContent.dialog({
-                    width: 1200,
-                    height: 750,
+                    width: $(window).width() - 150, // overcomes width:'auto' and maxWidth bug
+                    height: $(window).height() - 150,
                     modal: true,
                     show: 'fade',
                     hide: 'fade',
@@ -71,15 +71,16 @@ var proveedor =
 
                         proveedor.validacionCampos();
                       
+                        // Validacion de tool tip 
                         $pageContent.tooltip({
                             items: ".input-validation-error",
                             content: function () {
-                                return $("[data-valmsg-for='" + $(this).attr('id') + "']").text();
+                                return $("[data-valmsg-for='" + $(this).attr('id') + "']").text() ;
                             }
                         });
                         //  Setear anchura minima y maxima 
-                        $(this).css("maxWidth", "1200px");
-                        $(this).css("minWidth", "400px");
+                        //$(this).css("maxWidth", "1200px");
+                        //$(this).css("minWidth", "400px");
                     },
                     close: function() {
                         $pageContent.dialog('destroy').remove();

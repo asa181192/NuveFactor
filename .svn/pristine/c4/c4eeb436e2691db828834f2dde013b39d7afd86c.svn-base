@@ -1,0 +1,15 @@
+﻿Imports FactorEntidades
+
+Namespace AdminModels
+	Public Class ModeloUsuario
+		Inherits usuarios
+
+		Public Sub CargaControles()
+			SucursalDropDown = New controles().CargaSucursales()
+		End Sub
+
+		Public SucursalDropDown As List(Of SelectListItem)
+
+	End Class
+End Namespace
+

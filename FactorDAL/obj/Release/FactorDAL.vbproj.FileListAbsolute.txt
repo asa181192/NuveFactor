@@ -1,0 +1,17 @@
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorDAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorDAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorDAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorEntidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\TinyMapper.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorEntidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\FactorEntidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\obj\Release\FactorDAL.pdb

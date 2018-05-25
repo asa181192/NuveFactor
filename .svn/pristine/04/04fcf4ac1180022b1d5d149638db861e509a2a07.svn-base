@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A0EB53A-65F8-4AA6-9187-AD9D8C9AE173}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FactorEntidades</RootNamespace>
+    <AssemblyName>FactorEntidades</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>FactorEntidades.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>FactorEntidades.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\ClienteEntidad.vb" />
+    <Compile Include="Entities\CodigoEntidad.vb" />
+    <Compile Include="Entities\DropDownEntidad.vb" />
+    <Compile Include="Entities\Enumerador.vb" />
+    <Compile Include="Entities\PerfilEntidad.vb" />
+    <Compile Include="Entities\PromotorEntidad.vb" />
+    <Compile Include="Entities\TipoGarantiaEntidad.vb" />
+    <Compile Include="Entities\FinancieroEntidad.vb" />
+    <Compile Include="Entities\ParidadEntidad.vb" />
+    <Compile Include="Entities\ProveedorEntidad.vb" />
+    <Compile Include="Entities\SucursalEntidad.vb" />
+    <Compile Include="Entities\UsuarioEntidad.vb" />
+    <Compile Include="Tables\actividad.vb" />
+    <Compile Include="Tables\adeudos.vb" />
+    <Compile Include="Tables\anexo.vb" />
+    <Compile Include="Tables\apoderados.vb" />
+    <Compile Include="Tables\aseguradora.vb" />
+    <Compile Include="Tables\avisos.vb" />
+    <Compile Include="Tables\bancos.vb" />
+    <Compile Include="Tables\basketitems.vb" />
+    <Compile Include="Tables\baskets.vb" />
+    <Compile Include="Tables\ccosto.vb" />
+    <Compile Include="Tables\cesiones.vb" />
+    <Compile Include="Tables\cfiscales.vb" />
+    <Compile Include="Tables\cifrascontrol.vb" />
+    <Compile Include="Tables\ciudades.vb" />
+    <Compile Include="Tables\clientes.vb" />
+    <Compile Include="Tables\cobranza.vb" />
+    <Compile Include="Tables\codigogarantia.vb" />
+    <Compile Include="Tables\comisiones.vb" />
+    <Compile Include="Tables\comprador.vb" />
+    <Compile Include="Tables\contmovi.vb" />
+    <Compile Include="Tables\contratos.vb" />
+    <Compile Include="Tables\control.vb" />
+    <Compile Include="Tables\controlArrend.vb" />
+    <Compile Include="Tables\ctaprove.vb" />
+    <Compile Include="Tables\ctasaldos.vb" />
+    <Compile Include="Tables\cuentas.vb" />
+    <Compile Include="Tables\depositos.vb" />
+    <Compile Include="Tables\descuento.vb" />
+    <Compile Include="Tables\detalle.vb" />
+    <Compile Include="Tables\devengue.vb" />
+    <Compile Include="Tables\dev_iv.vb" />
+    <Compile Include="Tables\dev_moratorio.vb" />
+    <Compile Include="Tables\dev_mvencido.vb" />
+    <Compile Include="Tables\doctos.vb" />
+    <Compile Include="Tables\edocuenta.vb" />
+    <Compile Include="Tables\edoseguro.vb" />
+    <Compile Include="Tables\envios.vb" />
+    <Compile Include="Tables\estadosdemexico.vb" />
+    <Compile Include="Tables\estadosmexicocnbv.vb" />
+    <Compile Include="Tables\estudios.vb" />
+    <Compile Include="Tables\evento.vb" />
+    <Compile Include="Tables\FactorContext.vb" />
+    <Compile Include="Tables\fiscalpf.vb" />
+    <Compile Include="Tables\fiscalpv.vb" />
+    <Compile Include="Tables\foliosat.vb" />
+    <Compile Include="Tables\garantia.vb" />
+    <Compile Include="Tables\grupos.vb" />
+    <Compile Include="Tables\histremanentes.vb" />
+    <Compile Include="Tables\indicadores.vb" />
+    <Compile Include="Tables\ipolizas.vb" />
+    <Compile Include="Tables\lavado.vb" />
+    <Compile Include="Tables\linea.vb" />
+    <Compile Include="Tables\memos.vb" />
+    <Compile Include="Tables\monitor.vb" />
+    <Compile Include="Tables\movcuentas.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Tables\operaciones.vb" />
+    <Compile Include="Tables\pagares.vb" />
+    <Compile Include="Tables\pagosadeudos.vb" />
+    <Compile Include="Tables\pagosgarantia.vb" />
+    <Compile Include="Tables\paridad.vb" />
+    <Compile Include="Tables\perfil.vb" />
+    <Compile Include="Tables\perfiles.vb" />
+    <Compile Include="Tables\pmensual.vb" />
+    <Compile Include="Tables\polizas.vb" />
+    <Compile Include="Tables\producto.vb" />
+    <Compile Include="Tables\promotor.vb" />
+    <Compile Include="Tables\proveedor.vb" />
+    <Compile Include="Tables\remanentes.vb" />
+    <Compile Include="Tables\result.vb" />
+    <Compile Include="Tables\siniestros.vb" />
+    <Compile Include="Tables\sucursal.vb" />
+    <Compile Include="Tables\tipogarantia.vb" />
+    <Compile Include="Tables\usersregs.vb" />
+    <Compile Include="Tables\usuarios.vb" />
+    <Compile Include="Tables\usuariosArrend.vb" />
+    <Compile Include="Tables\vencida.vb" />
+    <Compile Include="Tables\wbregistry.vb" />
+    <Compile Include="Tables\webbancos.vb" />
+    <Compile Include="Tables\webcontrol.vb" />
+    <Compile Include="Tables\webmonitor.vb" />
+    <Compile Include="Tables\webservice.vb" />
+    <Compile Include="Tables\wsbitacora.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Complex\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

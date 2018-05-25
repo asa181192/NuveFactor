@@ -1,0 +1,14 @@
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\Entidades.dll.config
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\Entidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Release\Entidades.pdb

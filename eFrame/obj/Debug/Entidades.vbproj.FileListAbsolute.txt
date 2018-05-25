@@ -37,4 +37,3 @@ C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Debug\Entidades.vbproj.Gener
 C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Debug\Entidades.dll
 C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Debug\Entidades.xml
 C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Debug\Entidades.pdb
-C:\Users\alfredo.santiago\Documents\nuve\eFrame\obj\Debug\Entidades.vbprojResolveAssemblyReference.cache

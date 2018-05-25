@@ -7,12 +7,9 @@ Imports nuve.Helpers
 Imports System.IO
 Imports System.Runtime.Serialization.Json
 Imports System.Globalization
-Imports Negocio.arrendadoraBL
-Imports Entidades
-Imports Entidades.arrendadora
 
 Public Class ClientesController
-  Inherits BaseController
+	Inherits Controller
 
   <CustomAuthorize()> _
   <HttpGet()> _

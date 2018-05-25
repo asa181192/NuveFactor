@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="FactorNV" />
+  <setParameter name="FactorContext-Web.config Connection String" value="data source=192.168.121.233;initial catalog=Factor;user id=VPM_FACTOR;password=Punchout;MultipleActiveResultSets=True;App=EntityFramework" />
+  <setParameter name="SQLSTRINGCONFORME-Web.config Connection String" value="Data Source=briver;Initial Catalog=arrendadora20171218;Integrated Security=True" />
+  <setParameter name="SQLSTRINGCATALOGOS-Web.config Connection String" value="Data Source=briver;Initial Catalog=catalogos;Integrated Security=True" />
+  <setParameter name="SQLSTRINGWAREHOUSE-Web.config Connection String" value="Data Source=briver;Initial Catalog=warehouse;Integrated Security=True" />
+  <setParameter name="SQLSTRINGINVANTARIO-Web.config Connection String" value="Data Source=briver;Initial Catalog=inventory;Integrated Security=True" />
+  <setParameter name="SQLSTRINGWORLDCHECK-Web.config Connection String" value="Data Source=briver;Initial Catalog=worldcheck;Integrated Security=True" />
+  <setParameter name="SQLSTRINGCOTIZADOR-Web.config Connection String" value="Data Source=briver;Initial Catalog=dbcotizador;Integrated Security=True" />
+  <setParameter name="ConnectionStringFASTSQL-Web.config Connection String" value="Data Source=briver;Initial Catalog=fast2010a;Integrated Security=True" />
+</parameters>

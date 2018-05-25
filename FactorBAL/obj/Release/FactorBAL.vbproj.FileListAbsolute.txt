@@ -1,0 +1,17 @@
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorBAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorBAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorBAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorDAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorEntidades.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorDAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorDAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorEntidades.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorEntidades.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.vbprojResolveAssemblyReference.cache
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.Resources.resources
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.vbproj.GenerateResource.Cache
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.pdb

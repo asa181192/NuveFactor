@@ -1,0 +1,519 @@
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Linq
+Imports System.Net
+Imports System.Web
+Imports System.Web.Mvc
+Imports System.Web.Security
+Imports System.Configuration
+Imports System.Net.Mail
+Imports System.Threading
+Imports nuve
+Imports FactorBAL
+Imports FactorEntidades
+
+<Authorize()> _
+Public Class AccountController
+	Inherits Controller
+
+	<AllowAnonymous()> _
+	Public Function login(ByVal returnUrl As String) As ActionResult
+		ViewData("ReturnUrl") = returnUrl
+		Return View()
+	End Function
+
+	<HttpPost()> _
+	<AllowAnonymous()> _
+	<ValidateAntiForgeryToken()> _
+	Public Function login(ByVal model As login, ByVal returnUrl As String) As ActionResult
+
+		Dim manager = New Manager()
+		Dim resultado = New Result()
+		Dim usuario = New usuarios()
+
+		resultado = manager.ValidarUsuario(usuario, model.user, model.password)
+
+		If resultado.Ok And resultado IsNot Nothing Then
+
+			If usuario IsNot Nothing Then
+				If usuario.activo Then
+					FormsAuthentication.SetAuthCookie("Factor - AuthCookie", True)
+					Return RedirectToAction("welcome", "Home")
+
+				Else
+					ModelState.AddModelError("", "Acceso Denegado")
+					Return View(model)
+				End If
+			Else
+				ModelState.AddModelError("", "Credenciales Invalidas")
+				Return View(model)
+			End If
+		Else
+			ModelState.AddModelError("", "Ocurrio un error")
+			Return View(model)
+		End If
+
+
+		'If model.user = "Admin" And model.password = "Admin123" Then
+		'	FormsAutShentication.SetAuthCookie("Conforme - AuthCookie", True)
+		'	Response.Cookies("userid").Value = "admin"
+		'	Response.Cookies("userid").Expires = Now.AddDays(15)
+
+		'	Session("USERID") = "admin"
+		'	Return RedirectToAction("welcome", "Home")
+		'Else
+		'	Return View(model)
+		'End If
+
+		'If ModelState.IsValid Then
+		'	Dim ousuarioBL As usuarioBL = Nothing
+		'	Dim ousuario As Entidades.arrendadora.usuario = Nothing
+		'	Dim ocontrolBL As controlBL = Nothing
+		'	Dim ocontrol As Entidades.arrendadora.control = Nothing
+		'	Try
+
+		'		'If Not isIPAdmitida() Then
+		'		'    ModelState.AddModelError("", "Acceso denegado")
+		'		'    Return View(model)
+		'		'End If
+
+		'		ousuarioBL = New usuarioBL()
+		'		ousuario = ousuarioBL.Selectusuario(model.user)
+		'		If ousuarioBL.hayErr Then Throw ousuarioBL.Err
+
+		'		ocontrolBL = New controlBL()
+		'		ocontrol = ocontrolBL.SelectControl()
+		'		If ocontrolBL.hayErr Then Throw ocontrolBL.Err
+
+		'		If ousuario.activo Then
+		'			Dim bExistsADs As Boolean = False
+		'Dim ldap As New LdapAuth
+
+		'			If Not (ocontrol.adlogon) Is Nothing And (ocontrol.adlogon) Then
+		'bExistsADs = ldap.IsAuthenticated(ousuario.userid, model.password)
+		'				If bExistsADs Then
+		'					If FormsAuth(ousuario) Then
+		'Return RedirectToLocal(returnUrl)
+		'					Else
+		'						ModelState.AddModelError("", "Acceso denegado")
+		'						Return View(model)
+		'					End If
+		'				Else
+		'					ModelState.AddModelError("", "Acceso denegado")
+		'					Return View(model)
+		'				End If
+
+		'			Else
+		'				If (CLng(CRC(model.password)) = ousuario.password) Then
+		'					Dim d As Integer = DateDiff(DateInterval.Day, ousuario.fec_pass, Now)
+		'					If (d > PASSWORD_EXPIRES) Then
+		'						ModelState.AddModelError("", "Acceso denegado. Su contraseña ha expirado")
+		'						Return View(model)
+
+		'					Else
+
+		'						If FormsAuth(ousuario) Then
+		'							Return RedirectToLocal(returnUrl)
+		'						Else
+		'							ModelState.AddModelError("", "Acceso denegado")
+		'							Return View(model)
+		'						End If
+
+		'					End If
+
+		'				Else
+		'					ModelState.AddModelError("", "El usuario y/o password son incorrectos")
+		'					Return View(model)
+
+		'				End If
+
+		'			End If
+
+		'		Else
+		'			ModelState.AddModelError("", "Acceso denegado")
+		'			Return View(model)
+
+		'		End If
+
+		'	Catch ex As Exception
+		'		BitacoraError(ex, CType(Session("USERID"), String), Request.ServerVariables("REMOTE_ADDR"))
+		'		ModelState.AddModelError("", "Ocurrio un error")
+		'		Return View(model)
+		'	Finally
+		'		If ousuarioBL IsNot Nothing Then ousuarioBL.Dispose()
+		'		If ousuarioBL IsNot Nothing Then ousuarioBL = Nothing
+		'		If ousuario IsNot Nothing Then ousuario = Nothing
+		'		If ocontrolBL IsNot Nothing Then ocontrolBL.Dispose()
+		'		If ocontrolBL IsNot Nothing Then ocontrolBL = Nothing
+		'		If ocontrol IsNot Nothing Then ocontrol = Nothing
+		'	End Try
+		'Else
+		'	ModelState.AddModelError("", "Debe introducir el usuario y el password")
+		'	Return View(model)
+		'End If
+
+	End Function
+
+	'<CustomAuthorize> _
+	'<HttpGet> _
+	'Public Function contrasena_cambio(ByVal returnUrl As String) As ActionResult
+	'  ViewData("MinLenght") = "Debe contener al menos " & PASSWORD_MINLENGTH.ToString & " caracteres."
+	'  ViewData("Caps") = If(PASSWORD_CAPS, "Incluir letras mayúsculas.", "")
+	'  ViewData("SmallCaps") = If(PASSWORD_SMALLCAPS, "Incluir letras minúsculas.", "")
+	'  ViewData("Numbers") = If(PASSWORD_NUMBERS, "", "Incluir números.")
+	'  ViewData("SpeChars") = If(PASSWORD_SPECHARS, "", "Incluir caracteres especiales.")
+	'  ViewData("Nota") = "Para cambiar su contraseña asegúrese de alimentar correctamente su" & _
+	'                     " contraseña actual y de alimentar y confirmar su nueva contraseña." & _
+	'                     " La contraseña tiene una vigencia de " & PASSWORD_EXPIRES.ToString & _
+	'                     " días y, al ser cambiada, no debe ser igual a alguna de sus " & PASSWORD_HISTORY.ToString & _
+	'                     " anteriores contraseñas."
+	'  ViewData("style") = "cambiando"
+	'  Return View()
+	'End Function
+
+	'<CustomAuthorize> _
+	'<HttpPost()> _
+	'<ValidateAntiForgeryToken()> _
+	'Public Function contrasena_cambio(ByVal model As contrasena_cambio, ByVal returnUrl As String) As ActionResult
+	'  ViewData("MinLenght") = "Debe contener al menos " & PASSWORD_MINLENGTH.ToString & " caracteres."
+	'  ViewData("Caps") = If(PASSWORD_CAPS, "Incluir letras mayúsculas.", "")
+	'  ViewData("SmallCaps") = If(PASSWORD_SMALLCAPS, "Incluir letras minúsculas.", "")
+	'  ViewData("Numbers") = If(PASSWORD_NUMBERS, "", "Incluir números.")
+	'  ViewData("SpeChars") = If(PASSWORD_SPECHARS, "", "Incluir caracteres especiales.")
+	'  ViewData("Nota") = "Para cambiar su contraseña asegúrese de alimentar correctamente su" & _
+	'                     " contraseña actual y de alimentar y confirmar su nueva contraseña." & _
+	'                     " La contraseña tiene una vigencia de " & PASSWORD_EXPIRES.ToString & _
+	'                     " días y, al ser cambiada, no debe ser igual a alguna de sus " & PASSWORD_HISTORY.ToString & _
+	'                     " anteriores contraseñas."
+	'  ViewData("style") = "cambiando"
+	'  If ModelState.IsValid Then
+
+	'    Dim folio As Integer = Session("folio")
+	'    Dim usr As New usuarioBL()
+	'    Dim user As Entidades.arrendadora.usuario = usr.Selectusuario(folio)
+
+	'    Dim oControl As New Entidades.arrendadora.control
+	'    Dim oControlBL As New controlBL
+	'    oControl = oControlBL.SelectControl()
+
+	'    If Not usr.hayErr Then
+	'      If (user.folio <> -1) Then
+
+	'        If (user.folio = folio) Then
+	'          If oControl.adlogon Then
+
+	'            Dim domainAndUsername As String = System.Configuration.ConfigurationManager.AppSettings("DOMAIN") & "\" & user.userid.Trim
+	'            Dim root As New System.DirectoryServices.DirectoryEntry("GC://RootDSE")
+	'            Dim entry = New System.DirectoryServices.DirectoryEntry("GC://" & root.Properties("rootDomainNamingContext")(0).ToString, domainAndUsername, model.actual, DirectoryServices.AuthenticationTypes.Secure)
+
+	'            Dim search = New System.DirectoryServices.DirectorySearcher(entry)
+	'            search.Filter = "(SAMAccountName=" & user.userid.Trim & ")"
+	'            search.PropertiesToLoad.Add("cn")
+	'            Dim result As System.DirectoryServices.SearchResult = search.FindOne()
+
+	'            If result IsNot Nothing Then
+	'              'actualiza  el password del usuario
+	'              If (model.nueva = model.actual) Then
+	'                Warning("La nueva contraseña debe ser diferente de la actual contraseña.")
+	'              Else
+	'                If (model.nueva = model.confirmacion) Then
+	'                  If (PasswordComplexity(model.nueva)) Then
+	'                    Try
+	'                      Dim usuario As System.DirectoryServices.DirectoryEntry
+	'                      usuario = result.GetDirectoryEntry()
+	'                      usuario.Invoke("ChangePassword", New Object() {model.actual, model.nueva})
+	'                      usuario.CommitChanges()
+	'                      usuario.Close()
+	'                      Bitacora("USR.- Contraseña cambiada (Dominio).", Request.ServerVariables("REMOTE_ADDR"), IIf(Session("USERID") Is Nothing, "conforme.net", Session("USERID")))
+	'                      Success("Contraseña cambiada (Dominio).", True)
+	'                      ViewData("style") = "cambio"
+	'                    Catch ex As Exception
+	'                      Bitacora("ERR.- No se pudo actualizar la contraseña (Active Directory).", Request.ServerVariables("REMOTE_ADDR"), IIf(Session("USERID") Is Nothing, "conforme.net", Session("USERID")))
+	'                      Warning("La nueva contraseña no ha sido cambiada correctamente.", True)
+	'                    End Try
+	'                  Else
+	'                    Warning("La nueva contraseña no cumple con la complejidad requerida.", True)
+	'                  End If
+	'                Else
+	'                  Warning("La nueva contraseña no coincide con la confirmación.", True)
+	'                End If
+	'              End If
+	'            Else
+	'              Warning("La contraseña actual es incorrecta.", True)
+	'            End If
+	'          Else
+	'            If (CLng(CRC(model.actual)) = CLng(user.password)) Then
+
+	'              If (model.nueva = model.actual) Then
+	'                Warning("La nueva contraseña debe ser diferente de la actual contraseña.", True)
+	'              Else
+	'                If (model.nueva = model.confirmacion) Then
+
+	'                  If (PasswordComplexity(model.nueva)) Then
+
+	'                    Dim new_crc As Object = CRC(model.nueva)
+	'                    Dim str_crc As String = format_leading_zeros(new_crc, 7)
+	'                    Dim lista_pass As String = user.lista_pass
+
+	'                    If (Not lista_pass.IndexOf(str_crc) = -1) Then
+	'                      Warning("La nueva contraseña ya ha sido utilizada con anterioridad.", True)
+	'                    Else
+	'                      user.password = new_crc
+	'                      user.fec_pass = Now
+	'                      lista_pass = lista_pass & str_crc & ","
+
+	'                      If (lista_pass.Length > 32) Then
+	'                        lista_pass = Right(lista_pass, 32)
+	'                      End If
+
+	'                      user.lista_pass = lista_pass
+
+	'                      If usr.Submit(user) Then
+	'                        Bitacora("USR.- Password changed (WEB).", Request.ServerVariables("REMOTE_ADDR"), IIf(Session("USERID") Is Nothing, "conforme.net", Session("USERID")))
+	'                        Session("DIAS_PASS") = 0
+	'                        Success("Password changed (WEB)", True)
+	'                        ViewData("style") = "cambio"
+	'                      Else
+	'                        Bitacora("ERR.- No se pudo actualizar la contraseña (WEB).", Request.ServerVariables("REMOTE_ADDR"), IIf(Session("USERID") Is Nothing, "conforme.net", Session("USERID")))
+	'                        Warning("La nueva contraseña no ha sido cambiada correctamente.", True)
+	'                      End If
+	'                    End If
+	'                  End If
+	'                Else
+	'                  Warning("La nueva contraseña no ha sido cambiada correctamente.", True)
+	'                End If
+	'              End If
+	'            Else
+	'              Warning("La contraseña actual es incorrecta.", True)
+	'            End If
+	'          End If
+
+	'        End If
+
+	'      End If
+	'    End If
+
+	'    Return View(model)
+	'  Else
+	'    Information("Verifique los campos", True)
+	'    Return View(model)
+	'  End If
+	'End Function
+
+	'<AllowAnonymous()> _
+	'Public Function contrasena_olvidada(ByVal returnUrl As String) As ActionResult
+	'  ViewData("ReturnUrl") = returnUrl
+	'  ViewData("Title") = "Contraseña olvidada"
+	'  Return View()
+	'End Function
+
+	'<HttpPost()> _
+	'<AllowAnonymous()> _
+	'<ValidateAntiForgeryToken()> _
+	'Public Function contrasena_olvidada(ByVal model As contrasena_olvidada, ByVal returnUrl As String) As ActionResult
+	'  ViewData("Title") = "Contraseña olvidada"
+	'  If ModelState.IsValid Then
+	'    ViewData("ReturnUrl") = returnUrl
+	'    Dim t As New DataTable
+	'    Dim usrDL As New usuarioBL()
+	'    Dim folios = usrDL.SelectFoliobyEmail(model.mail.Trim).Select(Function(s) New With {.folio = s}).ToList()
+	'    If usrDL.hayErr Then Throw usrDL.Err
+	'    t = Negocio.ConvertToDataTable(folios)
+	'    If Not t Is Nothing Then
+	'      If t.Rows.Count > 0 Then
+	'        Dim pw As String = setPassWord()
+	'        Try
+	'          Dim msg As MailMessage = New MailMessage
+	'          msg.From = New MailAddress(System.Configuration.ConfigurationManager.AppSettings("EMailTareas"))
+	'          msg.To.Add(model.mail.Trim)
+	'          If msg.From.Address.Length < 1 Then msg.From = msg.To(0)
+	'          msg.Subject = "Confirmación"
+	'          Dim body As String = ""
+	'          body += "A petición suya hemos asignado una nueva contraseña temporal.<br />"
+	'          body += "Su nueva contraseña temporal es: <b>" & pw & "</b><br/>"
+	'          body += "Ingrese al <a href=""https://w3.arrvepormas.com.mx/nuve/login.aspx"">Conforme en la NUVE</a>."
+	'          msg.Body = formatEmail(body)
+
+	'          msg.IsBodyHtml = True
+	'          Dim smtp As New System.Net.Mail.SmtpClient
+	'          smtp.Host = System.Configuration.ConfigurationManager.AppSettings("HOST")
+	'          Dim folio As Integer = t.Rows(0)("folio")
+	'          Dim user As Entidades.arrendadora.usuario = usrDL.Selectusuario(folio)
+	'          If usrDL.hayErr Then Throw usrDL.Err
+	'          user.password = CRC(pw)
+	'          user.fec_pass = Now.AddDays(-PASSWORD_EXPIRES + 1)
+	'          Dim lista_pass As String = user.lista_pass
+	'          lista_pass = lista_pass & format_leading_zeros(user.password, 7) & ","
+	'          If lista_pass.Length > 32 Then
+	'            lista_pass = Right(lista_pass, 32)
+	'          End If
+	'          user.lista_pass = lista_pass
+	'          usrDL.Submit(user)
+	'          If usrDL.hayErr Then Throw usrDL.Err
+	'          Bitacora("USR.- Cambio de contraseña enviado a " & user.email.Trim & " (WEB).", Request.ServerVariables("REMOTE_ADDR"), IIf(Session("USERID") Is Nothing, "conforme.net", Session("USERID")))
+	'          smtp.Send(msg)
+	'        Catch ex As Exception
+	'          Danger("Email no puedo ser enviado. Intente nuevamente. Si el problema persiste consulte al administrador (C)", True)
+	'        End Try
+	'      Else
+	'        Warning("EL usuario o la contraseña son incorrectos (A)", True)
+	'      End If
+	'    Else
+	'      Warning("EL usuario o la contraseña son incorrectos (B)", True)
+	'    End If
+	'    Return View(model)
+	'  Else
+	'    ModelState.AddModelError("", "Escriba la dirección de correo")
+	'    Warning("Escriba la dirección de correo", True)
+	'    Return View(model)
+	'  End If
+	'End Function
+
+	'<AllowAnonymous()> _
+	'Public Function sesion_expirada(ByVal returnUrl As String) As ActionResult
+	'  ViewData("ReturnUrl") = returnUrl
+
+	'  Session("USERID") = ""
+	'  Session("NAME") = ""
+	'  Session("FOLIO") = ""
+	'  Session("EMAIL") = ""
+	'  Session("OFICINA") = ""
+	'  Session("PERFIL") = ""
+	'  Session("REGIONALES") = ""
+	'  Session("DIAS_PASS") = ""
+	'  Session("OFICINAS") = ""
+	'  Session("WORKDATE") = ""
+	'  FormsAuthentication.SignOut()
+	'  Dim c As HttpCookie = Request.Cookies(FormsAuthentication.FormsCookieName)
+	'  c.Expires = Date.Now.AddDays(-1)
+	'  Response.Cookies.Set(c)
+	'  Session.Clear()
+	'  Session.Abandon()
+
+	'  Return View()
+	'End Function
+
+	'<AllowAnonymous> _
+	'<HttpPost()> _
+	'<ValidateAntiForgeryToken()> _
+	Public Function LogOff() As ActionResult
+
+		'Session("USERID") = ""
+		'Session("NAME") = ""
+		'Session("FOLIO") = ""
+		'Session("EMAIL") = ""
+		'Session("OFICINA") = ""
+		'Session("PERFIL") = ""
+		'Session("REGIONALES") = ""
+		'Session("DIAS_PASS") = ""
+		'Session("OFICINAS") = ""
+		'Session("WORKDATE") = ""
+		FormsAuthentication.SignOut()
+		Dim c As HttpCookie = Request.Cookies(FormsAuthentication.FormsCookieName)
+		c.Expires = Date.Now.AddDays(-1)
+		Response.Cookies.Set(c)
+		'Session.Clear()
+		'Session.Abandon()
+
+		Return RedirectToAction("login", "Account")
+	End Function
+
+	'<Serializable()> _
+	'<Runtime.Serialization.DataContract()> _
+	'Private Class l_pexpires_diaspass
+	'  <Runtime.Serialization.DataMember()> _
+	'  Public Property password_expires As Integer
+	'  <Runtime.Serialization.DataMember()> _
+	'  Public Property dias_pass As Integer
+	'End Class
+
+	'<AllowAnonymous()> _
+	'<HttpGet> _
+	'Public Function ConsultaSessionDiasPass() As JsonResult
+	'  Dim odp_pe As New l_pexpires_diaspass
+	'  odp_pe.dias_pass = CType(Session("DIAS_PASS"), Integer)
+	'  odp_pe.password_expires = PASSWORD_EXPIRES
+	'  Return Json(SerializaJSon(odp_pe), JsonRequestBehavior.AllowGet)
+	'End Function
+
+	'#Region "Helpers"
+	'  Private Function FormsAuth(ByRef ousuario As Entidades.arrendadora.usuario) As Boolean
+	'    Dim breturn As Boolean = False
+	'    Dim ooficinaBL As oficinaBL = Nothing
+	'    Dim ooficina As Entidades.arrendadora.oficina = Nothing
+	'    Try
+	'			FormsAuthentication.SetAuthCookie("Conforme - AuthCookie" & ousuario.userid.Trim(), True)
+	'      Response.Cookies("userid").Value = ousuario.userid
+	'      Response.Cookies("userid").Expires = Now.AddDays(15)
+
+	'      ooficinaBL = New oficinaBL()
+	'      ooficina = ooficinaBL.SelectOficina(ousuario.oficina)
+	'      If ooficinaBL.hayErr Then Throw ooficinaBL.Err
+
+	'			Session.Clear()
+	'			Session("USERID") = ousuario.userid
+	'			Session("NAME") = ousuario.nombre
+	'			Session("FOLIO") = ousuario.folio
+	'			Session("EMAIL") = ousuario.email
+	'			Session("OFICINA") = ousuario.oficina
+	'			Session("PERFIL") = ousuario.perfil
+	'			Session("REGIONALES") = ousuario.id_regi
+	'			Session("DIAS_PASS") = DateDiff(DateInterval.Day, ousuario.fec_pass, Now)
+	'			Session("OFICINAS") = ousuario.oficinas
+	'			Session("WORKDATE") = ooficina.fec_oper
+
+	'      Bitacora("USR.- Log in (NUVE) ADS.", Request.ServerVariables("REMOTE_ADDR"), ousuario.userid)
+	'      breturn = True
+	'    Catch ex As Exception
+	'      BitacoraError(ex, CType(Session("USERID"), String), Request.ServerVariables("REMOTE_ADDR"))
+	'      ModelState.AddModelError("", "Ocurrio un error")
+	'      breturn = False
+	'    Finally
+	'      If ooficinaBL IsNot Nothing Then ooficinaBL.Dispose()
+	'      If ooficinaBL IsNot Nothing Then ooficinaBL = Nothing
+	'      If ooficina IsNot Nothing Then ooficina = Nothing
+	'    End Try
+	'    Return breturn
+	'  End Function
+
+	'  Private Function isIPAdmitida() As Boolean
+	'    If Request.ServerVariables("REMOTE_ADDR").IndexOf("10.212.78") > -1 Then
+	'      Return True
+	'    Else
+	'      Dim ipdr As New Negocio.catalogosBL.ipaddrBL()
+	'      Dim ips = ipdr.Selectipaddr
+	'      If ipdr.hayErr Then Throw ipdr.Err
+
+	'      Dim IPsAdmitidas() As String = ips.ElementAt(0).ip_pool.Trim.Split(",")
+	'      Dim RemoteAddress As String = Request.ServerVariables("REMOTE_ADDR")
+
+	'      For i As Integer = 0 To IPsAdmitidas.GetUpperBound(0)
+	'        Dim ipAdmit As String = IPsAdmitidas(i)
+	'        Dim lnFoundAsterisco As Integer = -1
+
+	'        lnFoundAsterisco = ipAdmit.IndexOf("*")
+
+	'        If lnFoundAsterisco > -1 Then
+	'          ipAdmit = ipAdmit.Substring(0, lnFoundAsterisco)
+	'          If RemoteAddress.IndexOf(ipAdmit) > -1 Then
+	'            Return True
+	'          End If
+	'        End If
+	'        If ipAdmit = RemoteAddress Then
+	'          Return True
+	'        End If
+	'      Next
+	'    End If
+	'    Return False
+	'  End Function
+
+	'  Private Function RedirectToLocal(ByVal returnUrl As String) As ActionResult
+	'    If Url.IsLocalUrl(returnUrl) Then
+	'      Return Redirect(returnUrl)
+	'    Else
+	'      Return RedirectToAction("welcome", "Home")
+	'    End If
+	'  End Function
+	'#End Region
+
+End Class

@@ -6,10 +6,10 @@
     <meta charset="utf-8" />
     <title>@ViewData("Title")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=11"> 
     <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/Images/favicon.ico" type="image/x-icon">
-
-    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/Images/favicon.ico" type="image/x-icon">
     
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -23,7 +23,6 @@
     @Scripts.Render("~/bundles/validation")
   
     @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/datetimepicker")
     @Styles.Render("~/Content/flexbox")
     @Styles.Render("~/Content/datatables")
@@ -31,13 +30,14 @@
     @Styles.Render("~/Content/jquery-ui")
     @Styles.Render("~/Content/responsiveDataTable")
     @Styles.Render("~/Content/jqueryLoading")
-
+     @Styles.Render("~/Content/css")
+   <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
   </head>
   <body>
     @code
       Html.RenderPartial("_Header")      
     End Code
-    <div class="container-fluid">
+    <div class="container-fluid fix">
       @RenderSection("featured", required:=false)
       <div class="starter-template">
         @code

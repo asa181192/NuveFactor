@@ -1,0 +1,115 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+
+Public Class IndicadoresDAL
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos Consulta"
+	Public Function ConsultaIndicadorDAL(fechaMes As String, fechaAnio As String, ByRef model As List(Of FinancieroEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+
+				Dim values = (From p In context.indicadores Where p.fecha.Value.Year = fechaAnio AndAlso p.fecha.Value.Month = fechaMes).ToList()
+
+
+				For Each item As indicadores In values
+					Dim p = New FinancieroEntidad
+
+					p.fecha = item.fecha.Value.ToShortDateString()
+					p.cetes28 = item.cetes28
+					p.cetes91 = item.cetes91
+					p.cpp = item.cpp
+					p.fondeo = item.fondeo
+					p.fondeousd = item.fondeousd
+					p.libor = item.libor
+					p.libor12m = item.libor12m
+					p.libor3m = item.libor3m
+					p.libor6m = item.libor6m
+					p.tiie = item.tiie
+					p.tiie91 = item.tiie91
+					p.tiip = item.tiip
+
+					model.Add(p)
+				Next
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaIndicadorDetalleDAL(fecha As String, ByRef model As indicadores) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model = (From p In context.indicadores
+									Where p.fecha = fecha).SingleOrDefault()
+
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+#End Region
+
+#Region "Metodos Transaccionales"
+	Public Function AltaIndicador(model As indicadores) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+			Try
+				context.indicadores.Add(model)
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarIndicador(model As indicadores) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				context.indicadores.Attach(model)
+				context.Entry(model).State = EntityState.Modified
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+#End Region
+
+End Class

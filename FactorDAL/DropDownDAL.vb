@@ -1,0 +1,93 @@
+﻿Imports FactorEntidades
+
+Public Class DropDownDAL
+	Public Function ConsultaPromotorDAL(promprod As Boolean, ByRef model As List(Of DropDownEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				If promprod Then
+					model = (From p In context.promotor Where p.interno = True And p.tipopromo = 2 Select New DropDownEntidad With {.nombre = p.nombre, .clave = p.promotor1}).ToList()
+				Else
+					model = (From p In context.promotor Select New DropDownEntidad With {.nombre = p.nombre, .clave = p.promotor1}).ToList()
+				End If
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ConsultaGrupoEmpresarialDAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				model = (From p In context.grupos Select New DropDownEntidad With {.nombre = p.nombre, .clave = p.clave}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ConsultaCiudadesDAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				model = (From p In context.ciudades Select New DropDownEntidad With {.nombre = p.ciudad, .clave = p.clave}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ConsultaEstadosDAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				model = (From p In context.estadosdemexico Select New DropDownEntidad With {.nombre = p.estado, .clave = p.num}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ConsultaPerfilesDAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				model = (From p In context.perfil Where p.activo = True Select New DropDownEntidad With {.nombre = p.nombre, .clave = p.perfil1}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+End Class

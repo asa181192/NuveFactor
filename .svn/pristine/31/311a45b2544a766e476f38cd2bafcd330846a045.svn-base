@@ -1,0 +1,42 @@
+﻿Imports FactorEntidades
+Imports nuve.Models
+
+Namespace nuve
+	Public Class BusquedaController
+		Inherits BaseController
+
+
+#Region "GET"
+		<CustomAuthorize()>
+		<HttpGet>
+		Public Function BusquedaGlobal(BusquedaTxt As String) As ActionResult
+
+			Dim resultado = New Result()
+			Dim manager = New FactorBAL.Manager()
+			Dim model = New ModeloBusqueda()
+			Dim listaClientes = New List(Of ClienteEntidad)
+			Dim listaProveedor = New List(Of ProveedorEntidad)
+			Dim listaComprador = New List(Of ProveedorEntidad)
+			Dim listaPromotor = New List(Of PromotorEntidad)
+
+			resultado = manager.BusquedaGlobalBAL(BusquedaTxt, listaClientes, listaProveedor, listaComprador, listaPromotor)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				model.ListaClientes = listaClientes
+				model.ListaProveedor = listaProveedor
+				model.ListaComprador = listaComprador
+				model.ListaPromotor = listaPromotor
+
+				Return View(model)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+			End If
+
+		End Function
+
+#End Region
+
+
+	End Class
+End Namespace
