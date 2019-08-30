@@ -1,0 +1,43 @@
+Imports System
+Imports System.Collections.Generic
+Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports System.Data.Entity.Spatial
+
+<Table("Aforo")>
+Partial Public Class Aforo
+    <Key>
+    Public Property Idaforo As Integer
+
+    Public Property contrato As Integer?
+
+    Public Property id As Integer?
+
+    Public Property identidad As Integer?
+
+    Public Property fecha As Date?
+
+    <Column(TypeName:="numeric")>
+    Public Property cobrado As Decimal?
+
+    <Column("aforo", TypeName:="numeric")>
+    Public Property aforo1 As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property descto As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property bonifica As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property pago As Decimal?
+
+    <Column(TypeName:="numeric")>
+    Public Property pgeaforo As Decimal?
+
+    Public Property cobranza As Integer?
+
+    Public Property cancelado As Integer?
+
+    Public Property idpago As Integer?
+End Class

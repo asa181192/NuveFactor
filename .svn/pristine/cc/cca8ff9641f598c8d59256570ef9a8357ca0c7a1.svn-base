@@ -1,0 +1,304 @@
+﻿//Inicializacion de variables
+var tabla;
+var title;
+var data =
+{
+    inicializarTabla: function (contrato, producto) {
+
+        tabla = $('#table')
+            .DataTable({
+                ajax: {
+                    "url": "../Catalogos/ObtenerAnexo/", // url del controlador a consultar 
+                    "Type": "GET",
+                    "data": function (d) { d.Contrato = contrato, d.Producto = producto }, // parametros a enviar al controlador 
+                    "dataSrc": function (json) {
+                        if (typeof (json.Mensaje) != 'undefined') {
+                            mensajemodal(json.Mensaje, 'warning', json.titulo);
+                            return {};
+                        } else {
+                            return json.Results;
+                        }
+                    }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
+                },
+                paging: true, // permite la paginacion en la tabla .  
+                lengthMenu: [10, 20],
+                ordering: false, // genera ordenamiento de columnas 
+                order: [[0, 'desc']], // ordena la primer columna
+                responsive: true, // realiza la tabla responsiva en moviles
+                destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
+                aoColumns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
+           {
+               data: "deudor", "width": "100px"
+           },
+           {
+               data: "nombre"
+           },
+           {
+               data: "activo", "render": function (data) {
+                   return data == 1 ? 'Activo' : 'Bloqueado'
+               }, "width": "100px"
+           },
+           {
+               data: function (data, type, dataToSet) {
+                   return '<a class="popup" href="../Catalogos/GuardarAnexo?deudor=' + data.deudor + '&producto=' + $("#Producto").val() + '&contrato=' + $("#Anexo_contrato").val() + '" add=' + data.deudor + ' ><button type="button" class="btn glyphicon glyphicon-search"></button></a>';
+               }, "width": "50px"
+           }
+                ],
+                "columnDefs": [
+                    { "className": "dt-center", "targets": [0, 2, 3] }
+                    //,                    { "targets": [4], "visible": false }
+                ]
+            });
+
+
+    }, //Funcion que inicializa la tabla 
+    openPopUp: function (pageUrl) {
+        var $pageContent = $('<div>');
+
+        $pageContent.load(pageUrl, function () {
+
+            $pageContent.dialog({
+                width: '400', // overcomes width:'auto' and maxWidth bug
+                height: 'auto',
+                modal: true,
+                show: 'fade',
+                title: title == null ? "Nuevo Registro" :"Actualizar Registro",
+                hide: 'fade',
+                fluid: true, //new option
+                resizable: true,
+                create: function (event, ui) { //permite inicializar parametros o campos dentro de el popup creado
+
+                    $("#ac_fechaDataTime").datetimepicker({
+                        format: 'DD/MM/YYYY',
+                        locale: 'es',
+                        widgetPositioning: {
+                            horizontal: 'left',
+                            vertical: 'top'
+                        }
+                    });
+                    $("#ac_fechareDataTime").datetimepicker({
+                        format: 'DD/MM/YYYY',
+                        locale: 'es',
+                        widgetPositioning: {
+                            horizontal: 'left',
+                            vertical: 'top'
+                        }
+                    });
+
+                    $("#popupForm").find(':input').each(function () {
+
+                        var value = $(this).val()
+                        $(this).val(value.trim())
+
+                    });
+
+                    $('#Anexo_limite').mask('000,000,000,000.00', { reverse: true });
+                    $('#Anexo_sobretasa').mask('000.00', { reverse: true });
+
+                    //permite reiniciar el validado de informacion al despelgar una ventana modal
+                    var form = $("#popupForm").closest("form");
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+
+                    $('#Anexo_deudor').rules().remote.complete = function (xhr) {
+                        if (xhr.status == 200) {
+                            if (xhr.getResponseHeader('X-Nombre') != undefined )
+                            {
+                                $("#Comprador_nombre").val(xhr.getResponseHeader('X-Nombre'))
+                            }
+                           
+                        }
+                    };
+
+                    // Validacion de tool tip 
+                    $pageContent.tooltip({
+                        items: ".input-validation-error",
+                        content: function () {
+                            return $("[data-valmsg-for='" + $(this).attr('id').replace("_", ".") + "']").text();
+                        }
+                    });
+                }
+                ,
+                close: function () {
+                    $pageContent.dialog('destroy').remove();
+                }
+            });
+
+
+        });
+
+        $pageContent.on('submit',
+           '#popupForm',
+           function (e) {
+               var url = $('#popupForm')[0].action;
+               $.ajax({
+                   type: "POST",
+                   url: url,
+                   data: $('#popupForm').serialize(),
+                   beforeSend: function () {
+                       $.Loading(true);
+                   },
+                   success: function (data) {
+                       if (data.Result) {
+                           mensajemodal(data.Text, 'success');
+                           if (data.Tipo == 2) {
+                               tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                           }
+                       } else {
+                           mensajemodal(data.Text, 'warning');
+                       }
+                       $pageContent.dialog('close');
+                   },
+                   error: function () {
+                       mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+
+                   },
+                   complete: function () {
+                       $.Loading(false);
+                   }
+               });
+
+               e.preventDefault();
+           });
+    },
+    fluidDialog: function () {
+        var $visible = $(".ui-dialog:visible");
+        // each open dialog
+        $visible.each(function () {
+            var $this = $(this);
+            var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+            // if fluid option == true
+            if (dialog.options.fluid) {
+                var wWidth = $(window).width();
+                // check window width against dialog width
+                if (wWidth < (parseInt(dialog.options.maxWidth) + 50)) {
+                    // keep dialog from filling entire screen
+                    $this.css("max-width", "90%");
+                } else {
+                    // fix maxWidth bug
+                    $this.css("max-width", dialog.options.maxWidth + "px");
+                }
+                //reposition dialog
+                dialog.option("position", dialog.options.position);
+            }
+        });
+
+    },
+    validacionCampos: function () {
+
+        jQuery.validator.setDefaults({
+            onkeyup: function () {
+                var originalKeyUp = $.validator.defaults.onkeyup;
+                var customKeyUp = function (element, event) {
+                    if ($("#Anexo_deudor")[0] === element) {
+                        return false;
+                    }
+                    else {
+                        return originalKeyUp.call(this, element, event);
+                    }
+                }
+                return customKeyUp;
+            }(),
+            ignore: ""
+        });
+
+        jQuery.validator.addMethod(
+            'date',
+            function (value, element, params) {
+                if (this.optional(element)) {
+                    return true;
+                };
+                var result = false;
+                try {
+                    $.datepicker.parseDate("dd/mm/yy", value);
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                return result;
+            },
+            ''
+        );
+    },// validacion de campos 
+    eventos: function () {
+        //tabla.on('click', 'a.cancelar', function (e) {
+        //    $('#dialog-confirm').text("Se dara de baja el contrato : " + $(this).attr("contrato"))
+        //    var url = $(this).attr("href")
+        //    $('#dialog-confirm').dialog({
+        //        resizable: true,
+        //        height: "auto",
+        //        title: "Baja de contrato",
+        //        width: 400,
+        //        modal: true,
+        //        buttons: {
+        //            "Aceptar": function () {
+        //                data.ajax(url, "POST", null)
+        //                $(this).dialog('close')
+        //            },
+        //            "Cancelar": function () {
+        //                $(this).dialog('close')
+        //            }
+        //        }
+        //    })
+        //    e.preventDefault()
+        //});
+        //tabla.on('click', 'tr', function () {
+        //    if ($(this).hasClass('selected')) {
+        //        $(this).removeClass('selected');
+        //        btnAnexo.addClass("disabled")
+        //    }
+        //    else {
+        //        tabla.$('tr.selected').removeClass('selected');
+        //        $(this).addClass('selected');
+        //        btnAnexo.removeClass('disabled');
+        //        btnAnexo.attr("href", btnAnexoLiga.replace("_contrato", tabla.row('.selected').data()["Contratos"].contrato).replace("_producto", tabla.row('.selected').data()["Producto"].id))
+        //    }
+        //});
+    },
+    ajax: function (url, tipo, data) {
+        $.ajax({
+            type: tipo,
+            url: url,
+            beforeSend: function () {
+                $.Loading(true);
+            },
+            success: function (data) {
+                if (data.Result) {
+                    mensajemodal(data.Text, data.color, data.titulo);
+                    if (tabla !== undefined) {
+                        tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                    }
+                } else {
+                    mensajemodal(data.Text, data.color, data.titulo);
+                }
+            },
+            error: function () {
+                mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+            },
+            complete: function () {
+                $.Loading(false);
+            }
+
+        });
+    }
+}
+
+$(document).ready(function (e) {
+    //Esto nos permite Abrir modal dentro de modal . 
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+
+    data.inicializarTabla($("#Anexo_contrato").val(), $("#Producto").val())
+    data.validacionCampos()
+    $("#tableContainer").on('click', 'a.popup',
+       function (e) {
+           e.preventDefault();
+           title = $(this).attr("add") // set the title for popup
+           //nombre = $(this).attr("nombre")
+           data.openPopUp($(this).attr('href'));
+
+       });
+});

@@ -1,0 +1,49 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+
+Namespace nuve
+
+  Public Class ContabilidadController
+    Inherits System.Web.Mvc.Controller
+
+
+#Region "Menu"
+    <CustomAuthorize>
+              <HttpGet>
+    Function Index() As ViewResult
+
+      Dim model As New Helpers.Menu
+
+      model.sMenu = "<div class=""BoxFlex"" id="""" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<label>Regresar</label>"
+      model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexinformes"" >"
+      'model.sMenu &= "<div class=""BoxFlexShadow"">"
+      'model.sMenu &= "<p>Informes</p>"
+      ''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      'model.sMenu &= "</div>"
+      'model.sMenu &= "</div>"
+
+
+      Return View(model)
+    End Function
+
+#End Region
+
+
+    '
+    ' GET: /Contabilidad
+
+    'Function Index() As ActionResult
+    '    Return View()
+    'End Function
+
+  End Class
+
+End Namespace

@@ -1,0 +1,41 @@
+﻿$(document).ready(function(e) {
+
+    $('#dvflexCatalogos').click(function() {
+        window.location.href = '../Catalogos/Index';
+    });
+
+    $('#dvflexAdministracion').click(function () {
+        window.location.href = '../Admin/Index';
+    });
+
+      $('#dvflexCuentasBancos').click(function () {
+        window.location.href = '../Tesoreria/Index';
+    });
+
+    $('#dvflexOperaciones').click(function () {
+      window.location.href = '../Operaciones/Index';
+    });
+
+    $('#dvflexPromocion').click(function () {
+      window.location.href = '../Promocion/Index';
+    });
+
+    $('#dvflexConta').click(function () {
+      window.location.href = '../Contabilidad/Index';
+    });
+
+    $('#dvflexPortal').click(function () {
+      window.location.href = '../Portal/Index';
+    });
+
+    
+    //alert('Esto que lo escriba en la 1ª línea, \n y esto en la 2ª')
+    mensajemodal('Esta version del sistema se encuentra en construccion,los estilos presentados aqui'+
+        ' asi como interfaces podrian cambiar en su version final , cualquier error encontrado favor de reportarlo .'+ 
+        ' <br/><br/>Actualizaciones (19/07/2018) : ' +
+        ' <br/><br/> -Se creo Proceso de Control de Riesgo para la parte de clientes . ' +
+        ' <br/> -Se corrigieron errores en Paridad Cambiaria y Indicadores Financieros .  ' +
+        ' <br/> -Ahora el Tipo de Garantia y Codigo de Garantia se encuentra dentro de Administracion .'+
+        ' <br/><br/> Revision 45'
+        , 'info');
+});

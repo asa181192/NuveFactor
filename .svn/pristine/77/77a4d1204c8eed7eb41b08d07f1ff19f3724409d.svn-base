@@ -1,0 +1,160 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+Imports Microsoft.Reporting.WebForms
+Imports System.Reflection
+Imports System.Globalization
+Imports FactorBAL
+
+
+Namespace nuve
+    Public Class reportesController
+        Inherits Controller
+#Region "Views"
+
+        <HttpGet>
+        Function Reportes() As ViewResult
+            Dim model = New Helpers.Menu
+
+            model.sMenu = "<div class=""BoxFlex"" id="""" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<label>Regresar</label>"
+            model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            model.sMenu &= "<div class=""BoxFlex"" id=""dvflexVencimientoNAFIN"" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<p>Vencimientos Fondeo NAFIN</p>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            Return View(model)
+        End Function
+
+        <HttpGet>
+        Function ReporteVNAFIN() As ViewResult
+            Return View()
+        End Function
+
+
+        <HttpGet>
+        Function ReportesDeposito() As ViewResult
+            Dim model = New Reportes.ReporteDepModel
+            model.CargaControles()
+            Return View(model)
+        End Function
+
+
+#End Region
+
+#Region "Get"
+
+#Region "Vencimientos Nafin"
+
+        Public Function ReporteVencimientosNAFIN(moneda As String, tipo As String, inicio1 As String, fin1 As String) As ActionResult
+            Dim localReport = New Microsoft.Reporting.WebForms.LocalReport()
+            Dim inicio As Date
+            Dim fin As Date
+
+
+
+            If inicio1 Is Nothing Or inicio1 = "" Then
+                inicio = Today.Date
+            Else
+                inicio = Date.Parse(inicio1)
+            End If
+
+            If fin1 Is Nothing Or fin1 = "" Then
+                fin = Today.Date
+            Else
+                fin = Date.Parse(fin1)
+            End If
+
+            Dim a = New Result(False)
+            Dim resultado = New Result
+            Dim bs = New FactorBAL.ReportesBAL()
+            Dim vencimientos = New sp_vencimientosnafin
+
+            resultado = bs.ReporteVencimientosNafinBAL(moneda, tipo, inicio, fin, vencimientos)
+            localReport.ReportPath = Server.MapPath("~/Reports/VencimientosFondeoNafin.rdlc")
+
+            Dim reportDataSource = New ReportDataSource()
+            reportDataSource.Name = "vencimientosNafin"
+            reportDataSource.Value = vencimientos.list
+
+            localReport.DataSources.Clear()
+
+            localReport.DataSources.Add(reportDataSource)
+
+            If resultado.Ok And resultado IsNot Nothing Then
+
+                Dim reportType As String = "PDF"
+                Dim mimeType As String = ""
+                Dim encoding As String = ""
+                Dim fileNameExtension As String = ""
+
+                Dim Waring() As Warning = Nothing   'Array
+                Dim Streams() As String = Nothing   'Array 
+                Dim renderedBytes() As Byte 'Array
+
+                Dim list(0) As ReportParameter
+                list(0) = New ReportParameter("Usuario", Session("USERID").ToString())
+
+                localReport.SetParameters(list)
+                renderedBytes = localReport.Render(reportType, Nothing, mimeType, encoding, fileNameExtension, Streams, Waring)
+                If Request.Cookies("reporte") IsNot Nothing Then
+                    Request.Cookies("reporte").Value = "OK"
+                End If
+                Response.SetCookie(Request.Cookies("reporte"))
+                Return File(renderedBytes, "pdf", "VencimientosFondeoNafin.pdf")
+
+            Else
+                Return Content("<script language='javascript' type='text/javascript'>alert('Error al generar el PDF favor de volver a consultar !!\n\nClick Aceptar para volver'); window.location.href ='../Catalogos/ControlRiesgo?clienteId=")
+                '+ idcliente.ToString() + "&nombre=" + nombre + "';</script>")
+
+            End If
+
+        End Function
+
+#End Region
+
+#Region "Depositos"
+
+        <HttpGet>
+        Public Function ConsultaDepositos(fecha As String, idctabanco As Integer) As ActionResult
+            Dim jresult
+            Dim response
+            Dim consulta = New ReportesBAL()
+            Dim model As New List(Of ReporteDepositos)
+
+            response = consulta.ConsultaDepositosBAL(fecha, idctabanco, model)
+
+            If response IsNot Nothing And response.ok Then
+                jresult = Json(New With {Key .Results = model}, JsonRequestBehavior.AllowGet)
+                jresult.MaxJsonLength = Integer.MaxValue
+            Else
+                response.Mensaje = "Ocurrio un error al consultar la informacion"
+                jresult = Json(New With {Key .Mensaje = "ERR!!" + response.Mensaje + "!!" + response.Detalle}, JsonRequestBehavior.AllowGet)
+            End If
+
+            Return jresult
+        End Function
+
+#End Region
+
+#End Region
+
+#Region "Post"
+
+#End Region
+
+
+
+
+
+    End Class
+
+End Namespace
+
+

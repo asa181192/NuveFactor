@@ -1,0 +1,188 @@
+﻿Imports FactorEntidades
+Imports System.Transactions
+
+Public Class RegistroCuentasBancariasDAL
+
+#Region "Consultas"
+
+    Function ConsultaCuentasBancariasDAL(deudor As Integer, identidad As Integer, model As List(Of ctaproveEntidad)) As Result
+        Dim respuesta = New Result(False)
+    Dim context As New FactorContext
+    Dim tabla = context
+
+    Try
+
+
+      Dim values = (From a In context.ctaprove
+                Join b In context.webbancos On a.cuentaid Equals b.cuentaid
+                Where a.identidad = identidad And a.deudor = deudor
+                Select a, b Select New ctaproveEntidad With {.id = a.id, .cuenta = a.cuenta, .moneda = a.moneda, .activo = a.activo, .nombre = b.shortname, .numrec = a.numrec}).ToList()
+
+      For Each item As ctaproveEntidad In values
+
+        Dim a = New ctaproveEntidad
+
+        a.id = item.id
+        a.cuenta = item.cuenta.Trim()
+        a.nombre = item.nombre
+        a.divisa = IIf(item.moneda = 1, "M.N", "DLLS")
+        a.status = IIf(item.activo, "Activo", "Inactivo")
+        a.numrec = item.numrec
+
+        model.Add(a)
+      Next
+
+      respuesta.Ok = True
+
+    Catch ex As Exception
+      respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return respuesta
+  End Function
+
+  Function consultaCuentaBancariaDetalleDAL(numrec As Integer, ByRef model As ctaproveEntidad) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+
+        model = (From a In context.ctaprove
+                 Where a.numrec = numrec
+                 Select a
+                 Select New ctaproveEntidad With {
+                     .identidad = a.identidad, .id = a.id, .deudor = a.deudor, .cuenta = a.cuenta,
+                     .cuentaid = a.cuentaid, .moneda = a.moneda, .activo = a.activo,
+                     .plaza = a.plaza, .sucursal = a.sucursal, .clabe = a.clabe, .garantia = a.garantia,
+                     .void = a.void, .updaterec = a.updaterec, .modifica = a.modifica}).SingleOrDefault()
+
+        If model IsNot Nothing Then
+          respuesta.Ok = True
+        End If
+
+      Catch ex As Exception
+        respuesta.Detalle = ex.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+  Function consultaDeudorDAL(deudor As Integer, identidad As Integer, ByRef model As ctaproveEntidad) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        If identidad = 1 Then
+          model = (From a In context.clientes
+                   Where a.cliente = deudor
+                   Select a Select New ctaproveEntidad With {.nombre = a.nombre}).SingleOrDefault()
+
+        Else
+          model = (From a In context.proveedor
+                   Where a.deudor = deudor
+                   Select a Select New ctaproveEntidad With {.nombre = a.nombre}).SingleOrDefault()
+
+        End If
+
+        respuesta.Ok = True
+
+      Catch ex As Exception
+        respuesta.Detalle = ex.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+
+  End Function
+
+#End Region
+
+#Region "Metodos transaccionales"
+
+  Function altaCuentasBancariasDAL(model As ctaproveEntidad) As Result
+
+    Dim respuesta = New Result(False)
+
+    Using scope As New TransactionScope
+      Using context As New FactorContext
+
+        Dim ctas = New ctaprove
+
+        ctas.identidad = model.identidad
+        ctas.id = model.id
+        ctas.deudor = model.deudor
+        ctas.cuentaid = model.cuentaid
+        ctas.cuenta = model.cuenta
+        ctas.moneda = model.moneda
+        ctas.activo = model.activo
+        ctas.plaza = model.plaza
+        ctas.sucursal = model.sucursal
+        ctas.clabe = model.clabe
+        ctas.garantia = model.garantia
+        ctas.void = 0
+        ctas.updaterec = ""
+        ctas.modifica = 0
+
+        context.ctaprove.Add(ctas)
+
+        Try
+          context.SaveChanges()
+          respuesta.Ok = True
+          scope.Complete()
+
+        Catch ex As Exception
+          respuesta.Detalle = ex.InnerException.Message
+
+        End Try
+
+      End Using
+    End Using
+
+    Return respuesta
+
+  End Function
+
+  Function actualizarCuentaBancariaDAL(model As ctaproveEntidad) As Result
+
+    Dim respuesta = New Result(False)
+
+    Using scope As New TransactionScope
+
+      Using context As New FactorContext
+
+        'Try
+        Dim ctas = (From a In context.ctaprove
+                    Where a.numrec = model.numrec
+                    Select a).SingleOrDefault()
+
+        ctas.cuenta = model.cuenta
+        ctas.moneda = model.moneda
+        ctas.sucursal = model.sucursal
+        ctas.cuentaid = model.cuentaid
+        ctas.plaza = model.plaza
+        ctas.clabe = model.clabe
+        ctas.activo = model.activo
+        ctas.garantia = model.garantia
+
+
+        context.SaveChanges()
+        respuesta.Ok = True
+        scope.Complete()
+
+      End Using
+
+    End Using
+
+    Return respuesta
+
+  End Function
+
+#End Region
+
+End Class

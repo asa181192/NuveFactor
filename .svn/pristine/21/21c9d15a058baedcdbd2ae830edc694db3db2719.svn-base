@@ -1,0 +1,22 @@
+﻿Public Class UsuarioWebEntidad
+	Public Property fec_alta As Date?
+	Public Property folio As Integer
+	Public Property username As String
+	Public Property ca As String
+	Public Property pw As Integer?
+	Public Property sessionid As Integer?
+	Public Property listpass As String
+	Public Property nombre As String
+	Public Property id As Integer?
+	Public Property identidad As Integer?
+	Public Property tipo As Integer?
+	Public Property expires As Date?
+	Public Property activo As Boolean
+	Public Property email As String
+	Public Property asignada As Boolean
+	Public Property insession As Boolean
+	Public Property lastlog As Date?
+	Public Property notas As String
+	Public Property void As Boolean
+	Public Property updaterec As String
+End Class

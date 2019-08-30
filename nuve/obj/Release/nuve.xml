@@ -6,7 +6,59 @@ nuve
 </name>
 </assembly>
 <members>
-<member name="P:nuve.My.Resources.Resources.ResourceManager">
+<member name="T:nuve.FactorDataSet.SP_ReporteControlRiesgoDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:nuve.FactorDataSet.SP_ReporteControlRiesgoRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:nuve.FactorDataSet.SP_ReporteControlRiesgoRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:nuve.FactorDataSet">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:nuve.FactorDataSetTableAdapters.SP_ReporteControlRiesgoTableAdapter">
+	<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member><member name="M:nuve.FactorDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(nuve.FactorDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Update rows in top-down order.
+</summary>
+</member><member name="M:nuve.FactorDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(nuve.FactorDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Insert rows in top-down order.
+</summary>
+</member><member name="M:nuve.FactorDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(nuve.FactorDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Delete rows in bottom-up order.
+</summary>
+</member><member name="M:nuve.FactorDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+	<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member><member name="M:nuve.FactorDataSetTableAdapters.TableAdapterManager.UpdateAll(nuve.FactorDataSet)">
+	<summary>
+Update all changes to the dataset.
+</summary>
+</member><member name="T:nuve.FactorDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+	<summary>
+Update Order Option
+</summary>
+</member><member name="T:nuve.FactorDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+	<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member><member name="T:nuve.FactorDataSetTableAdapters.TableAdapterManager">
+	<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member><member name="P:nuve.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>

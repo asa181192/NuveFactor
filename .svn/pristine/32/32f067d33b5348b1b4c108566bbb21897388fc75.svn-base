@@ -1,0 +1,66 @@
+﻿Imports FactorEntidades
+
+Public Class ParametrosDAL
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+
+
+	Function ConsultaParametrosDAL(ByRef webcontrol As webcontrol) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				webcontrol = context.webcontrol.FirstOrDefault()
+
+				If webcontrol IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function ActualizarParametrosDAL(model As webcontrol) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				Dim modelfn = context.webcontrol.FirstOrDefault()
+
+				If modelfn IsNot Nothing Then
+
+					modelfn.tasa = model.tasa
+					modelfn.tasadlls = model.tasadlls
+					modelfn.mailserver = model.mailserver
+					modelfn.dominio = model.dominio
+					modelfn.timecte = model.timecte
+					modelfn.timeend = model.timeend
+					modelfn.online = model.online
+
+					context.SaveChanges()
+					respuesta.Ok = True
+				End If
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+#End Region
+End Class

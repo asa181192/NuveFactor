@@ -1,0 +1,41 @@
+﻿
+
+Public Class ctaproveEntidad
+
+    Public Property numrec As Integer
+
+    Public Property identidad As Integer?
+
+    Public Property id As Integer?
+
+    Public Property deudor As Integer?
+
+    Public Property cuentaid As Integer?
+
+    Public Property cuenta As String
+
+    Public Property moneda As Integer?
+
+    Public Property activo As Boolean
+
+    Public Property status As String
+
+    Public Property plaza As String
+
+    Public Property sucursal As String
+
+    Public Property clabe As String
+
+    Public Property garantia As Boolean
+
+    Public Property void As Boolean
+
+    Public Property updaterec As String
+
+    Public Property modifica As Boolean
+
+    Public Property nombre As String
+    Public Property divisa As String
+    Public Property statust As String
+
+End Class

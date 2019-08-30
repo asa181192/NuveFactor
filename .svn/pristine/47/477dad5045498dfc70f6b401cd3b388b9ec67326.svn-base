@@ -1,0 +1,370 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Transactions
+
+Public Class CobranzaDAL
+
+#Region "Metodos de Consulta"
+
+  Public Function consultaAdeudos(ByRef model As List(Of adeudosEntidad)) As Result
+
+    Dim Respuesta = New Result(False)
+    Dim context As New FactorContext
+    '
+    Try
+      Dim values = (From a In context.adeudos
+                    Join b In context.clientes
+                    On a.id Equals b.cliente
+                    Where a.saldo > 0 AndAlso a.identidad = 1
+                    Order By a.moneda, a.contrato
+                    Select New adeudosEntidad() With {.docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = If(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.adeudos
+                      Join b In context.proveedor
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 2
+                      Order By a.moneda, a.contrato
+                      Select New adeudosEntidad() With {.docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = If(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.adeudos
+                      Join b In context.comprador
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 3
+                      Order By a.moneda, a.contrato
+                      Select New adeudosEntidad() With {.docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = If(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).ToList()
+
+      For Each item As adeudosEntidad In values
+
+        Dim a = New adeudosEntidad
+
+
+        a.Adeudo = item.tipo + "-" + item.docto.Value.ToString("0000000")
+        a.docto = item.docto
+        a.tipo = item.tipo
+        a.serie = item.serie
+        a.contrato = item.contrato
+        a.Nombre = item.Nombre
+        a.fec_alta = item.fec_alta
+        a.monto = item.monto
+        a.saldo = item.saldo
+        a.moneda = item.moneda
+        a.monedaStr = item.monedaStr
+        a.idadeudo = item.idadeudo
+
+        model.Add(a)
+      Next
+
+      Respuesta.Ok = True
+
+    Catch ex As Exception
+      Respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return Respuesta
+
+  End Function
+
+  Function ConsultaAdeudosDetalleDAL(idadeudo As Integer, ByRef model As adeudos) As Result
+
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+
+      Try
+
+        model = (From a In context.adeudos
+                  Where a.idadeudo = idadeudo).SingleOrDefault()
+        If model IsNot Nothing Then
+          respuesta.Ok = True
+        End If
+
+      Catch e As Exception
+        respuesta.Detalle = e.Message
+      End Try
+
+    End Using
+    Return respuesta
+  End Function
+
+  Function ActualizarAdeudoDAL(ByRef model As adeudosEntidad) As Result
+
+    Dim respuesta = New Result(False)
+
+    Using scope As New TransactionScope
+
+      Using context As New FactorContext()
+
+        Try
+          'Lista de Lista permite almacenar multiples consulta al servicio t24 para generar un solo xml 
+          Dim parameters = New List(Of SqlParameter)
+          parameters.Add(New SqlParameter("@idadeudo", model.idadeudo))
+          parameters.Add(New SqlParameter("@movto", model.movto))
+          parameters.Add(New SqlParameter("@concepto", model.concepto))
+          parameters.Add(New SqlParameter("@importe", model.saldo))
+
+          context.Database.SqlQuery(Of adeudosEntidad)("Exec [dbo].[SP_Pagoadeudo] " +
+                                            " @idadeudo, " +
+                                            " @movto, " +
+                                            " @concepto , " +
+                                            " @importe ", parameters.ToArray()).ToList()
+
+          respuesta.Ok = True
+          scope.Complete()
+
+        Catch e As Exception
+          respuesta.Detalle = e.Message
+
+        End Try
+
+      End Using
+
+    End Using
+
+    Return respuesta
+
+  End Function
+
+
+  Public Function consultaPagosadeudos(ByRef model As List(Of adeudosEntidad), dfecha As Date) As Result
+
+    Dim Respuesta = New Result(False)
+    Dim context As New FactorContext
+    '
+    Try
+      Dim values = (From a In context.pagosadeudos
+                    Join b In context.clientes
+                    On a.id Equals b.cliente
+                    Join c In context.adeudos
+                    On a.serie Equals c.serie And a.sisfol Equals c.sisfol
+      Where a.cancelado = 0 AndAlso a.identidad = 1 AndAlso a.fecha = dfecha
+                    Order By a.contrato
+                    Select New adeudosEntidad() With {.fecha = a.fecha, .referencia = a.referencia, .numrec = a.numrec, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .importe = a.importe, .moneda = c.moneda, .concepto = a.concepto,
+                      .monedaStr = If(c.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.pagosadeudos
+                      Join b In context.proveedor
+                      On a.id Equals b.deudor
+                     Join c In context.adeudos
+                    On a.serie Equals c.serie And a.sisfol Equals c.sisfol
+      Where a.cancelado = 0 AndAlso a.identidad = 2 AndAlso a.fecha = dfecha
+                      Order By a.contrato
+                      Select New adeudosEntidad() With {.fecha = a.fecha, .referencia = a.referencia, .numrec = a.numrec, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .importe = a.importe, .moneda = c.moneda, .concepto = a.concepto,
+                      .monedaStr = If(c.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.pagosadeudos
+                      Join b In context.comprador
+                      On a.id Equals b.deudor
+                     Join c In context.adeudos
+                    On a.serie Equals c.serie And a.sisfol Equals c.sisfol
+                    Where a.cancelado = 0 AndAlso a.identidad = 3 AndAlso a.fecha = dfecha
+                      Order By a.contrato
+                      Select New adeudosEntidad() With {.fecha = a.fecha, .referencia = a.referencia, .numrec = a.numrec, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .importe = a.importe, .moneda = c.moneda, .concepto = a.concepto,
+                      .monedaStr = If(c.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).ToList()
+
+      For Each item As adeudosEntidad In values
+
+        Dim a = New adeudosEntidad
+
+        a.Adeudo = item.tipo + "-" + item.docto.Value.ToString("0000000")
+        a.docto = item.docto
+        a.tipo = item.tipo
+        a.serie = item.serie
+        a.contrato = item.contrato
+        a.Nombre = item.Nombre
+        a.importe = item.importe
+        a.moneda = item.moneda
+        a.concepto = item.concepto
+        a.monedaStr = item.monedaStr
+        a.idadeudo = item.idadeudo
+        a.numrec = item.numrec
+        a.referencia = item.referencia
+        a.fecha = item.fecha
+
+        model.Add(a)
+      Next
+
+      Respuesta.Ok = True
+
+    Catch ex As Exception
+      Respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return Respuesta
+
+  End Function
+
+  Public Function consultaedocuenta(ByRef model As List(Of EdocuentaEntidad), fechaMes As String, fechaAnio As String, contrato As Integer) As Result
+
+    Dim Respuesta = New Result(False)
+    Dim context As New FactorContext
+    Dim fecini As String
+
+    fecini = "01-" + fechaMes + "-" + fechaAnio
+    Dim dt As DateTime = Convert.ToDateTime(fecini)
+    '
+    Try
+
+      Dim anticipo = 0
+      Dim cartera = 0
+      Dim santicipo = 0
+      Dim scartera = 0
+      Dim registro = 0
+
+      Dim previo = From res In (From a In context.edocuenta
+                   Where a.cancelado = 0 AndAlso a.contrato = contrato AndAlso a.fecha < dt
+                    Group a By keys = New With {Key a.contrato}
+                    Into gp = Group, asaldo = Sum(a.ant_debe - a.ant_haber), csaldo = Sum(a.car_debe - a.car_haber)
+                    Select New With {.contrato = keys.contrato, .ant_saldo = asaldo, .car_saldo = csaldo})
+                    Join b In context.contratos
+                    On b.contrato Equals res.contrato
+                    Join c In context.clientes
+                    On b.cliente Equals c.cliente
+                    Join p In context.producto
+                    On b.producto Equals p.id
+                    Select New With {b.contrato, b.linea, b.producto, .descripcion = p.producto1, b.moneda, res.ant_saldo, res.car_saldo, c.nombre}
+
+
+      For Each item In previo
+
+        anticipo = item.ant_saldo
+        cartera = item.car_saldo
+
+
+        If contrato > 0 Then
+
+          Dim b = New EdocuentaEntidad
+          b.contrato = item.contrato
+          b.concepto = "Saldos iniciales..."
+          b.nombre = item.nombre
+          b.descripcion = item.descripcion
+          b.producto = item.producto
+          b.linea = item.linea
+          b.moneda = item.moneda
+          b.monedastr = IIf(item.moneda = 1, "MXN", "USD")
+          b.ant_saldo = anticipo
+          b.car_saldo = cartera
+          'b.ant_debe = ""
+          'b.ant_haber = ""
+
+          'b.car_debe = ""
+          'b.car_haber = ""
+
+          model.Add(b)
+        End If
+      Next
+
+
+      'Dim previo = From a In context.edocuenta
+      '             Where a.cancelado = 0 AndAlso a.contrato = contrato AndAlso a.fecha < dt
+      '              Group a By keys = New With {Key a.contrato}
+      '              Into gp = Group, asaldo = Sum(a.ant_debe - a.ant_haber), csaldo = Sum(a.car_debe - a.car_haber)
+      '              Select New With {.contrato = keys.contrato, .ant_saldo = asaldo, .car_saldo = csaldo}
+
+
+
+      santicipo = anticipo
+      scartera = cartera
+
+      Dim values = (From a In context.edocuenta
+                    Join b In context.contratos
+                    On a.contrato Equals b.contrato
+                    Join c In context.clientes
+                    On b.cliente Equals c.cliente
+                    Join d In context.producto
+                    On b.producto Equals d.id
+            Where a.cancelado = 0 AndAlso a.contrato = contrato AndAlso a.fecha.Value.Year = fechaAnio AndAlso a.fecha.Value.Month = fechaMes
+                    Order By a.fecha Ascending
+                    Select New EdocuentaEntidad() With {.fecha = a.fecha, .contrato = a.contrato, .concepto = a.concepto, .ant_debe = a.ant_debe, .ant_haber = a.ant_haber, .ant_saldo = 0, .id = a.id, .car_debe = a.car_debe,
+                      .car_haber = a.car_haber, .car_saldo = 0, .nombre = c.nombre, .producto = b.producto, .descripcion = d.producto1, .linea = b.linea, .moneda = b.moneda,
+                      .monedastr = If(b.moneda = 1, "MXN", "USD")}).ToList()
+
+
+      For Each item As EdocuentaEntidad In values
+
+        'If registro = 0 And contrato > 0 Then
+        '  Dim b = New EdocuentaEntidad
+        '  b.contrato = item.contrato
+        '  b.concepto = "Saldos iniciales..."
+        '  b.nombre = item.nombre
+        '  b.descripcion = item.descripcion
+        '  b.producto = item.producto
+        '  b.linea = item.linea
+        '  b.moneda = item.moneda
+        '  b.monedastr = IIf(item.moneda = 1, "MXN", "USD")
+        '  b.ant_saldo = santicipo
+        '  b.car_saldo = scartera
+
+        '  'b.ant_debe = ""
+        '  'b.ant_haber = ""
+
+        '  'b.car_debe = ""
+        '  'b.car_haber = ""
+
+
+        '  registro = registro + 1
+        '  model.Add(b)
+        'End If
+
+        Dim a = New EdocuentaEntidad
+
+        a.fecha = item.fecha
+        a.contrato = item.contrato
+        a.id = item.id
+        a.concepto = item.concepto
+        a.movto = item.movto
+        a.cancelado = item.cancelado
+        a.proveedor = item.proveedor
+        a.nombre = item.nombre
+        a.descripcion = item.descripcion
+        a.producto = item.producto
+        a.linea = item.linea
+        a.moneda = item.moneda
+        a.monedastr = IIf(item.moneda = 1, "MXN", "USD")
+
+        ' Saldos 
+        a.anticipo = anticipo
+        a.cartera = cartera
+
+        a.ant_debe = item.ant_debe
+        a.ant_haber = item.ant_haber
+
+        ' Cartera
+        a.cartera = cartera
+        a.car_debe = item.car_debe
+        a.car_haber = item.car_haber
+        santicipo = santicipo + (item.ant_debe - item.ant_haber)
+        scartera = scartera + (item.car_debe - item.car_haber)
+        a.ant_saldo = santicipo
+        a.car_saldo = scartera
+
+        registro = registro + 1
+        model.Add(a)
+      Next
+
+      Respuesta.Ok = True
+
+    Catch ex As Exception
+      Respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return Respuesta
+
+  End Function
+
+
+
+#End Region
+
+  Private Function values() As Object
+    Throw New NotImplementedException
+  End Function
+
+End Class
+
+
+'consultaAdeudos

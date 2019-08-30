@@ -1,0 +1,37 @@
+﻿Imports FactorEntidades
+Imports FactorDAL
+
+Public Class ReportesBAL
+
+    Function ReporteVencimientosNafinBAL(moneda As Integer, tipo As String, inicio As Date, fin As Date, ByRef model As sp_vencimientosnafin) As Result
+        Dim consulta = New ReportesDAL()
+        Return consulta.vencimientoFondeoNafin(moneda, tipo, inicio, fin, model)
+    End Function
+
+    Public Function ConsultaDepositosBAL(fecha As String, idctabanco As Integer, ByRef model As List(Of ReporteDepositos)) As Result
+        Dim consulta As New ReportesDAL()
+        Return consulta.ConsultaDepositosDAL(fecha, idctabanco, model)
+    End Function
+
+    Public Function ConsultaSalidasBAL(fecha As String, idctabanco As Integer, ByRef model As List(Of ReporteDepositos)) As Result
+        Dim consulta As New ReportesDAL()
+        Return consulta.ConsultaSalidasDAL(fecha, idctabanco, model)
+    End Function
+
+  Public Function ConsultaReportesBAL(ByRef model As List(Of ReporteEntidad)) As Result
+    Dim consulta As New ReportesDAL()
+    Return consulta.ConsultaReportesDAL(model)
+  End Function
+
+  Public Function ReportecobranzaBAL(fecha As String, contrato As Integer, ByRef model As List(Of CobranzaEntidad)) As Result
+    Dim consulta As New ReportesDAL()
+    Return consulta.ReportecobranzaDAL(fecha, contrato, model)
+  End Function
+
+  Public Function ReporteaforoBAL(fecha As String, contrato As Integer, ByRef model As List(Of CobranzaEntidad)) As Result
+    Dim consulta As New ReportesDAL()
+    Return consulta.ReporteaforoDAL(fecha, contrato, model)
+  End Function
+
+
+End Class

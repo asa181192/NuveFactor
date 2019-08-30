@@ -1,0 +1,32 @@
+﻿$(document).ready(function (e) {
+
+  $('#dvflexadeudos').click(function () {
+    window.location.href = '../Cobranza/adeudos';
+  });
+
+  $('#dvflexpagos').click(function () {
+    window.location.href = '../Cobranza/pagos';
+  });
+
+  $('#dvflexestado').click(function () {
+    window.location.href = '../Cobranza/estadocta';
+  });
+ 
+  $('#dvflexregistro').click(function () {
+    window.location.href = '../Cobranza/registrocobranza';
+  });
+
+   $('#dvflexaforos').click(function () {
+    window.location.href = '../Cobranza/Aforos';
+  });
+
+  //$('#dvflexafecta').click(function () {
+  //  window.location.href = '../Cobranza/Afecta';
+  //});
+
+  //$('#dvflexcinformes').click(function () {
+  //  window.location.href = '../Cobranza/Informes';
+  //});
+
+
+});

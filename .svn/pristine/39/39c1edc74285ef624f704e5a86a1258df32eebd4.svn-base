@@ -1,0 +1,417 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+
+Namespace nuve
+  <CustomAuthorize(Permisos.Acciones.COBRANZA)>
+  Public Class CobranzaController
+    Inherits System.Web.Mvc.Controller
+
+#Region "Views" '*****VIEW*****
+
+    <HttpGet>
+    Function adeudos() As ViewResult
+      Dim model = New Modeloadeudos()
+      Return View(model)
+    End Function
+
+    <HttpGet>
+    Function pagos() As ViewResult
+      Dim model = New Modeloadeudos()
+      Return View(model)
+    End Function
+
+    <HttpGet>
+    Function estadocta() As ViewResult
+      Dim model = New Modeloedocuenta()
+      Return View(model)
+    End Function
+
+
+    <HttpGet>
+    Function registrocobranza() As ViewResult
+      Dim model = New Modelocobranza()
+      Return View(model)
+    End Function
+
+#End Region
+
+
+#Region "Menu"
+    <CustomAuthorize>
+              <HttpGet>
+    Function Index() As ViewResult
+
+      Dim model As New Helpers.Menu
+
+      model.sMenu = "<div class=""BoxFlex"" id="""" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<label>Regresar</label>"
+      model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexadeudos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Adeudos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexpagos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Pagos adeudos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexestado"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Estado de cuenta</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexregistro"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Registro de cobranza</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexaforos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Aforos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcinformes"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Informes</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      Return View(model)
+    End Function
+
+#End Region
+
+
+#Region "Get"
+
+#Region "Adeudos"
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function obtenerListaAdeudos() As ActionResult
+
+      Dim jresult
+      Dim resultado
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+
+      Dim listaAdeudos = New List(Of adeudosEntidad)
+      resultado = consulta.ConsultaAdeudosBAL(listaAdeudos)
+
+      If resultado.Ok And resultado IsNot Nothing Then
+
+        jresult = New CustomJsonResult With {
+          .Data = New With {Key .Results = listaAdeudos,
+        .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
+        }
+
+        'jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+    'Detalle de Adeudo '
+    <HttpGet>
+    Public Function GuardarAdeudo(idadeudo As Integer, m As String) As ActionResult
+
+      Dim model = New Modeloadeudos
+      Dim consulta = New FactorBAL.CobranzaBAL()
+      Dim adeudos = New adeudos
+
+      Dim resultado = consulta.ConsultaAdeudosDetalleBAL(idadeudo, adeudos)
+
+      If resultado.Ok And resultado IsNot Nothing Then
+        TinyMapper.Bind(Of adeudos, Modeloadeudos)()  'Mapeo de propiedad para modelo.
+        model = TinyMapper.Map(Of Modeloadeudos)(adeudos)
+      End If
+      model.SaldoPago = model.saldo
+      model.Adeudo = model.tipo + "-" + model.docto.ToString("0000000")
+      model.movto = m
+      model.importe = model.saldo
+
+      Return PartialView(model)
+    End Function
+
+#End Region
+
+#Region "Pagosadeudos"
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function obtenerListapagosadeudos(dfecha As String) As ActionResult
+
+      Dim jresult
+      Dim resultado
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+      Dim listaPagosadeudos = New List(Of adeudosEntidad)
+      resultado = consulta.ConsultaPagosadeudosBAL(listaPagosadeudos, dfecha)
+
+      If resultado.Ok And resultado IsNot Nothing Then
+
+        jresult = New CustomJsonResult With {
+          .Data = New With {Key .Results = listaPagosadeudos,
+        .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
+        }
+
+        'jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+
+#End Region
+
+#Region "edocuenta"
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function obtenerListaedocuenta(fechaMes As String, fechaAnio As String, contrato As String) As ActionResult
+
+      Dim jresult
+      Dim resultado
+      Dim nombre = ""
+      Dim lineacto = ""
+      Dim monedastr = ""
+      Dim anticipo = ""
+      Dim cartera = ""
+      Dim cont = ""
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+
+      Dim listaedocuenta = New List(Of EdocuentaEntidad)
+      resultado = consulta.ConsultaedocuentaBAL(listaedocuenta, fechaMes, fechaAnio, contrato)
+
+      If listaedocuenta IsNot Nothing And listaedocuenta.Count > 0 Then
+        nombre = listaedocuenta.FirstOrDefault().nombre
+        lineacto = listaedocuenta.FirstOrDefault().linea.ToString()
+        monedastr = listaedocuenta.FirstOrDefault().monedastr
+        anticipo = listaedocuenta.FirstOrDefault().anticipo.ToString()
+        cartera = listaedocuenta.FirstOrDefault().cartera.ToString()
+        cont = listaedocuenta.FirstOrDefault().contrato
+      End If
+
+
+      If resultado.Ok And resultado IsNot Nothing Then
+
+        jresult = New CustomJsonResult With {
+          .Data = New With {Key .Results = listaedocuenta, .nombre = nombre, .lineacto = lineacto, .monedastr = monedastr, .cont = contrato,
+        .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
+        }
+
+        'jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+
+#End Region
+
+
+#Region "Regitro de cobranza"
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function obtenerlistacobranza(fecha As String, contrato As String) As ActionResult
+
+      Dim jresult
+      Dim resultado
+      Dim nom = ""
+      Dim timporte = ""
+      Dim tdescto = ""
+      Dim tneto = ""
+      Dim tbonifica = ""
+      Dim monedastr = ""
+      Dim cont = ""
+      Dim descrip = ""
+
+      Dim tprovision = ""
+      Dim tadeudo = ""
+      Dim tmoratorio = ""
+
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+      Dim listaregistro = New List(Of CobranzaEntidad)
+      resultado = consulta.ConsultaregistrocobranzaBAL(listaregistro, fecha, contrato)
+
+      If listaregistro IsNot Nothing And listaregistro.Count > 0 Then
+
+        nom = listaregistro.FirstOrDefault().Nombre.Trim
+        monedastr = listaregistro.FirstOrDefault().monedastr
+        cont = listaregistro.FirstOrDefault().contrato
+
+        timporte = listaregistro.FirstOrDefault().timporte
+        tdescto = listaregistro.FirstOrDefault().tdescto
+        tbonifica = listaregistro.FirstOrDefault().tbonifica
+        tneto = listaregistro.FirstOrDefault().tneto
+        descrip = listaregistro.FirstOrDefault().descrip.Trim
+
+        tprovision = listaregistro.FirstOrDefault().tprovision
+        tadeudo = listaregistro.FirstOrDefault().contrato
+        tmoratorio = listaregistro.FirstOrDefault().contrato
+      End If
+
+
+      If resultado.Ok And resultado IsNot Nothing Then
+
+        jresult = New CustomJsonResult With {
+          .Data = New With {Key .Results = listaregistro, .descrip = descrip, .nom = nom, .monedastr = monedastr, .cont = contrato,
+                            .timporte = timporte, .tdescto = tdescto, .tneto = tneto, .tbonifica = tbonifica, .tprovision = tprovision, .tadeudo = tadeudo, .tmoratorio = tmoratorio,
+        .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
+        }
+
+        'jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function Obtenerdocumentosxpagar(fecha As String, contrato As String) As ActionResult
+
+      Dim jresult
+      Dim resultado
+      'Dim nom = ""
+      'Dim timporte = ""
+      'Dim tdescto = ""
+      'Dim tneto = ""
+      'Dim tbonifica = ""
+      'Dim monedastr = ""
+      'Dim cont = ""
+      'Dim descrip = ""
+
+      'Dim tprovision = ""
+      'Dim tadeudo = ""
+      'Dim tmoratorio = ""
+
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+      Dim listaregistro = New List(Of CobranzaEntidad)
+      resultado = consulta.ObtenerdocumentosxpagarBAL(listaregistro, fecha, contrato)
+
+      If listaregistro IsNot Nothing And listaregistro.Count > 0 Then
+
+        'nom = listaregistro.FirstOrDefault().Nombre.Trim
+        'monedastr = listaregistro.FirstOrDefault().monedastr
+        'cont = listaregistro.FirstOrDefault().contrato
+
+        'timporte = listaregistro.FirstOrDefault().timporte
+        'tdescto = listaregistro.FirstOrDefault().tdescto
+        'tbonifica = listaregistro.FirstOrDefault().tbonifica
+        'tneto = listaregistro.FirstOrDefault().tneto
+        'descrip = listaregistro.FirstOrDefault().descrip.Trim
+
+        'tprovision = listaregistro.FirstOrDefault().tprovision
+        'tadeudo = listaregistro.FirstOrDefault().contrato
+        'tmoratorio = listaregistro.FirstOrDefault().contrato
+      End If
+
+
+      If resultado.Ok And resultado IsNot Nothing Then
+
+        jresult = New CustomJsonResult With {
+          .Data = New With {Key .Results = listaregistro,
+        .JsonRequestBehavior = JsonRequestBehavior.AllowGet}
+        }
+
+        'jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+
+#End Region
+
+#End Region
+
+
+#Region "Post"  '*****POST*****
+
+    'Detalle de Adeud
+    <HttpPost>
+    <CustomAuthorize(Permisos.Acciones.COBRANZA_ACTUALIZAR)>
+    Public Function GuardarAdeudo(modadeudo As Modeloadeudos) As ActionResult
+
+      Dim resultado
+      Dim bs = New FactorBAL.CobranzaBAL()
+
+      Dim consulta = New FactorBAL.CobranzaBAL()
+      Dim madeudos = New adeudos
+
+      TinyMapper.Bind(Of Modeloadeudos, adeudosEntidad)()  'Mapeo de propiedad para modelo
+      Dim model = TinyMapper.Map(Of adeudosEntidad)(modadeudo)
+
+      resultado = bs.ActualizarAdeudoBAL(model)
+
+      If resultado.Ok And resultado IsNot Nothing Then
+        resultado.Mensaje = "Informacion Actualizada"
+        resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+      Else
+        resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+                  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+      End If
+
+      Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+
+      Return PartialView(model)
+    End Function
+
+
+#End Region
+
+    ''
+    '' GET: /Cobranza
+
+    'Function Index() As ActionResult
+    '  Return View()
+    'End Function
+
+  End Class
+
+End Namespace

@@ -53,12 +53,12 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\Microsoft.AspNet.Identity.Core.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -66,15 +66,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\Microsoft.Owin.Security.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\Users\hector.jaime\Desktop\Referencias\bin\Microsoft.Owin.Security.Cookies.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
@@ -82,9 +78,25 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\Owin.dll</HintPath>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -92,6 +104,7 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -156,8 +169,8 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Referencias\bin\TinyMapper.dll</HintPath>
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\TinyMapper.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -253,20 +266,57 @@
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\Startup.Auth.vb" />
     <Compile Include="Controllers\AdminController.vb" />
+    <Compile Include="Controllers\AseguradoraController.vb" />
+    <Compile Include="Controllers\AutorizaController.vb" />
     <Compile Include="Controllers\CatalogosController.vb" />
+    <Compile Include="Controllers\CobranzaController.vb" />
+    <Compile Include="Controllers\ConsolidacionesController.vb" />
+    <Compile Include="Controllers\ContabilidadController.vb" />
     <Compile Include="Controllers\CustomAuthorize.vb" />
+    <Compile Include="Controllers\ErrorController.vb" />
+    <Compile Include="Controllers\FacturacionController.vb" />
+    <Compile Include="Controllers\InformesController.vb" />
     <Compile Include="Controllers\LdapAuth.vb" />
     <Compile Include="Controllers\BusquedaController.vb" />
+    <Compile Include="Controllers\NotificacionesController.vb" />
+    <Compile Include="Controllers\OperacionesController.vb" />
+    <Compile Include="Controllers\PortalController.vb" />
+    <Compile Include="Controllers\PromocionController.vb" />
+    <Compile Include="Controllers\ReportesController.vb" />
+    <Compile Include="Controllers\ReqController.vb" />
+    <Compile Include="Controllers\TesoreriaController.vb" />
+    <Compile Include="FactorDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FactorDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="FactorDataSet.vb">
+      <DependentUpon>FactorDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModels.vb" />
+    <Compile Include="Models\AseguradoraModels.vb" />
+    <Compile Include="Models\AutorizaModels.vb" />
     <Compile Include="Models\BusquedaModels.vb" />
     <Compile Include="Models\CatalogoModels.vb" />
+    <Compile Include="Models\CobranzaModels.vb" />
+    <Compile Include="Models\ConsolidacionesModel.vb" />
     <Compile Include="Models\controles.vb" />
     <Compile Include="Models\cryptomd5.vb" />
+    <Compile Include="Models\CustomValidations.vb" />
+    <Compile Include="Models\FacturacionModel.vb" />
+    <Compile Include="Models\FieldsReflect.vb" />
     <Compile Include="Models\Helpers.vb" />
     <Compile Include="Models\HomeModels.vb" />
+    <Compile Include="Models\InformeModels.vb" />
+    <Compile Include="Models\NotificacionesModel.vb" />
+    <Compile Include="Models\OperacionesModel.vb" />
+    <Compile Include="Models\PortalModels.vb" />
+    <Compile Include="Models\Reportes.vb" />
+    <Compile Include="Models\RepositorioValidacion.vb" />
+    <Compile Include="Models\TesoreriaModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -286,6 +336,14 @@
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Models\AccountModels.vb" />
     <Compile Include="Startup.vb" />
+    <Compile Include="Utilities\CustomJsonResult.vb" />
+    <Compile Include="Utilities\Permisos.vb" />
+    <Compile Include="Utilities\ValidateAttributes.vb" />
+    <Compile Include="VencimientosNafin.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VencimientosNafin.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -294,14 +352,32 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Anexo.rdlc" />
+    <EmbeddedResource Include="Reports\CteraVencida.rdlc" />
+    <EmbeddedResource Include="Reports\Rebate.rdlc" />
+    <EmbeddedResource Include="Reports\ReporteDocSinDescontar.rdlc" />
+    <EmbeddedResource Include="Reports\CalculoAforo.rdlc" />
+    <EmbeddedResource Include="Reports\LineasFactor.rdlc" />
+    <EmbeddedResource Include="Reports\Operaciones.rdlc" />
+    <EmbeddedResource Include="Reports\CtrlRiesgoTotales.rdlc" />
+    <EmbeddedResource Include="Reports\Notificaciones_NProve.rdlc" />
+    <EmbeddedResource Include="Reports\Notificaciones_NRec.rdlc" />
+    <EmbeddedResource Include="Reports\Reporteadeudos.rdlc" />
+    <EmbeddedResource Include="Reports\Reporteaforo.rdlc" />
+    <EmbeddedResource Include="Reports\Reportecobranza.rdlc" />
+    <EmbeddedResource Include="Reports\usersregs.rdlc" />
+    <EmbeddedResource Include="Reports\VencimientosFondeoNafin.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\duDatepicker.css" />
+    <Content Include="Content\material.css" />
     <Content Include="Content\DataTables-1.10.16\css\dataTables.bootstrap.css" />
     <Content Include="Content\DataTables-1.10.16\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\DataTables-1.10.16\css\dataTables.bootstrap4.css" />
@@ -325,10 +401,22 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.loading.css" />
+    <Content Include="Content\loading.css" />
+    <Content Include="Content\mdtimepicker.css" />
     <Content Include="Content\MonthPicker.css" />
+    <Content Include="Content\multi-select.css" />
     <Content Include="Content\responsive.dataTables.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\admin.png" />
     <Content Include="Images\administration.png" />
+    <Content Include="Images\analysis.png" />
+    <Content Include="Images\benefits.png" />
+    <Content Include="Images\Catalogo.png" />
+    <Content Include="Images\Conta.png" />
+    <Content Include="Images\cuentasBancos2.png" />
+    <Content Include="Images\FirmasNotificaciones\apoderado.jpg" />
+    <Content Include="Images\FirmasNotificaciones\testigo1.jpg" />
+    <Content Include="Images\FirmasNotificaciones\testigo2.jpg" />
     <Content Include="Images\icon.gif" />
     <Content Include="Images\list.png" />
     <Content Include="Images\loading\bpormas [www.imagesplitter.net]-0-0.png" />
@@ -355,6 +443,8 @@
     <Content Include="Images\menu\logout_vb.png" />
     <Content Include="Images\menu\logout_vg.png" />
     <Content Include="Images\menu\menuregresar.png" />
+    <Content Include="Images\menu\menu_vb.png" />
+    <Content Include="Images\menu\menu_vg.png" />
     <Content Include="Images\menu\password.gif" />
     <Content Include="Images\menu\password.png" />
     <Content Include="Images\menu\password_vb.png" />
@@ -362,6 +452,8 @@
     <Content Include="Images\menu\user.png" />
     <Content Include="Images\menu\user_vb.png" />
     <Content Include="Images\menu\user_vg.png" />
+    <Content Include="Images\Operacion.png" />
+    <Content Include="Images\pdf.png" />
     <Content Include="Images\Película1.clk" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
@@ -370,6 +462,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="FactorDataSet.xsc">
+      <DependentUpon>FactorDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="FactorDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FactorDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="FactorDataSet.xss">
+      <DependentUpon>FactorDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -383,7 +486,6 @@
     <Content Include="Images\100.png" />
     <Content Include="Images\309.jpg" />
     <Content Include="Images\a2011.gif" />
-    <Content Include="Images\abstracto02.jpg" />
     <Content Include="Images\acercar.gif" />
     <Content Include="Images\adocsintro.gif" />
     <Content Include="Images\adocsintro2014.gif" />
@@ -577,8 +679,10 @@
     <Content Include="Images\plusik2.gif" />
     <Content Include="Images\plusik2.jpg" />
     <Content Include="Images\portafolio2014.gif" />
+    <Content Include="Images\Portal.png" />
     <Content Include="Images\prev.gif" />
     <Content Include="Images\printer.png" />
+    <Content Include="Images\Promocion.png" />
     <Content Include="Images\prueba.gif" />
     <Content Include="Images\puntos.gif" />
     <Content Include="Images\quitar.gif" />
@@ -607,6 +711,7 @@
     <Content Include="Images\sat.ico" />
     <Content Include="Images\scotiabank.ico" />
     <Content Include="Images\sodexo.ico" />
+    <Content Include="Images\switch.png" />
     <Content Include="Images\tableroa.jpg" />
     <Content Include="Images\tablerob.jpg" />
     <Content Include="Images\tableroc.jpg" />
@@ -646,13 +751,85 @@
     <Content Include="Images\worldclient.ico" />
     <Content Include="Images\xls.gif" />
     <Content Include="Images\xls.jpg" />
+    <Content Include="Images\xml.png" />
     <Content Include="Images\yahoo.ico" />
     <Content Include="Images\Zoomminus.gif" />
     <Content Include="Images\Zoomplus.gif" />
     <Content Include="Scripts\AdminScripts\Index.js" />
     <Content Include="Scripts\AdminScripts\Usuarios.js" />
+    <Content Include="Scripts\Aseguradora\Aseguradora.js" />
+    <Content Include="Scripts\Aseguradora\Index.js" />
+    <Content Include="Scripts\Aseguradora\PolizasGlobales.js" />
+    <Content Include="Scripts\AutorizaScripts\Autoriza.js" />
     <Content Include="Scripts\BusquedaScripts\Busqueda.js" />
+    <Content Include="Scripts\CatalogosScripts\Anexo.js" />
+    <Content Include="Scripts\CatalogosScripts\Apoderado.js" />
+    <Content Include="Scripts\CatalogosScripts\Cesiones.js" />
+    <Content Include="Scripts\CatalogosScripts\ControlRiesgo.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarCesion.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarCliente.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarComprador.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarPromotor.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarProveedor.js" />
     <Content Include="Scripts\CatalogosScripts\Promotor.js" />
+    <Content Include="Scripts\CatalogosScripts\UsuarioWeb.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\CobranzaScripts\Accesorios.js" />
+    <Content Include="Scripts\CobranzaScripts\AccesoriosRonly.js" />
+    <Content Include="Scripts\CobranzaScripts\adeudos.js" />
+    <Content Include="Scripts\CobranzaScripts\adeudosRonly.js" />
+    <Content Include="Scripts\CobranzaScripts\aforos.js" />
+    <Content Include="Scripts\CobranzaScripts\aforosPorLiquidar.js" />
+    <Content Include="Scripts\CobranzaScripts\aforosRonly.js" />
+    <Content Include="Scripts\CobranzaScripts\aplicacob.js" />
+    <Content Include="Scripts\CobranzaScripts\carteravencida.js" />
+    <Content Include="Scripts\CobranzaScripts\Cobglobal.js" />
+    <Content Include="Scripts\CobranzaScripts\estadocta.js" />
+    <Content Include="Scripts\CobranzaScripts\Index.js" />
+    <Content Include="Scripts\CobranzaScripts\pagos.js" />
+    <Content Include="Scripts\CobranzaScripts\registrocobranza.js" />
+    <Content Include="Scripts\ConsolidaScripts\bitacora.js" />
+    <Content Include="Scripts\ContabilidadScripts\Index.js" />
+    <Content Include="Scripts\datatableplugin\dataTables.buttons.js" />
+    <Content Include="Scripts\dataTables.rowGroup.min.js" />
+    <Content Include="Scripts\duDatepicker.js" />
+    <Content Include="Scripts\GCharts\loader.js" />
+    <Content Include="Scripts\HomeScripts\version.js" />
+    <Content Include="Scripts\InformesScripts\Informecobros.js" />
+    <Content Include="Scripts\InformesScripts\Informes.js" />
+    <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.multi-select.js" />
+    <Content Include="Scripts\Jspdf\jspdf.js" />
+    <Content Include="Scripts\loading.js" />
+    <Content Include="Scripts\mdtimepicker.js" />
+    <Content Include="Scripts\Notificaciones\Notificaciones.js" />
+    <Content Include="Scripts\CatalogosScripts\Contratos.js" />
+    <Content Include="Scripts\CatalogosScripts\GuardarContrato.js" />
+    <Content Include="Scripts\OperacionesScripts\Complemento.js" />
+    <Content Include="Scripts\OperacionesScripts\FacturacionScript.js" />
+    <Content Include="Scripts\OperacionesScripts\FacturacionScript1.js" />
+    <Content Include="Scripts\OperacionesScripts\FacturacionScriptRonly.js" />
+    <Content Include="Scripts\OperacionesScripts\Index.js" />
+    <Content Include="Scripts\PortalScripts\Index.js" />
+    <Content Include="Scripts\PortalScripts\operaciones.js" />
+    <Content Include="Scripts\PortalScripts\parametros.js" />
+    <Content Include="Scripts\PromocionScripts\Index.js" />
+    <Content Include="Scripts\Reportes\Adeudosxliquidar.js" />
+    <Content Include="Scripts\Reportes\histDocumento.js" />
+    <Content Include="Scripts\Reportes\DocsPorDescontar.js" />
+    <Content Include="Scripts\Reportes\hisAdeudo.js" />
+    <Content Include="Scripts\Reportes\Index.js" />
+    <Content Include="Scripts\Reportes\Informecobros.js" />
+    <Content Include="Scripts\Reportes\Informes.js" />
+    <Content Include="Scripts\Reportes\Rebatemensual.js" />
+    <Content Include="Scripts\Reportes\Tesoreria\ReporteDepositos.js" />
+    <Content Include="Scripts\Reportes\Tesoreria\ReporteSalidas.js" />
+    <Content Include="Scripts\Reportes\Tesoreria\VencimientosNafin.js" />
+    <Content Include="Scripts\TesoScripts\cuentas.js" />
+    <Content Include="Scripts\TesoScripts\cuentasBancos.js" />
+    <Content Include="Scripts\TesoScripts\Index.js" />
+    <Content Include="Scripts\TesoScripts\movimientos.js" />
+    <Content Include="Scripts\TesoScripts\RegistrosContables.js" />
     <Content Include="Scripts\UtilitiesScripts\Busqueda.js" />
     <Content Include="Scripts\Buttons-1.5.1\css\common.scss" />
     <Content Include="Scripts\Buttons-1.5.1\css\mixins.scss" />
@@ -695,14 +872,14 @@
     <Content Include="Scripts\Buttons-1.5.1\js\dataTables.buttons.min.js" />
     <Content Include="Scripts\Buttons-1.5.1\swf\flashExport.swf" />
     <Content Include="Scripts\CatalogosScripts\Clientes.js" />
-    <Content Include="Scripts\CatalogosScripts\CodigoGarantia.js" />
+    <Content Include="Scripts\AdminScripts\CodigoGarantia.js" />
     <Content Include="Scripts\CatalogosScripts\Comprador.js" />
     <Content Include="Scripts\CatalogosScripts\EstadosFinancieros.js" />
     <Content Include="Scripts\CatalogosScripts\Index.js" />
     <Content Include="Scripts\CatalogosScripts\paridadCambiaria.js" />
     <Content Include="Scripts\CatalogosScripts\Proveedor.js" />
     <Content Include="Scripts\CatalogosScripts\Sucursal.js" />
-    <Content Include="Scripts\CatalogosScripts\TipoGarantia.js" />
+    <Content Include="Scripts\AdminScripts\TipoGarantia.js" />
     <Content Include="Scripts\DatatableGlobalConfig.js" />
     <Content Include="Scripts\DataTables-1.10.16\css\dataTables.bootstrap.css" />
     <Content Include="Scripts\DataTables-1.10.16\css\dataTables.bootstrap.min.css" />
@@ -789,6 +966,7 @@
     <Content Include="Scripts\Responsive-2.2.1\js\responsive.semanticui.js" />
     <Content Include="Scripts\Responsive-2.2.1\js\responsive.semanticui.min.js" />
     <Content Include="Views\Account\login.vbhtml" />
+    <Content Include="Views\favicon.ico" />
     <Content Include="Views\Shared\_Alerts.vbhtml" />
     <Content Include="Views\Home\welcome.vbhtml" />
     <Content Include="Views\Shared\_Footer.vbhtml" />
@@ -809,10 +987,10 @@
     <Content Include="Views\Catalogos\Sucursales.vbhtml" />
     <Content Include="Views\Catalogos\GuardarSucursal.vbhtml" />
     <Content Include="Views\Shared\_ErrorPopUp.vbhtml" />
-    <Content Include="Views\Catalogos\CodigoGarantia.vbhtml" />
-    <Content Include="Views\Catalogos\GuardarCodigoGarantia.vbhtml" />
-    <Content Include="Views\Catalogos\TipoGarantia.vbhtml" />
-    <Content Include="Views\Catalogos\GuardarTipoGarantia.vbhtml" />
+    <Content Include="Views\Admin\CodigoGarantia.vbhtml" />
+    <Content Include="Views\Admin\GuardarCodigoGarantia.vbhtml" />
+    <Content Include="Views\Admin\TipoGarantia.vbhtml" />
+    <Content Include="Views\Admin\GuardarTipoGarantia.vbhtml" />
     <Content Include="Views\Catalogos\Clientes.vbhtml" />
     <Content Include="Views\Catalogos\GuardarCliente.vbhtml" />
     <Content Include="Views\Busqueda\BusquedaGlobal.vbhtml" />
@@ -822,6 +1000,108 @@
     <Content Include="Views\Admin\Index.vbhtml" />
     <Content Include="Views\Admin\Usuarios.vbhtml" />
     <Content Include="Views\Admin\GuardarUsuario.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarAsociarLineas.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarGarantiaLiquida.vbhtml" />
+    <Content Include="Views\Tesoreria\bancos.vbhtml" />
+    <Content Include="Views\Tesoreria\cuentas.vbhtml" />
+    <Content Include="Views\Tesoreria\cuentasBancos.vbhtml" />
+    <Content Include="Views\Tesoreria\index.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarClienteLineas.vbhtml" />
+    <Content Include="Views\Tesoreria\ObtenerDetalleCuenta.vbhtml" />
+    <Content Include="Views\Cobranza\Index.vbhtml" />
+    <Content Include="Views\Contabilidad\Index.vbhtml" />
+    <Content Include="Views\Operaciones\Index.vbhtml" />
+    <Content Include="Views\Portal\Index.vbhtml" />
+    <Content Include="Views\Promocion\Index.vbhtml" />
+    <Content Include="Views\Tesoreria\movimientos.vbhtml" />
+    <Content Include="Views\Tesoreria\ObtenerDetalleMovimiento.vbhtml" />
+    <Content Include="Views\Tesoreria\consultarCuentaBancariaDetalle.vbhtml" />
+    <Content Include="Views\Tesoreria\obtenerCuentasContables.vbhtml" />
+    <Content Include="Views\Cobranza\adeudos.vbhtml" />
+    <Content Include="Views\Cobranza\estadocta.vbhtml" />
+    <Content Include="Views\Cobranza\pagos.vbhtml" />
+    <Content Include="Views\Shared\_PermisoDenegado.vbhtml" />
+    <Content Include="Views\Catalogos\Apoderado.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarApoderado.vbhtml" />
+    <Content Include="Views\Catalogos\Contratos.vbhtml" />
+    <Content Include="Views\Reportes\Reportes.vbhtml" />
+    <Content Include="Views\Reportes\ReporteVencimientosNAFIN.vbhtml" />
+    <Content Include="Views\Reportes\ReporteVNAFIN.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarContrato.vbhtml" />
+    <Content Include="VencimientosNafin.xsc">
+      <DependentUpon>VencimientosNafin.xsd</DependentUpon>
+    </Content>
+    <None Include="VencimientosNafin.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>VencimientosNafin.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="VencimientosNafin.xss">
+      <DependentUpon>VencimientosNafin.xsd</DependentUpon>
+    </Content>
+    <Content Include="Views\Cobranza\Obtenerdocumentosxpagar.vbhtml" />
+    <Content Include="Views\Cobranza\registrocobranza.vbhtml" />
+    <Content Include="Views\Cobranza\Aforos.vbhtml" />
+    <Content Include="Views\Reportes\ReportesDeposito.vbhtml" />
+    <Content Include="Views\Reportes\ReporteSalidas.vbhtml" />
+    <Content Include="Views\Cobranza\AforosPorLiquidar.vbhtml" />
+    <Content Include="Views\Cobranza\GuardarAforo.vbhtml" />
+    <Content Include="Views\Notificaciones\HistorialNotificaciones.vbhtml" />
+    <Content Include="Views\Notificaciones\Notificar.vbhtml" />
+    <Content Include="Views\Catalogos\Anexo.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarAnexo.vbhtml" />
+    <Content Include="Views\Catalogos\Cesiones.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarCesion.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarGarantia.vbhtml" />
+    <Content Include="Views\Cobranza\liquidarAforo.vbhtml" />
+    <Content Include="Views\Cobranza\aplicacob.vbhtml" />
+    <Content Include="Views\Catalogos\UsuariosWeb.vbhtml" />
+    <Content Include="Views\Catalogos\GuardarUsuarioWeb.vbhtml" />
+    <Content Include="Views\Portal\Parametros.vbhtml" />
+    <Content Include="Views\Portal\Operaciones.vbhtml" />
+    <Content Include="Views\Facturacion\FacturasManuales.vbhtml" />
+    <Content Include="Views\Facturacion\HistorialFacturas.vbhtml" />
+    <Content Include="Views\Facturacion\NotasCargo.vbhtml" />
+    <Content Include="Views\Facturacion\NotasCredito.vbhtml" />
+    <Content Include="Views\Facturacion\Remisiones.vbhtml" />
+    <Content Include="Views\Catalogos\WebMonitor.vbhtml" />
+    <Content Include="Views\Cobranza\informes.vbhtml" />
+    <Content Include="Views\Cobranza\Informescob.vbhtml" />
+    <Content Include="Views\Informes\Informecobros.vbhtml" />
+    <Content Include="Views\Informes\Informes.vbhtml" />
+    <Content Include="Views\Informes\Reporteaforo.vbhtml" />
+    <Content Include="Views\Informes\Reportecobranza.vbhtml" />
+    <Content Include="Views\Aseguradora\Aseguradoras.vbhtml" />
+    <Content Include="Views\Aseguradora\ConsultaPoliza.vbhtml" />
+    <Content Include="Views\Aseguradora\DetalleAseguradora.vbhtml" />
+    <Content Include="Views\Aseguradora\Index.vbhtml" />
+    <Content Include="Views\Aseguradora\PolizasGlobales.vbhtml" />
+    <Content Include="Views\Autoriza\Autoriza.vbhtml" />
+    <Content Include="Views\Reportes\ReporteSaldos.vbhtml" />
+    <Content Include="Views\Reportes\HistoriaDocumento.vbhtml" />
+    <Content Include="Views\Cobranza\Accesorios.vbhtml" />
+    <Content Include="Views\Cobranza\Cobglobal.vbhtml" />
+    <Content Include="Views\Reportes\Adeudosxliquidar.vbhtml" />
+    <Content Include="Views\Reportes\Informecobros.vbhtml" />
+    <Content Include="Views\Reportes\Informes.vbhtml" />
+    <Content Include="Views\Reportes\Reporteadeudos.vbhtml" />
+    <Content Include="Views\Reportes\Reporteaforo.vbhtml" />
+    <Content Include="Views\Reportes\Reportecobranza.vbhtml" />
+    <Content Include="Views\Reportes\ReporteLineasFactor.vbhtml" />
+    <Content Include="Views\Reportes\DocPorDescontar.vbhtml" />
+    <Content Include="Views\Facturacion\index.vbhtml" />
+    <Content Include="Views\Facturacion\complementopago.vbhtml" />
+    <Content Include="Views\Reportes\HistoriaAdeudo.vbhtml" />
+    <Content Include="Views\Cobranza\GuardarAdeudo.vbhtml" />
+    <Content Include="Views\Reportes\GraficaPie.vbhtml" />
+    <Content Include="Views\Reportes\GraficaLinea.vbhtml" />
+    <Content Include="Views\Reportes\GraficaCartera.vbhtml" />
+    <Content Include="Views\Reportes\GraficaBarra.vbhtml" />
+    <Content Include="Views\Cobranza\carteravencida.vbhtml" />
+    <Content Include="Views\Home\consultarVersion.vbhtml" />
+    <Content Include="Views\Home\GuardarVersion.vbhtml" />
+    <Content Include="Views\Req\requerimientos.vbhtml" />
+    <Content Include="Views\Consolidaciones\bitacora.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -862,8 +1142,6 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="App_Start\App_Data\" />
-    <Folder Include="Reports\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FactorBAL\FactorBAL.vbproj">

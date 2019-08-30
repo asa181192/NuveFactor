@@ -1,0 +1,72 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+
+
+Public Class CuentasDAL
+
+#Region "Metodos de Consulta"
+
+
+    Public Function consultaCuentasBanco(cancel As Boolean, ByRef model As List(Of cuentas)) As Result
+
+        Dim Respuesta = New Result(False)
+        Dim context As New FactorContext
+        '
+        Try
+            Dim values = (From a In context.cuentas
+                          Where a.cancelado = cancel
+                          Select a).ToList()
+
+            For Each item As cuentas In values
+
+                Dim a = New cuentas
+
+                a.ctabanco = item.ctabanco
+                a.idctabanco = item.idctabanco
+                a.sucursal = item.sucursal
+                a.banco = item.banco
+                a.saldo = item.saldo
+                a.moneda = item.moneda
+                a.cancelado = item.cancelado
+                a.idctabanco = a.idctabanco
+
+                model.Add(a)
+            Next
+
+            Respuesta.Ok = True
+
+        Catch ex As Exception
+            Respuesta.Detalle = ex.Message
+
+        End Try
+
+        Return Respuesta
+
+    End Function
+
+    Function ConsultaCuentaDetalle(idcta As Integer, ByRef model As cuentas) As Result
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.cuentas
+                                    Where a.idctabanco = idcta).SingleOrDefault()
+
+                If model IsNot Nothing Then
+                    respuesta.Ok = True
+                End If
+
+            Catch e As Exception
+                respuesta.Detalle = e.Message
+            End Try
+
+        End Using
+        Return respuesta
+    End Function
+
+#End Region
+
+End Class

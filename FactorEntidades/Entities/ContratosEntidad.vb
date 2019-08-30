@@ -1,0 +1,10 @@
+﻿Public Class ContratosEntidad
+	Public Property linea As Decimal?
+	Public Property contrato As Integer
+	Public Property moneda As Integer?
+	Public Property producto As Integer
+	Public Property altalinea As Date?
+	Public Property vencelinea As Date?
+	Public Property cliente As Integer
+	Public Property bloqueado As Boolean
+End Class

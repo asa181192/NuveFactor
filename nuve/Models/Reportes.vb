@@ -1,0 +1,325 @@
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports FactorEntidades
+Imports nuve.CustomValidations
+Imports nuve.Models
+
+Public Class Reportes
+
+#Region "Reporte Vencimientos Fondeo NAFIN"
+
+	Public Class VencimientosNAFINModel
+
+		Public Property contrato As Integer
+		Public Property cesion As Integer
+		Public Property monto As Decimal
+		Public Property saldo As Decimal
+		Public Property docto As String
+		Public Property pagare As String
+		Public Property fec_fondeo As String
+		Public Property fec_vence As String
+		Public Property interes As Decimal
+		Public Property Epo As String
+		Public Property nombre As String
+		Public Property griesgo As Integer
+		Public Property tnafin As Decimal
+		Public Property Operado As Decimal
+		Public Property T1 As Decimal
+		Public Property T2 As Decimal
+		Public Property T3 As Decimal
+		Public Property T4 As Decimal
+		Public Property T5 As Decimal
+		Public Property T6 As Decimal
+		Public Property moneda As Integer
+		Public Property Dias_Prov As Integer
+		Public Property Total_Prov As Decimal
+		Public Property tasa_ord As Decimal
+		Public Property tipo_inter As Integer
+		Public Property tasa_teso As Decimal
+		Public Property referencia As String
+		Public Property tiie As Decimal
+		Public Property tiie91 As Decimal
+		Public Property libor As Decimal
+		Public Property libor3m As Decimal
+		Public Property Total_Provold As Decimal
+
+	End Class
+
+#End Region
+
+#Region "Reporte de deposistos"
+
+	Public Class ReporteDepModel
+
+		Public Sub CargaControles()
+			cuentasDropDownList = New controles().CargaCuentas()
+		End Sub
+
+		<Display(Name:="Folio")>
+		Public Property folio As Integer
+
+		<Display(Name:="Contrato")>
+		Public Property contrato As Integer
+
+		<Display(Name:="Concepto")>
+		Public Property concepto As String
+
+		<Display(Name:="Entrada")>
+		Public Property entrada As Decimal
+
+		<Display(Name:="Capital")>
+		Public Property capital As Decimal
+
+		<Display(Name:="General")>
+		Public Property general As Decimal
+
+		<Display(Name:="Salida")>
+		Public Property salida As Decimal
+
+		<Display(Name:="Fecha")>
+		Public Property fecha As Date
+
+		<Display(Name:="Divisa")>
+		Public Property divisa As String
+
+		<Display(Name:="Cuenta")>
+		Public Property idctabanco As Integer
+
+		Public Property moneda As Integer
+
+		Public Property cuentasDropDownList As List(Of SelectListItem)
+
+	End Class
+
+#End Region
+
+#Region "Reporte Poliza Global"
+
+	Public Class reportePolizaGlobal
+
+		Public Property nombre As String
+
+		Public Property calle As String
+
+		Public Property noext As String
+
+		Public Property noint As String
+
+		Public Property colonia As String
+
+		Public Property municipio As String
+
+		Public Property estado As String
+
+		Public Property pais As String
+
+		Public Property cp As Integer
+
+		Public Property telefono As String
+
+		Public Property rfc As String
+
+		Public Property email As String
+
+		Public Property idpoliza As Integer
+
+		Public Property idaseguradora As Integer
+
+		Public Property poliza As String
+
+		Public Property cancelada As Boolean
+
+		Public Property moneda As Integer
+
+		Public Property mvigencia As Integer
+
+		Public Property femision As Date
+
+		Public Property fvigencia1 As Date
+
+		Public Property fvigencia2 As Date
+
+		Public Property piva As Decimal
+
+		Public Property indemnizacion As Decimal
+
+		Public Property facturacion As Decimal
+
+		Public Property primasubtotal As Decimal
+
+		Public Property primaiva As Decimal
+
+		Public Property primatotal As Decimal
+
+		Public Property primapdescuento As Decimal
+
+		Public Property primapagar As Decimal
+
+		Public Property primaminima As Decimal
+
+		Public Property primaperiodos As Integer
+
+		Public Property primaasubtotal As Decimal
+
+		Public Property primaaiva As Decimal
+
+		Public Property primaatotal As Decimal
+
+		Public Property primaafprimera As Date
+
+		Public Property gecosto As Decimal
+
+		Public Property geasegurados As Integer
+
+		Public Property geperiodos As Integer
+
+		Public Property gesubtotal As Decimal
+
+		Public Property geiva As Decimal
+
+		Public Property getotal As Decimal
+
+		Public Property geatotal As Decimal
+
+		Public Property gefprimera As Date
+
+		Public Property deducible As Decimal
+
+		Public Property archivopdf As String
+
+	End Class
+
+#End Region
+
+#Region "Reporte Saldos"
+	Public Class reporteSaldos
+		Public Sub CargaControles()
+			cuentasDropDownList = New controles().CargaCuentas()
+		End Sub
+
+
+		Public Property cuentasDropDownList As List(Of SelectListItem)
+	End Class
+#End Region
+
+#Region "Historia de un documento"
+	Public Class modelohistoriaDoc
+
+		Public Property iddocto As Decimal
+
+		<Display(Name:="Contrato")>
+		Public Property contrato As Integer?
+
+		<Display(Name:="Documento")>
+		Public Property docto As String
+
+		<Display(Name:="Cliente")>
+		Public Property nombreCliente As String
+
+		Public Property producto As Integer
+
+		Public Property pagos As String
+
+		Public Property moneda As Integer
+
+		Public Property interes As Integer
+
+		Public Property cesion As Integer
+
+		Public Property fecvencedocto As Date
+
+		Public Property porcanti As Decimal
+
+		Public Property fec_alta As Date
+
+		Public Property fec_vence As Date
+
+		Public Property monto As Decimal
+
+		Public Property saldo As Decimal
+
+		Public Property plaza As String
+
+		Public Property c_delegada As Integer
+
+		Public Property deudor As Integer
+
+		Public Property nombreDocumento As String
+
+		Public Property fmvto As Date
+
+		Public Property Tasaoper As Decimal
+
+		Public Property importe As Decimal
+
+		Public Property fecha As String
+
+	End Class
+#End Region
+
+
+#Region "Rebate"
+
+	Public Class Rebate
+
+		Public Property contrato As Integer
+
+		Public Property nombre As String
+
+		Public Property proveedor As String
+
+		Public Property cesion As Integer
+
+		Public Property docto As String
+
+		Public Property referencia As String
+
+		Public Property monto As Decimal
+
+		Public Property plazo As Integer
+
+		Public Property fec_alta As Date
+
+		Public Property fec_Vence As Date
+
+		Public Property deudor As Integer
+
+		Public Property tasaoper As Decimal
+
+		Public Property rebatepts As Decimal
+
+		Public Property interes As Decimal
+
+		Public Property intbxmas As Decimal
+
+		Public Property rebate As Decimal
+
+	End Class
+
+
+#End Region
+#Region "Hist. de un adeudo"
+	Public Class historiaAdeudoModel
+		<Display(Name:="Serie")>
+		Public Property serie As Integer
+		<Display(Name:="Docto")>
+		Public Property docto As Integer
+
+		<Display(Name:="contrato")>
+		Public Property contrato As Integer
+		Public Property nombre As String
+
+		<Display(Name:="Registrado")>
+		Public Property fec_alta As String
+
+		<Display(Name:="Importe")>
+		Public Property importe As Decimal
+		<Display(Name:="Saldo")>
+		Public Property saldo As Decimal
+
+		<Display(Name:="Resumen de pagos")>
+		Public Property notas As String
+
+	End Class
+#End Region
+End Class

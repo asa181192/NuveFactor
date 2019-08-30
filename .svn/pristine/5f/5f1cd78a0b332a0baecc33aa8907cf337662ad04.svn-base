@@ -1,0 +1,25 @@
+﻿Public Class ClienteEntidad
+
+	Public Property void As Boolean
+
+	Public Property cliente As Integer
+
+	Public Property nombre As String
+
+	Public Property rfc As String
+
+	Public Property telefono As String
+
+	Public Property puesto As String
+
+	Public Property pfisica As Boolean
+
+	Public Property actempres As Boolean
+
+	Public Property fenlace As String
+
+	Public Property fec_alta As Date
+
+	Public Property promotor As Integer
+
+End Class

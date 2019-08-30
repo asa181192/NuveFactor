@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="getPdf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pdf" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPdfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPdfResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getXmlResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="base64Binary" nillable="true" type="s:base64Binary" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getPdfSoapIn">
+    <wsdl:part name="parameters" element="tns:getPdf" />
+  </wsdl:message>
+  <wsdl:message name="getPdfSoapOut">
+    <wsdl:part name="parameters" element="tns:getPdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="getXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:getXml" />
+  </wsdl:message>
+  <wsdl:message name="getXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:getXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPdfHttpGetIn">
+    <wsdl:part name="pdf" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPdfHttpGetOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="getXmlHttpGetIn">
+    <wsdl:part name="xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getXmlHttpGetOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="getPdfHttpPostIn">
+    <wsdl:part name="pdf" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getPdfHttpPostOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="getXmlHttpPostIn">
+    <wsdl:part name="xml" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="getXmlHttpPostOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:portType name="GetCypressServiceSoap">
+    <wsdl:operation name="getPdf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el PDF de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getPdfSoapIn" />
+      <wsdl:output message="tns:getPdfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el XML de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getXmlSoapIn" />
+      <wsdl:output message="tns:getXmlSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GetCypressServiceHttpGet">
+    <wsdl:operation name="getPdf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el PDF de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getPdfHttpGetIn" />
+      <wsdl:output message="tns:getPdfHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el XML de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getXmlHttpGetIn" />
+      <wsdl:output message="tns:getXmlHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GetCypressServiceHttpPost">
+    <wsdl:operation name="getPdf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el PDF de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getPdfHttpPostIn" />
+      <wsdl:output message="tns:getPdfHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Exporta el XML de la factura</wsdl:documentation>
+      <wsdl:input message="tns:getXmlHttpPostIn" />
+      <wsdl:output message="tns:getXmlHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetCypressServiceSoap" type="tns:GetCypressServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPdf">
+      <soap:operation soapAction="http://tempuri.org/getPdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <soap:operation soapAction="http://tempuri.org/getXml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetCypressServiceSoap12" type="tns:GetCypressServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPdf">
+      <soap12:operation soapAction="http://tempuri.org/getPdf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <soap12:operation soapAction="http://tempuri.org/getXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetCypressServiceHttpGet" type="tns:GetCypressServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="getPdf">
+      <http:operation location="/getPdf" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <http:operation location="/getXml" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetCypressServiceHttpPost" type="tns:GetCypressServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="getPdf">
+      <http:operation location="/getPdf" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getXml">
+      <http:operation location="/getXml" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetCypressService">
+    <wsdl:port name="GetCypressServiceSoap" binding="tns:GetCypressServiceSoap">
+      <soap:address location="http://192.168.122.43/efactura/ws_efactura/GetCypressService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetCypressServiceSoap12" binding="tns:GetCypressServiceSoap12">
+      <soap12:address location="http://192.168.122.43/efactura/ws_efactura/GetCypressService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetCypressServiceHttpGet" binding="tns:GetCypressServiceHttpGet">
+      <http:address location="http://192.168.122.43/efactura/ws_efactura/GetCypressService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetCypressServiceHttpPost" binding="tns:GetCypressServiceHttpPost">
+      <http:address location="http://192.168.122.43/efactura/ws_efactura/GetCypressService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

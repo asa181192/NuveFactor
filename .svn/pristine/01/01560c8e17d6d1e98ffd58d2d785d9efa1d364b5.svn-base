@@ -1,0 +1,225 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.portal
+Imports Microsoft.Reporting.WebForms
+Imports FactorBAL
+
+Namespace nuve
+
+
+
+	Public Class PortalController
+		Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+
+#Region "operaciones"
+		<HttpGet>
+		Function Operaciones() As ViewResult
+			Dim model = New operacionesModel
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Parametros"
+		<HttpGet>
+		Function Parametros() As ViewResult
+
+			Dim model = New ParametrosModel
+			Dim consulta = New FactorBAL.PortalBAL()
+			Dim parametro = New webcontrol
+
+			Dim resultado = consulta.ConsultaParametrosBAL(parametro)
+
+			TinyMapper.Bind(Of webcontrol, ParametrosModel)()  'Mapeo de propiedad para modelo.
+			model = TinyMapper.Map(Of ParametrosModel)(parametro)
+
+			model.timeend = DateTime.Parse(parametro.timeend).ToString("HH:mm")
+			model.timeinit = DateTime.Parse(parametro.timeinit).ToString("HH:mm")
+
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Menu"
+		<CustomAuthorize>
+				  <HttpGet>
+		Function Index() As ViewResult
+
+			Dim model As New Helpers.Menu
+
+			model.sMenu = "<div class=""BoxFlex"" id="""" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<label>Regresar</label>"
+			model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexparametros"" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<p>Parámetros</p>"
+			'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexoperaciones"" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<p>Operaciones</p>"
+			'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+
+			Return View(model)
+		End Function
+
+#End Region
+#End Region
+
+
+#Region "Get"
+
+#Region "Parametros"
+
+#End Region
+
+#Region "Operaciones"
+		<HttpGet()>
+		Public Function ObtenerOperaciones(fecha As String) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim consulta = New FactorBAL.PortalBAL()
+			Dim listaOperaciones = New List(Of OperacionesEntidad)
+
+			resultado = consulta.ConsultaOperacionesBAL(fecha, listaOperaciones)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = New CustomJsonResult With {
+				  .Data = New With {Key .Results = listaOperaciones.ToList()},
+				  .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				}
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function ReporteOperacionesCalculo(folio As Integer) As ActionResult
+			Dim localReport = New Microsoft.Reporting.WebForms.LocalReport()
+
+			Dim resultado = New Result
+			Dim bs = New FactorBAL.PortalBAL()
+			Dim model = New ReporteOperacionDetalle()
+
+			resultado = bs.ReporteDetalleOPeracionBAL(folio, model)
+			localReport.ReportPath = Server.MapPath("~/Reports/Operaciones.rdlc")
+			localReport.DataSources.Clear()
+
+			Dim reportDataSource = New ReportDataSource()
+			reportDataSource.Name = "DetalleDataSet"
+			reportDataSource.Value = model.Detalle
+
+			localReport.DataSources.Add(reportDataSource)
+			'If resultado.Ok And resultado IsNot Nothing Then
+
+			Dim reportType As String = "PDF"
+			Dim mimeType As String = ""
+			Dim encoding As String = ""
+			Dim fileNameExtension As String = ""
+
+			Dim Waring() As Warning = Nothing	'Array
+			Dim Streams() As String = Nothing	'Array 
+			Dim renderedBytes() As Byte	'Array
+
+			Dim list(5) As ReportParameter
+			list(0) = New ReportParameter("Contrato", model.Operacion.contrato)
+			list(1) = New ReportParameter("Beneficiario", model.Operacion.beneficiario)
+			list(2) = New ReportParameter("Deposito", model.Operacion.deposita)
+			list(3) = New ReportParameter("FechaOp", model.Operacion.fecha)
+			list(4) = New ReportParameter("Folio", model.Operacion.folio)
+			list(5) = New ReportParameter("Divisa", model.Operacion.moneda)
+
+			localReport.SetParameters(list)
+			renderedBytes = localReport.Render(reportType, Nothing, mimeType, encoding, fileNameExtension, Streams, Waring)
+			If Request.Cookies("reporte") IsNot Nothing Then
+				Request.Cookies("reporte").Value = "OK"
+				Response.SetCookie(Request.Cookies("reporte"))
+			End If
+			Response.BufferOutput = False
+			Return File(renderedBytes, "pdf", "ReporteDetalle [" + folio.ToString() + "]" + ".pdf")
+
+			'Else
+			'Return Content("<script language='javascript' type='text/javascript'>alert('Error al generar el PDF favor de volver a consultar !!\n\nClick Aceptar para volver'); window.location.href ='../Catalogos/ControlRiesgo?clienteId=" + idcliente.ToString() + "&nombre=" + nombre + "';</script>")
+			'End If
+
+		End Function
+
+		Public Function GetFileFactura(factura As String, tipo As Integer) As FileResult
+			Dim resultado = New Result(False)
+			Dim consulta = New FacturacionBAL()
+			Dim archivo As Byte() = Nothing
+			Dim extension As String = IIf(tipo = 1, ".pdf", ".xml")
+
+			resultado = consulta.GetPdfBAL(factura, archivo, tipo)
+
+			If resultado.Ok And archivo IsNot Nothing Then
+				If Request.Cookies("reporte") IsNot Nothing Then
+					Request.Cookies("reporte").Value = "OK"
+					Response.SetCookie(Request.Cookies("reporte"))
+				End If
+				Response.BufferOutput = False
+				Return File(archivo, "application/" + extension, factura + extension)
+			Else
+
+				Return File(archivo, "application/txt", factura + ".txt")
+			End If
+
+		End Function
+
+#End Region
+
+#End Region
+
+#Region "Post"
+		<HttpPost>
+		Public Function GuardarParametros(parametro As ParametrosModel) As ActionResult
+
+			Dim resultado
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.PortalBAL()
+				TinyMapper.Bind(Of ParametrosModel, webcontrol)() 'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of webcontrol)(parametro)
+				model.timeend = DateTime.Now.Date.Add(New TimeSpan(Convert.ToInt64(parametro.timeend.Split(":")(0)), Convert.ToInt64(parametro.timeend.Split(":")(1)), 0))
+				model.timeinit = DateTime.Now.Date.Add(New TimeSpan(Convert.ToInt64(parametro.timeinit.Split(":")(0)), Convert.ToInt64(parametro.timeinit.Split(":")(1)), 0))
+				resultado = bs.ActualizarParametrosBAL(model)
+
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Actualizado"
+					FactorBAL.Utility.Monitor(Session("USERID"), "Actualizado parametros")
+					resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+				Else
+					resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+												"Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+
+				End If
+
+				Return Json(New With {Key .Result = resultado.Ok, .color = "success", .Text = resultado.Mensaje, .Tipo = resultado.Tipo, .titulo = ""})
+			Else
+				resultado = New Result(False)
+				Return Json(New With {Key .Result = resultado.Ok, .color = "warning", .Text = resultado.Mensaje, .titulo = "Error favor de revisar los campos !!"})
+			End If
+
+
+		End Function
+#End Region
+
+	End Class
+
+End Namespace

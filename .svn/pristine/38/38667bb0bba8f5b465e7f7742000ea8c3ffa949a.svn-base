@@ -1,0 +1,34 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Data.Entity.Validation
+Imports System.Transactions
+Imports Nelibur.ObjectMapper
+
+Public Class UtilitiesDAL
+
+    Public Function ConsultaParametros(clave As String, ByRef parametro As String) As Result
+        Dim response = New Result(False)
+
+        Using context As New FactorContext
+
+            Try
+                Dim values = (From a In context.parametros
+                         Where a.clave = clave
+                         Select a).SingleOrDefault()
+
+                parametro = values.ruta
+
+                response.Ok = True
+            Catch ex As Exception
+                response.Mensaje = "Error al consultar los parámetros"
+            End Try
+
+        End Using
+
+        Return response
+    End Function
+
+
+End Class

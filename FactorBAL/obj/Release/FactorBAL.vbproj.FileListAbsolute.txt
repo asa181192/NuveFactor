@@ -15,3 +15,4 @@ C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.vbproj.
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Release\FactorBAL.pdb
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Release\FactorBAL.dll.config

@@ -1,0 +1,192 @@
+﻿//Inicializacion de variables
+var tabla;
+var title;
+var nombre;
+var data =
+{
+    inicializarTabla: function (fecha) {
+
+        tabla = $('#table')
+            .DataTable({
+                ajax: {
+                    "url": "../Portal/ObtenerOperaciones/", // url del controlador a consultar 
+                    "Type": "GET",
+                    "data": function (d) { d.fecha = fecha }, // parametros a enviar al controlador 
+                    "dataSrc": function (json) {
+                        if (typeof (json.Mensaje) != 'undefined') {
+                            mensajemodal(json.Mensaje, 'warning', json.titulo);
+                            return {};
+                        } else {
+                            return json.Results;
+                        }
+                    }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
+                },
+                buttons: [  'excel'
+                ],
+                paging: true, // permite la paginacion en la tabla .   
+                lengthMenu: [15],
+                "dom": 'frtip',
+                searching: true, // genera cuadro de busqueda
+                ordering: false, // genera ordenamiento de columnas 
+                order: [[0, 'desc']], // ordena la primer columna
+                responsive: true, // realiza la tabla responsiva en moviles
+                destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
+                aoColumns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
+           {
+               data: "folio", "width": "40px"
+           },
+           {
+               data: "fpago", "width": "140px"
+           },
+           {
+               data: "contrato", "width": "350px"
+           },
+           {
+               data: "deposita", "width": "450px"
+           },
+           {
+               data: function (data, type, dataToSet) {
+                   return '<a class="file" href="../Portal/ReporteOperacionesCalculo?folio=' + data.folio + '"><img src="../Images/pdf.png"></a>';
+               }, "width": "50px"
+           },           
+           {
+               data: function (data, type, dataToSet) {
+                   if (data.cfdi == "") {
+                       return ""
+                   }
+                   else {
+                       return '<a class="file" href="../Portal/GetFileFactura?factura=' + data.cfdi + '&tipo=1"><img src="../Images/pdf.png"></a>' +
+                   '<a class="file" href="../Portal/GetFileFactura?factura=' + data.cfdi + '&tipo=2"><img src="../Images/xml.png"></a>';
+                   }
+                   
+               }, "width": "50px"
+           },
+           {
+               data: "totalpagar", render: $.fn.dataTable.render.number(',', '.', 2, ''), "width": "60px"
+           },
+                ],
+                "columnDefs": [
+                    { "className": "dt-center", "targets": [ 4, 5] },
+                    { "className": "dt-right", "targets": [6] },
+                    { "className": "dt-left", "targets": [0,1,2,3] }
+                ],
+                fnFooterCallback: function (nRow, aaData, iStart, iEnd, aiDisplay) {
+                    $("tfoot tr").remove();
+                    var table = this;
+                    var api = table.api();
+                    var gliquidaTot = 0;
+                    var addText = ""
+
+                    var result = aaData.reduce(function (tot, x) {                               
+                                          
+                        return tot += x.totalpagar
+                    }, 0)
+
+                    this.find('tfoot').length ? this.find('tfoot') : $('<tfoot>').insertBefore($(this).find('tbody'));
+              
+                     if (result > 0) {
+                         $('tfoot').append('<tr><td colspan="2">Operaciones Registradas : ' + aiDisplay.length  + ' <td/><td/><td/><td style="text-align:right">Total Pagado:<td style="text-align:center">' + $.fn.dataTable.render.number(',', '.', 2, '$').display(result) + '</td></tr>');
+                        }
+                    
+                }
+            });
+
+
+    }, //Funcion que inicializa la tabla 
+    eventos: function () {
+        //tabla.on('click', 'a.cancelar', function (e) {
+        //    $('#dialog-confirm').text("Se dara de baja el contrato : " + $(this).attr("contrato"))
+        //    var url = $(this).attr("href")
+        //    $('#dialog-confirm').dialog({
+        //        resizable: true,
+        //        height: "auto",
+        //        title: "Baja de contrato",
+        //        width: 400,
+        //        modal: true,
+        //        buttons: {
+        //            "Aceptar": function () {
+        //                data.ajax(url, "POST", null)
+        //                $(this).dialog('close')
+        //            },
+        //            "Cancelar": function () {
+        //                $(this).dialog('close')
+        //            }
+        //        }
+        //    })
+        //    e.preventDefault()
+        //});
+        //tabla.on('click', 'tr', function () {
+        //    if ($(this).hasClass('selected')) {
+        //        $(this).removeClass('selected');
+        //        btnAnexo.addClass("disabled")
+        //        btnCesion.addClass("disabled")
+        //    }
+        //    else {
+        //        tabla.$('tr.selected').removeClass('selected');
+        //        $(this).addClass('selected');
+        //        btnAnexo.removeClass('disabled');
+        //        btnCesion.removeClass('disabled');
+        //        btnAnexo.attr("href", btnAnexoLiga.replace("_contrato", tabla.row('.selected').data()["Contratos"].contrato).replace("_producto", tabla.row('.selected').data()["Producto"].id))
+        //        btnCesion.attr("href", btnCesionLiga.replace("_contrato", tabla.row('.selected').data()["Contratos"].contrato).replace("_producto", tabla.row('.selected').data()["Producto"].id))
+        //    }
+        //});
+    },
+    ajax: function (url, tipo, data) {
+        $.ajax({
+            type: tipo,
+            url: url,
+            beforeSend: function () {
+                $.Loading(true);
+            },
+            success: function (data) {
+                if (data.Result) {
+                    mensajemodal(data.Text, data.color, data.titulo);
+                    if (tabla !== undefined) {
+                        tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                    }
+                } else {
+                    mensajemodal(data.Text, data.color, data.titulo);
+                }
+            },
+            error: function () {
+                mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+            },
+            complete: function () {
+                $.Loading(false);
+            }
+
+        });
+    }
+}
+
+$(document).ready(function (e) {
+    //Esto nos permite Abrir modal dentro de modal . 
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    data.inicializarTabla(moment().format('DD/MM/YYYY'))
+    $('#fecha').duDatepicker({ format: 'dd/mm/yyyy' }).on('datechanged', function (e) {
+        data.inicializarTabla(e.date)
+    });
+    //data.inicializarTabla()
+    data.eventos();
+   
+    $(".excel").on("click", function () {
+      tabla.button('.buttons-excel').trigger();
+    });
+
+    $("#tableContainer").on('click', 'a.file', function (e) {
+        $.Loading(true)
+        Cookies.remove('reporte');
+        Cookies.set('reporte', 'FALSE');
+        var time = setInterval(function () {
+            if (Cookies.get('reporte') == 'OK') {
+                $.Loading(false)
+                clearInterval(time);
+                Cookies.remove('reporte');
+            }
+        }, 1000)
+    });
+
+});

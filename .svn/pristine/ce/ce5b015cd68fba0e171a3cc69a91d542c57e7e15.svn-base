@@ -1,0 +1,554 @@
+﻿Imports FactorEntidades
+Imports System.Xml.Serialization
+Imports System.Xml
+Imports System.Data.SqlClient
+Imports System.Data.Entity
+
+
+Public Class Procesos
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos Consulta"
+	Public Function ConsultaControlRiesgoDAL(clienteId As Integer, ByRef model As ControlRiesgo_Cliente) As Result
+
+		Dim respuesta = New Result(False)
+		Dim proxy = New Proxy()
+		Using scope As New Transactions.TransactionScope
+
+      Using context As New FactorContext()
+        'Lista de Lista permite almacenar multiples consulta al servicio t24 para generar un solo xml 
+
+        Dim ListaSaldoCuenta = New List(Of List(Of ServicioT24.RespENQSaldoCuenta))()
+        Dim xmlSaldoCuenta = Nothing
+        Try
+
+          'Obiene claves de t24 si existen en ctrlriesgo y cliente y parseamos a enteros
+          Dim claves = (From A In context.CtrlRiesgo
+                  Where A.cliente = clienteId
+                Select A.clientet24
+                ).Union(
+                From B In context.clientes
+                    Where B.cliente = clienteId
+                Select B.clientet24
+                ).Distinct().ToList().Select(Function(e) Integer.Parse(e)).ToList()
+
+
+
+
+          Dim cuentas = (From A In context.CtrlRiesgo
+                  Where A.cliente = clienteId And A.liquida = True
+                  Select A.cuenta).ToList().Select(Function(e) Integer.Parse(e)).ToList()
+
+          If cuentas.Count > 0 Then
+            If proxy.ListaConsultaSaldoCuenta(cuentas, ListaSaldoCuenta).Ok = False Then
+              respuesta.Id_Out = 1
+              Throw New System.Exception
+            End If
+            xmlSaldoCuenta = New XElement("ArrayOfRespENQSaldoCuenta")
+            For Each item As List(Of ServicioT24.RespENQSaldoCuenta) In ListaSaldoCuenta
+              For Each item2 As ServicioT24.RespENQSaldoCuenta In item
+                If item2 IsNot Nothing Then
+                  xmlSaldoCuenta.Add(New XElement("RespENQSaldoCuenta",
+                                              New XElement("sNumCuenta", item2.sNumCuenta),
+                                              New XElement("sSaldoTrabajo", item2.sSaldoTrabajo))
+                                             )
+
+                End If
+
+              Next
+            Next
+          End If
+
+
+          Dim ListaLineasCredito = New List(Of List(Of ServicioT24.RespENQLineasCredito))()
+          Dim ListaLineaCredito = New List(Of List(Of ServicioT24.RespENQLineaCredito))()
+          Dim ListaDatosCliente = New List(Of List(Of ServicioT24.RespENQDatosCliente))()
+          Dim clavesLineaCredito = New List(Of String)
+
+          'obtienes listas de t24 
+          If proxy.ConsultaListaLineasCredito(claves, ListaLineasCredito).Ok = False Then
+            respuesta.Id_Out = 1
+            Throw New System.Exception
+          End If
+          Dim xmlLineasCredito = New XElement("ArrayOfRespENQLineasCredito")
+          For Each item As List(Of ServicioT24.RespENQLineasCredito) In ListaLineasCredito
+            For Each item2 As ServicioT24.RespENQLineasCredito In item
+              If item2 IsNot Nothing Then
+                xmlLineasCredito.Add(New XElement("RespENQLineasCredito",
+                                        New XElement("sClave", item2.sLineaCredito.Split(".")(0)),
+                                        New XElement("sTipo", item2.sLineaCredito.Split(".")(1)),
+                                        New XElement("sNumero", item2.sLineaCredito.Split(".")(2)),
+                                        New XElement("sLineaCredito", item2.sLineaCredito),
+                                        New XElement("sDescripcionLinea", item2.sDescripcionLinea),
+                                        New XElement("sMoneda", item2.sMoneda),
+                                        New XElement("sMontoOtorgado", item2.sMontoOtorgado),
+                                        New XElement("sMontoDispuesto", item2.sMontoDispuesto),
+                                        New XElement("sMontoDisponer", item2.sMontoDisponer),
+                                        New XElement("sVencimiento", item2.sVencimiento),
+                                        New XElement("sUtilizado", item2.sUtilizado)
+                                        ))
+                clavesLineaCredito.Add(item2.sLineaCredito)
+              End If
+
+            Next
+          Next
+
+          If proxy.ConsultaLineaCredito(clavesLineaCredito, ListaLineaCredito).Ok = False Then
+            respuesta.Id_Out = 1
+            Throw New System.Exception
+          End If
+          Dim xmlLineaCredito = New XElement("ArrayOfRespENQLineaCredito")
+          For Each item As List(Of ServicioT24.RespENQLineaCredito) In ListaLineaCredito
+            For Each item2 As ServicioT24.RespENQLineaCredito In item
+              If item2 IsNot Nothing Then
+                xmlLineaCredito.Add(New XElement("RespENQLineaCredito",
+                                            New XElement("sClave", item2.sIdentificador.Split(".")(0)),
+                                            New XElement("sTipo", item2.sIdentificador.Split(".")(1)),
+                                            New XElement("sNumero", item2.sIdentificador.Split(".")(2)),
+                                            New XElement("sLineaCredito", item2.sIdentificador),
+                                            New XElement("sAdeudosPendientes", item2.sAdeudosPendientes))
+                                           )
+
+              End If
+
+            Next
+          Next
+
+          Dim xmlDatosCliente = New XElement("ArrayOfRespENQDatosCliente")
+          If proxy.ConsultaListaDatosCliente(claves, ListaDatosCliente).Ok = False Then
+            respuesta.Id_Out = 1
+            Throw New System.Exception
+          End If
+          For Each item As List(Of ServicioT24.RespENQDatosCliente) In ListaDatosCliente
+            For Each item2 As ServicioT24.RespENQDatosCliente In item
+              If item2 IsNot Nothing Then
+                xmlDatosCliente.Add(New XElement("RespENQDatosCliente",
+                                        New XElement("sID", item2.sID),
+                                        New XElement("sName1", item2.sName1))
+                                       )
+              End If
+            Next
+          Next
+
+          Dim parameters = New List(Of SqlParameter)
+
+          If xmlLineasCredito IsNot Nothing Then
+            parameters.Add(New SqlParameter("@ServicioT24LineasXML", xmlLineasCredito.ToString()))
+          Else
+            parameters.Add(New SqlParameter("@ServicioT24LineasXML", DBNull.Value))
+          End If
+
+          If xmlLineaCredito IsNot Nothing Then
+            parameters.Add(New SqlParameter("@ServicioT24LineaXML", xmlLineaCredito.ToString()))
+          Else
+            parameters.Add(New SqlParameter("@ServicioT24LineaXML", DBNull.Value))
+          End If
+
+
+          If xmlDatosCliente IsNot Nothing Then
+            parameters.Add(New SqlParameter("@ServicioT24ENQDatosXMl", xmlDatosCliente.ToString()))
+          Else
+            parameters.Add(New SqlParameter("@ServicioT24ENQDatosXMl", DBNull.Value))
+          End If
+
+          If xmlSaldoCuenta IsNot Nothing Then
+            parameters.Add(New SqlParameter("@ServicioT24ENQSaldoCuenta", xmlSaldoCuenta.ToString()))
+          Else
+            parameters.Add(New SqlParameter("@ServicioT24ENQSaldoCuenta", DBNull.Value))
+          End If
+          parameters.Add(New SqlParameter("@ClienteID", clienteId))
+
+          model.controlRiesgo = context.Database.SqlQuery(Of ControlRiesgo)("Exec [dbo].[SP_ConsultaControlRiesgo] " +
+                                            " @ServicioT24LineasXML, " +
+                                            " @ServicioT24LineaXML, " +
+                                            " @ServicioT24ENQDatosXMl , " +
+                                            " @ServicioT24ENQSaldoCuenta, " +
+                                            " @ClienteID", parameters.ToArray()).ToList()
+
+
+          If model.controlRiesgo IsNot Nothing Then
+            model.cliente = (From p In context.clientes
+                     Where p.cliente = clienteId
+                     Select New ControlCliente With {
+                      .rgpo = p.rgpo,
+                      .riesgo = p.riesgo,
+                      .riesgogpo = p.riesgogpo,
+                      .vobo = p.vobo,
+                      .voboreg = p.voboreg
+            }).SingleOrDefault()
+            model.cliente.Paridad = context.paridad.OrderByDescending(Function(x) x.fecha).Select(Function(x) x.paridad1).FirstOrDefault()
+            scope.Complete()
+            respuesta.Ok = True
+
+          End If
+
+        Catch e As Exception
+          If respuesta.Id_Out = 1 Then
+            respuesta.Detalle = "Servicio T24 no disponible , favor de intentar mas tarde."
+          Else
+            respuesta.Detalle = e.Message
+          End If
+        End Try
+
+      End Using
+
+    End Using
+
+
+    Return respuesta
+
+  End Function
+
+  Function consultaLineasDAL(clienteId As Integer, ByRef modelLinea As ControlRiesgo) As Result
+
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+
+      Try
+        modelLinea.dropdown = New List(Of DropDownEntidad)
+        modelLinea.dropdown = (From x In context.CtrlRiesgo
+               Where x.cliente = clienteId And x.lcredito.TrimEnd().Length < 15 And x.idmultiple = "" And x.cancelado = 0
+               Select New DropDownEntidad With {
+                    .claveStr = x.lcredito.TrimEnd(),
+                    .nombre = x.id_rec.TrimEnd() + "-" + x.ldescrip.TrimEnd()
+                    }
+                  ).Distinct().ToList()
+
+        If modelLinea IsNot Nothing Then
+          respuesta.Ok = True
+        End If
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+        respuesta.Id_Out = 1
+      End Try
+
+    End Using
+    Return respuesta
+  End Function
+
+  Function ConsultaGarantiaLiquidaDAL(idRec As String, ByRef entidad As CtrlRiesgo) As Result
+
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+
+      Try
+        entidad = context.CtrlRiesgo.Where(Function(p) p.id_rec.TrimEnd() = idRec).SingleOrDefault()
+
+        If entidad IsNot Nothing Then
+          respuesta.Ok = True
+        End If
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+        respuesta.Id_Out = 1
+      End Try
+
+    End Using
+    Return respuesta
+  End Function
+
+  Function ReporteCtrlRiesgo(idCliente As Integer, model As ControlRiesgo_Cliente) As Result
+
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+
+      Try
+
+        Dim parameters = New List(Of SqlParameter)
+
+        parameters.Add(New SqlParameter("@ClienteID", idCliente))
+
+
+
+        model.controlRiesgo = context.Database.SqlQuery(Of ControlRiesgo)("Exec [dbo].[SP_ReporteControlRiesgo] " +
+                                            " @ClienteID", parameters.ToArray()).ToList()
+        If model.controlRiesgo IsNot Nothing Then
+
+          model.cliente = (From p In context.clientes
+               Where p.cliente = idCliente
+               Select New ControlCliente With {
+                .riesgo = p.riesgo,
+                .riesgogpo = p.riesgogpo
+          }).SingleOrDefault()
+
+          model.cliente.tipoCambio = context.paridad.OrderByDescending(Function(e) e.fecha).Select(Function(p) p.paridad1).FirstOrDefault()
+          respuesta.Ok = True
+        End If
+
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+        respuesta.Id_Out = 1
+      End Try
+
+    End Using
+    Return respuesta
+  End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+
+  Public Function GuardarClienteLinea(clienteId As Integer, clienteT24 As Decimal) As Result
+
+    Dim respuesta = New Result(False)
+    Dim proxy = New Proxy()
+
+    Using context As New FactorContext()
+      'Lista de Lista permite almacenar multiples consulta al servicio t24 para generar un solo xml 
+
+      Dim ListaSaldoCuenta = New List(Of List(Of ServicioT24.RespENQSaldoCuenta))()
+      Try
+
+        'Obiene claves de t24 si existen en ctrlriesgo y cliente y parseamos a enteros
+        Dim clave = (From p In context.clientes
+                Where p.clientet24 = clienteT24
+                Select p.cliente).SingleOrDefault()
+
+
+        Dim ListaLineasCredito = New List(Of ServicioT24.RespENQLineasCredito)
+        Dim ListaLineaCredito = New List(Of List(Of ServicioT24.RespENQLineaCredito))()
+        Dim ListaDatosCliente = New List(Of ServicioT24.RespENQDatosCliente)()
+        Dim clavesLineaCredito = New List(Of String)
+
+        'obtienes listas de t24 
+        proxy.ConsultaLineasCredito(Convert.ToInt32(clienteT24), ListaLineasCredito)
+        Dim xmlLineasCredito = New XElement("ArrayOfRespENQLineasCredito")
+        For Each item As ServicioT24.RespENQLineasCredito In ListaLineasCredito
+          If item IsNot Nothing Then
+            xmlLineasCredito.Add(New XElement("RespENQLineasCredito",
+                                              New XElement("sClave", item.sLineaCredito.Split(".")(0)),
+                                              New XElement("sTipo", item.sLineaCredito.Split(".")(1)),
+                                              New XElement("sNumero", item.sLineaCredito.Split(".")(2)),
+                                              New XElement("sLineaCredito", item.sLineaCredito),
+                                              New XElement("sDescripcionLinea", item.sDescripcionLinea),
+                                              New XElement("sMoneda", item.sMoneda),
+                                              New XElement("sMontoOtorgado", item.sMontoOtorgado),
+                                              New XElement("sMontoDispuesto", item.sMontoDispuesto),
+                                              New XElement("sMontoDisponer", item.sMontoDisponer),
+                                              New XElement("sVencimiento", item.sVencimiento),
+                                              New XElement("sUtilizado", item.sUtilizado)
+                                              ))
+            clavesLineaCredito.Add(item.sLineaCredito)
+            'Else
+            '	'No existe cliente t24
+            '	respuesta.Id_Out = 1
+            '	respuesta.Detalle = "No existe Cliente en T24 !!"
+            '	Throw New System.Exception()
+
+          End If
+
+        Next
+
+        proxy.ConsultaLineaCredito(clavesLineaCredito, ListaLineaCredito)
+        Dim xmlLineaCredito = New XElement("ArrayOfRespENQLineaCredito")
+        For Each item As List(Of ServicioT24.RespENQLineaCredito) In ListaLineaCredito
+          For Each item2 As ServicioT24.RespENQLineaCredito In item
+            If item2 IsNot Nothing Then
+              xmlLineaCredito.Add(New XElement("RespENQLineaCredito",
+                                          New XElement("sClave", item2.sIdentificador.Split(".")(0)),
+                                          New XElement("sTipo", item2.sIdentificador.Split(".")(1)),
+                                          New XElement("sNumero", item2.sIdentificador.Split(".")(2)),
+                                          New XElement("sLineaCredito", item2.sIdentificador),
+                                          New XElement("sAdeudosPendientes", item2.sAdeudosPendientes))
+                                         )
+
+            End If
+
+          Next
+        Next
+
+        Dim xmlDatosCliente = New XElement("ArrayOfRespENQDatosCliente")
+        proxy.ConsultaDatosCliente(Convert.ToInt32(clienteT24), ListaDatosCliente)
+
+        For Each item As ServicioT24.RespENQDatosCliente In ListaDatosCliente
+          If item IsNot Nothing Then
+            xmlDatosCliente.Add(New XElement("RespENQDatosCliente",
+                                    New XElement("sID", item.sID),
+                                    New XElement("sName1", item.sName1))
+                                   )
+          End If
+        Next
+
+        Dim parameters = New List(Of SqlParameter)
+
+        If xmlLineasCredito IsNot Nothing Then
+          parameters.Add(New SqlParameter("@ServicioT24LineasXML", xmlLineasCredito.ToString()))
+        Else
+          parameters.Add(New SqlParameter("@ServicioT24LineasXML", DBNull.Value))
+        End If
+
+        If xmlLineaCredito IsNot Nothing Then
+          parameters.Add(New SqlParameter("@ServicioT24LineaXML", xmlLineaCredito.ToString()))
+        Else
+          parameters.Add(New SqlParameter("@ServicioT24LineaXML", DBNull.Value))
+        End If
+
+
+        If xmlDatosCliente IsNot Nothing Then
+          parameters.Add(New SqlParameter("@ServicioT24ENQDatosXMl", xmlDatosCliente.ToString()))
+        Else
+          parameters.Add(New SqlParameter("@ServicioT24ENQDatosXMl", DBNull.Value))
+        End If
+
+        parameters.Add(New SqlParameter("@ClienteOriginal", clienteId))
+        parameters.Add(New SqlParameter("@Cliente", clave))
+
+
+        context.Database.SqlQuery(Of ControlRiesgo)("Exec [dbo].[SP_AltaCtrlRiesgo] " +
+                                          " @ServicioT24LineasXML, " +
+                                          " @ServicioT24LineaXML, " +
+                                          " @ServicioT24ENQDatosXMl , " +
+                                          " @ClienteOriginal, " +
+                                          " @Cliente ", parameters.ToArray()).ToList()
+
+        respuesta.Ok = True
+
+      Catch e As Exception
+        If respuesta.Id_Out <> 1 Then
+          respuesta.Detalle = e.Message
+        End If
+
+      End Try
+
+    End Using
+
+    Return respuesta
+
+  End Function
+
+  Public Function ActualizarAsociarLineasDAL(model As ControlRiesgo) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+
+        Dim values = context.CtrlRiesgo.Where(Function(x) model.claves.Contains(x.lcredito) And x.cliente = model.cliente).ToList()
+        For Each item As CtrlRiesgo In values
+          item.idmultiple = model.idmultiple
+          item.lmultiple = model.lmultiple
+        Next
+        context.SaveChanges()
+        respuesta.Ok = True
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+  Public Function ActualizarControlRiesgoDAL(model As clientes) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+
+        Dim cliente = context.clientes.Where(Function(x) x.cliente = model.cliente).SingleOrDefault()
+
+        cliente.vobo = model.vobo
+        cliente.voboreg = model.voboreg
+        cliente.rgpo = model.rgpo
+        cliente.riesgogpo = model.riesgogpo
+        cliente.riesgo = model.riesgo
+
+        context.clientes.Attach(cliente)
+        context.Entry(cliente).State = EntityState.Modified
+        context.SaveChanges()
+        respuesta.Ok = True
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+  Public Function DesasociarLineasDAL(clienteId As Integer) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        Dim values = context.CtrlRiesgo.Where(Function(x) x.cliente = clienteId).ToList()
+        For Each item As CtrlRiesgo In values
+          item.idmultiple = ""
+          item.lmultiple = 0D
+        Next
+        context.SaveChanges()
+        respuesta.Ok = True
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+  Public Function ActualizarGarantiaLiquidaDAL(model As linea) As Result
+    Dim respuesta = New Result(False)
+
+    Dim proxy = New Proxy()
+    Dim lista = New List(Of ServicioT24.RespENQSaldoCuenta)
+
+    If proxy.ConsultaSaldoCuenta(model.cuenta.TrimEnd(), lista).Ok Then
+      If lista(0) IsNot Nothing Then
+        Using context As New FactorContext
+          Try
+            Dim entidad = context.CtrlRiesgo.Where(Function(x) x.id_rec.TrimEnd() = model.id_rec.TrimEnd()).SingleOrDefault()
+            If entidad IsNot Nothing Then
+              entidad.porcentaje = model.porcentaje
+              entidad.liquida = model.liquida
+              entidad.cuenta = model.cuenta.Trim()
+              context.SaveChanges()
+              respuesta.Ok = True
+            End If
+          Catch e As Exception
+            respuesta.Detalle = e.InnerException.InnerException.Message
+          End Try
+
+        End Using
+      Else
+        respuesta.Detalle = "Cuenta no existe."
+      End If
+    Else
+      respuesta.Detalle = "Error al consultar Servicio T24!!"
+    End If
+
+    Return respuesta
+  End Function
+
+  Public Function CancelarLineaDAL(idRec As String) As Result
+    Dim respuesta = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        Dim linea = context.CtrlRiesgo.Where(Function(x) x.id_rec.TrimEnd() = idRec.Trim()).SingleOrDefault()
+        linea.cancelado = True
+        context.SaveChanges()
+        respuesta.Ok = True
+
+      Catch e As Exception
+        respuesta.Detalle = e.InnerException.InnerException.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+#End Region
+
+End Class

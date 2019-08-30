@@ -1,0 +1,8 @@
+﻿Public Class UsuarioConsulta
+
+	Public Property user As usuarios
+	Public Property sucursal As sucursal
+	Public Property perfil As Perfil
+	Public Property permisos As List(Of Integer)
+
+End Class

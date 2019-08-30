@@ -1,0 +1,207 @@
+﻿@ModelType nuve.Models.Modeloautoriza
+
+@Code
+  ViewData("Title") = "Factoraje - Autorizaciones"
+End Code
+
+@Section Scripts
+  <script src="~/Scripts/AutorizaScripts/Autoriza.js?v=@String.Concat(Today.Day, Today.Month, Today.Year, TimeOfDay.Hour, TimeOfDay.Minute, TimeOfDay.Second)"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+End Section
+
+@Section css
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+End Section
+
+<div class="head">
+  <div class="headForma">
+    <div class="headFormaContenido">
+      <a href="~/Operaciones/Index">
+        <img src="~/Images/menu/menuregresar.png" /></a>
+      <span>Autorizaciones</span>
+    </div>
+  </div>
+</div>
+
+   
+
+<div id="tableContainer" class="tableContainer">
+  <div class="panel-heading">
+    <div class="topmargin">
+      <div class="form-inline" style="width: 100%">
+
+@*        <div class="form-group">
+          @Html.Label("Contrato:")
+          <input id="contrato" value="0" class='form-control' type="text" />
+        </div>*@
+ 
+          @Html.Label("fecha : ", New With {.class = "control-label"})
+          <div class='input-group date' id='ac_fechaDataTime'>
+            <input id="sfecha" class='month-year-input form-control' type="text" autocomplete="off" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+            </span>
+          </div>
+ 
+      <hr />
+
+      </div>
+
+      <hr />
+
+      <div class="form-inline" style="width: 100%">
+
+     
+
+         <div class="form-group pull-right">
+          @*<button id="btnafectar" type="button" class="btn bold">Afectar cobranza</button>*@
+
+          @*<button id="btnreverso" type="button" class="btn bold">Reverso cobranza</button>*@
+        </div>
+
+     
+      </div>
+
+     
+    </div>
+
+  </div>
+</div>
+
+<div class="panel-body">
+  <div >
+    <div class="table-responsive">
+      <table id="tablaprincipal" class="table cell-border compact hover" style="width: 100%">
+
+        <thead>
+
+@*          <tr>
+
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Contrato: </label>
+                <label id="cont" />
+              </div>
+
+              <div class="form-group">
+                <label id="nom" />
+              </div>
+
+              <div class="form-group">
+                <label id="monedastr" />
+              </div>
+
+
+            </div>
+
+          </tr>
+
+          <tr>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Producto: </label>
+              </div>
+              <div class="form-group">
+                <label id="descrip" />
+              </div>
+            </div>
+          </tr>
+
+          <tr>
+            <div class="form-inline">
+
+              <div class="form-group">
+                <label>Adeudos: </label>
+              </div>
+              <div class="form-group">
+                <label id="ade" />
+              </div>
+              &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                  
+                  <div class="form-group">
+                    <label>Provisión: </label>
+                  </div>
+              <div class="form-group">
+                <label id="prov" />
+              </div>
+              &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                
+                  <div class="form-group">
+                    <label>Moratorios: </label>
+                  </div>
+              <div class="form-group">
+                <label id="moras" />
+              </div>
+
+            </div>
+          </tr>*@
+
+
+          <tr>
+            <th style="text-align:center">
+              @Html.DisplayNameFor(Function(model) model.oper)
+            </th>
+            <th style="text-align:center">
+              @Html.DisplayNameFor(Function(model) model.timefondeo)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.contname)
+            </th>
+            
+            <th style="text-align:left">
+              @Html.DisplayNameFor(Function(model) model.descrip)
+            </th>
+
+            <th style="text-align:center">
+              @Html.DisplayNameFor(Function(model) model.moneda)
+            </th>
+            <th style="text-align:right">
+              @Html.DisplayNameFor(Function(model) model.pago)
+            </th>
+            <th style="text-align:center">
+              @Html.DisplayNameFor(Function(model) model.stat)
+            </th>
+            <th style="text-align:left">
+              @Html.DisplayNameFor(Function(model) model.benefi)
+            </th>
+            <th style="text-align:left">
+              @Html.DisplayNameFor(Function(model) model.clabe)
+            </th>
+            <th style="text-align:left">
+              @Html.DisplayNameFor(Function(model) model.shortname)
+            </th>
+            
+          </tr>
+        </thead>
+
+        <tfoot>
+          <tr>
+
+            <th colspan="3">
+            </th>
+
+
+            <th>
+            </th>
+
+            <th style="text-align:right">
+              <label id="importe" />
+            </th>
+
+            <th colspan="5">
+            </th>
+
+            
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+@*</div>*@
+
+<div id="dialog-confirm" title="" style="display: none">
+  <p>
+    <span class="glyphicon glyphicon-remove" style="float: left; margin: 12px 12px 20px 0;"></span>
+  </p>
+</div>

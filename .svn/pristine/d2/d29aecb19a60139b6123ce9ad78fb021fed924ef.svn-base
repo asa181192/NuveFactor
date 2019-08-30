@@ -1,0 +1,57 @@
+﻿
+var vencida =
+{
+    inicializarTabla: function (contrato) {
+
+        tablaAdeudos = $('#table')
+            .DataTable({
+                ajax: {
+                    "url": "../Cobranza/obtenerCarteraVencida", // url del controlador a consultar 
+                    "data": function (d) { d.contrato = contrato },
+                    "Type": "GET",
+                    "dataSrc": function (json) {
+                        if (typeof (json.Mensaje) != 'undefined') {
+                            //mensajemodal(json.Mensaje, 'warning');
+                            return {};
+                        } else {
+                            return json.Results;
+                        }
+                    }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
+                },
+                dom: "Bfrtip",
+                buttons: [
+                      'excel', 'pdf', 'print' // permiten agregar botones para exportar a excel 
+                ],
+                paging: true, // permite la paginacion en la tabla .
+                lengthMenu: [31], // Cantidad de registros mostrados por pantalla 
+                searching: true, // genera cuadro de busqueda
+                ordering: true, // genera ordenamiento de columnas 
+                order: [[1, 'desc']], // ordena la primer columna
+                responsive: true, // realiza la tabla responsiva en moviles
+                destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
+                columns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
+           { data: "contrato", orderable: true },
+           { data: "deudor" },
+           { data: "deunombre" },
+           { data: "docto", orderable: true },
+           { data: "saldo", orderable: true },
+           { data: "fec_vence" },
+           { data: "plazo", render: $.fn.dataTable.render.number(',', '.', '2', ''), orderable: false, className: 'dt-body-right' },
+                ],
+                "columnDefs": [
+                    { "className": "dt-body-center", "targets": [0] } // permite centrar botones de edicion 
+                ]
+            });
+
+
+    }
+}
+
+$(document).ready(function (e) {
+    vencida.inicializarTabla($("#contrato").val()); // Realiza consulta al mes actual y año actual al carga la pagina pro primera vez 
+      
+
+});

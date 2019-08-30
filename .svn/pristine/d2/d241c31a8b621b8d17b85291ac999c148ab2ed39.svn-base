@@ -1,0 +1,27 @@
+﻿Imports FactorEntidades
+Imports System.Data.SqlClient
+
+Public Class ValidacionesDAL
+	Function ConsultaRFC(RFC As String, tabla As String, Param1 As String, Param2 As String, ByVal clave As Integer, ByRef existe As Boolean) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				If context.Database.SqlQuery(Of Integer)(
+					"SELECT count(1) Resultado FROM " + tabla + " WHERE Rtrim(" + Param1 + ")=@rfc AND " + Param2 + " <> @clave  ",
+					New SqlParameter("tabla", tabla),
+					New SqlParameter("rfc", RFC.Trim()),
+					New SqlParameter("clave", clave)).Single() > 0 Then
+					existe = True
+				End If
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+End Class

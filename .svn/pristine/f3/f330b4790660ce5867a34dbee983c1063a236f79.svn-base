@@ -1,0 +1,22 @@
+﻿Imports FactorEntidades
+
+Public Class ValidacionesDAL
+	Function ConsultaRFC(RFC As String, ByVal deudor As Integer, ByRef existe As Boolean) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				If context.proveedor.Any(Function(p) p.rfc.Trim() = RFC.Trim() And p.deudor <> deudor) Then
+					existe = True
+				End If
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+End Class

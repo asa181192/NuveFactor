@@ -1,0 +1,132 @@
+﻿@ModelType nuve.Models.ModeloControlRiesgo
+
+@Code
+    ViewData("Title") = "ControlRiesgo"
+End Code
+
+@Section Scripts
+    <script src="~/Scripts/CatalogosScripts/ControlRiesgo.js"></script>
+End Section
+
+
+
+<div class="head">
+    <div class="headForma">
+      <div class="headFormaContenido">
+        <a href="~/Catalogos/Clientes"><img src="~/Images/menu/menuregresar.png"/></a>
+        <span>Cliente - ( @ViewBag.clienteid ) </span>
+      </div>       
+    </div>  
+</div>
+
+@Html.HiddenFor(Function(x) x.cliente)
+
+<div id="tableContainer" class="tableContainer">
+    <div class="panel-heading">
+        <div class="topmargin" >    
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Riesgo Individual</label>      
+                     <input type="text" />    
+                     <span>MXN</span>              
+                </div>
+                 <div class="col-md-4">
+                     <label class="chBox">Riesgo de grupo
+                      <input type="checkbox" checked="checked">
+                      <span class="checkmark"></span>
+                     </label>     
+                     <input type="text" />    
+                     <button>1</button> 
+                     <button>2</button>   
+                     <button>3</button>   
+                     <button>4</button>          
+                </div>
+                   <div class="col-md-4">
+                     <label class="chBox">Vo.Bo.Registro
+                      <input type="checkbox" checked="checked">
+                      <span class="checkmark"></span>
+                     </label>
+                      <label class="chBox">Vo.Bo.Mesa Ctrl.
+                      <input type="checkbox" checked="checked">
+                      <span class="checkmark"></span>
+                     </label>
+                </div>
+            </div>        
+                                  
+        </div>
+    </div> 
+    <div class="panel-body">
+            <div class="jumbotron">     
+                <div class="table-responsive">        
+                   <table id="table"  class ="table cell-border compact hover" style="width:100%" > 
+                           <thead>
+                              <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.Cancela)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.Div)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.id_rec)
+                                    </th>                                 
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.Infolinea)
+                                    </th> 
+                                    <th>
+                                       @Html.DisplayNameFor(Function(model) model.clientet24)
+                                    </th> 
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.nombre)
+                                    </th> 
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.RgoDesc)
+                                    </th>  
+                                    <th>
+                                       @Html.DisplayNameFor(Function(model) model.ldescrip)
+                                    </th> 
+                                    <th>
+                                       @Html.DisplayNameFor(Function(model) model.lmonto)
+                                    </th> 
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.lutilizado)
+                                    </th>      
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.ldisponibl)
+                                    </th> 
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.lvence)
+                                    </th> 
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.lmultiple)
+                                    </th> 
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.gliq)
+                                    </th> 
+                                    <th>
+                                        @Html.DisplayNameFor(Function(model) model.porcentaje)
+                                    </th> 
+                                  <th>
+                                        @Html.DisplayNameFor(Function(model) model.cuenta)
+                                    </th> 
+                                  <th>
+                                        @Html.DisplayNameFor(Function(model) model.adeudo)
+                                    </th> 
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.vencida)
+                                    </th>    
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.garantsdo)
+                                    </th>    
+                                   <th>
+                                        @Html.DisplayNameFor(Function(model) model.garantutl)
+                                    </th>       
+                                  <th>Editar</th>                          
+                              </tr>
+                             </thead>
+                    </table>
+                 </div>     
+            </div>
+    </div>
+</div>
+

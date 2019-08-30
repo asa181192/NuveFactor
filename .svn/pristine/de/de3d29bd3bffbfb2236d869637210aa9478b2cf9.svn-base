@@ -1,0 +1,192 @@
+﻿Imports FactorEntidades
+
+
+Public Class Proxy
+
+	Public Function ConsultaLineasCredito(ByVal sCliente As String, ByRef model As List(Of ServicioT24.RespENQLineasCredito)) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+			model = consulta.ENQLineasCredito(sCliente).ToList()
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+	Public Function ConsultaListaLineasCredito(ByVal Claves As List(Of Integer), ByRef model As List(Of List(Of ServicioT24.RespENQLineasCredito))) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+
+			For Each item As Integer In Claves
+				model.Add(consulta.ENQLineasCredito(item).ToList())
+
+			Next
+			Respuesta.Ok = True
+
+		Catch ex As Exception
+			Respuesta.DetalleServicio = "Ocurrio un error al consultar el servicio T24 !! Tipo de error : " + ex.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+	Public Function ConsultaDatosCliente(ByVal Clave As Integer, ByRef model As List(Of ServicioT24.RespENQDatosCliente)) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+			model = consulta.ENQDatosCliente(Clave).ToList()
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+	Public Function ConsultaListaDatosCliente(ByVal Claves As List(Of Integer), ByRef model As List(Of List(Of ServicioT24.RespENQDatosCliente))) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+
+			For Each item As Integer In Claves
+				model.Add(consulta.ENQDatosCliente(item).ToList())
+			Next
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+
+	Public Function ConsultaSaldoCuenta(ByVal sNumCuenta As String, ByRef model As List(Of ServicioT24.RespENQSaldoCuenta)) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+			model = consulta.ENQSaldoCuenta(sNumCuenta).ToList()
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+	Public Function ListaConsultaSaldoCuenta(ByVal cuentas As List(Of Integer), ByRef model As List(Of List(Of ServicioT24.RespENQSaldoCuenta))) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+
+			For Each item As Integer In cuentas
+				model.Add(consulta.ENQSaldoCuenta(item).ToList())
+			Next
+
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+	End Function
+
+	Public Function ConsultaCuentasCliente(ByVal sCliente As String, ByVal sCuenta As String, ByRef model As List(Of ServicioT24.RespENQCuentasCliente)) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+			model = consulta.ENQCuentasCliente(sCliente, sCuenta).ToList()
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+		Return Respuesta
+	End Function
+
+	Public Function ConsultaLineaCredito(ByVal sCliente As List(Of String), ByRef model As List(Of List(Of ServicioT24.RespENQLineaCredito))) As Result
+
+		Dim Respuesta = New Result(False)
+		Try
+			Dim consulta = New ServicioT24.FactorajeSoapClient()
+			For Each item In sCliente
+
+				Dim lista = consulta.ENQLineaCredito(item).ToList()
+				If lista(0) IsNot Nothing Then
+					For Each value As ServicioT24.RespENQLineaCredito In lista
+						value.sIdentificador = item
+					Next
+					model.Add(lista)
+				End If
+			Next
+			Respuesta.Ok = True
+		Catch ex As Exception
+			Respuesta.Detalle = ex.InnerException.Message
+		End Try
+
+		Return Respuesta
+
+    End Function
+
+    Public Function GetPdfResult(ByRef parametro As String, ByRef archivo As Byte()) As Result
+        Dim response = New Result(False)
+
+        Try
+            Dim consulta = New ServicioWsFactura.GetCypressServiceSoapClient()
+            archivo = consulta.getPdf(parametro)
+            response.Ok = True
+        Catch ex As Exception
+            response.Mensaje = ex.Message
+        End Try
+
+        Return response
+    End Function
+
+    Public Function GetXmlResult(ByRef parametro As String, ByRef archivo As Byte()) As Result
+        Dim response = New Result(False)
+
+        Try
+            Dim consulta = New ServicioWsFactura.GetCypressServiceSoapClient()
+            archivo = consulta.getXml(parametro)
+            response.Ok = True
+        Catch ex As Exception
+            response.Mensaje = ex.Message
+        End Try
+
+        Return response
+    End Function
+
+    Public Function CancelaCFDI(rfc As String, serie As String, folio As Integer) As Result
+        Dim response = New Result(False)
+
+        Try
+            Dim consulta = New ServicioCancelacionCFDI.CancelacionServiceSoapClient()
+            consulta.CancelarCFDI(rfc, serie, folio)
+            response.Ok = True
+        Catch ex As Exception
+            response.Mensaje = ex.Message
+        End Try
+
+        Return response
+    End Function
+
+
+
+
+
+End Class

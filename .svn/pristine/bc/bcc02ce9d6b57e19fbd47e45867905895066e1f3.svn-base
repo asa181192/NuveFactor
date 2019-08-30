@@ -1,0 +1,114 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+Public Class ParidadDAL
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+	Public Function ConsultaParidadDAL(fechaMes As String, fechaAnio As String, ByRef model As List(Of ParidadEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				Dim values = (From p In context.paridad
+						Where p.fecha.Value.Year = fechaAnio AndAlso p.fecha.Value.Month = fechaMes
+						Select p).ToList()
+
+				For Each item As paridad In values
+					Dim p = New ParidadEntidad
+
+					p.fecha = item.fecha.Value.ToShortDateString()
+					p.paridad = item.paridad1
+					p.udis = item.udis
+
+					model.Add(p)
+				Next
+
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaParidadDetalleDAL(fecha As String, ByRef model As paridad) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model = (From p In context.paridad
+									Where p.fecha = fecha).SingleOrDefault()
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function AltaParidad(model As paridad) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+			Try
+
+				If Not context.paridad.Any(Function(p) p.fecha = model.fecha) Then
+					context.paridad.Add(model)
+					context.SaveChanges()
+					respuesta.Ok = True
+				Else
+					respuesta.Mensaje = "El registro ya existe !! ."
+				End If
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarParidad(model As paridad) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				context.paridad.Attach(model)
+				context.Entry(model).State = EntityState.Modified
+				context.Entry(model).Property(Function(x) x.void).IsModified = False
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+#End Region
+
+End Class

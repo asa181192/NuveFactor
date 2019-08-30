@@ -1,0 +1,36 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Transactions
+
+
+Public Class ReportesDAL
+
+    Public Function vencimientoFondeoNafin(moneda As Integer, tipo As String, inicio As Date, fin As Date, model As sp_vencimientosnafin) As Result
+        Dim response = New Result(False)
+        Dim parameter = New List(Of SqlParameter)
+
+        Using context As New FactorContext
+
+            Try
+                parameter.Add(New SqlParameter("@moneda", moneda))
+                parameter.Add(New SqlParameter("@tipo", tipo))
+                parameter.Add(New SqlParameter("@inicio", inicio))
+                parameter.Add(New SqlParameter("@fin", fin))
+
+                model.list = context.Database.SqlQuery(Of sp_vencimientosnafin)(
+                    "Exec [dbo].[sp_vencimientosnafin" + "@moneda," + "@tipo," + "@inicio," + "@fin", parameter.ToArray()).ToList()
+
+                response.Ok = True
+            Catch ex As Exception
+                response.Detalle = ex.InnerException.InnerException.Message
+                response.Id_Out = 1
+            End Try
+
+        End Using
+
+        Return response
+    End Function
+
+End Class

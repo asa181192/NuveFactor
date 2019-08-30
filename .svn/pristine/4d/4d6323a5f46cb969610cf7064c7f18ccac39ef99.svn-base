@@ -1,0 +1,79 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+
+Public Class CobranzaDAL
+
+#Region "Metodos de Consulta"
+
+  Public Function consultaAdeudos(ByRef model As List(Of adeudos)) As Result
+
+    Dim Respuesta = New Result(False)
+    Dim context As New FactorContext
+    '
+    Try
+      Dim values = (From a In context.adeudos
+                    Join b In context.clientes
+                    On a.id Equals b.cliente
+                    Where a.saldo > 0 AndAlso a.identidad = 1
+                    Select a).Union(From a In context.adeudos
+                      Join b In context.proveedor
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 2
+                      Select a).Union(From a In context.adeudos
+                      Join b In context.comprador
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 2
+                      Select a).ToList()
+
+
+
+      '.Union( From a In context.adeudos
+      '                Join b In context.prveedor
+      '                On New With {a.id} Equals New With {b.deudor}
+      '                Where a.saldo > 0 
+      '                And a.identidad = 2
+      '                Select a)
+      '                .Union(From a In context.adeudos
+      '                Join b In context.prveedor
+      '                On New With {a.id} Equals New With {b.deudor}
+      '                Where a.saldo > 0 
+      '                And a.identidad = 2
+      '                Select a)).ToList()
+
+      For Each item As cuentas In values
+
+        Dim a = New cuentas
+
+        a.ctabanco = item.ctabanco
+        a.idctabanco = item.idctabanco
+        a.sucursal = item.sucursal
+        a.banco = item.banco
+        a.saldo = item.saldo
+        a.moneda = item.moneda
+        a.cancelado = item.cancelado
+        a.idctabanco = a.idctabanco
+
+        model.Add(a)
+      Next
+
+      Respuesta.Ok = True
+
+    Catch ex As Exception
+      Respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return Respuesta
+
+  End Function
+
+
+#End Region
+
+End Class
+
+
+'consultaAdeudos

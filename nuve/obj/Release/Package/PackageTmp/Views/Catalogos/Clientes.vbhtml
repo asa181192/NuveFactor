@@ -5,7 +5,7 @@
 End Code
 
 @Section Scripts
-    <script src="/Scripts/CatalogosScripts/Clientes.js"></script>
+    <script src="~/Scripts/CatalogosScripts/Clientes.js"></script>
 End Section
 
 <div class="head">

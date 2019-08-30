@@ -1,0 +1,121 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Data.Entity.Validation
+Imports System.Activities.Statements
+
+
+
+
+
+
+
+Public Class MovimientosDAL
+
+#Region "Metodos de consulta"
+
+    Public Function consultaMovimientosDAL(fecIni As Date, idctabanco As Integer, ByRef model As List(Of MovimientosEntidad)) As Result
+
+        Dim respuesta = New Result(False)
+        Dim context As New FactorContext
+
+        Try
+
+            Dim values = (From a In context.movcuentas
+                          Join b In context.cuentas On a.idctabanco Equals (b.idctabanco)
+                          Where (a.fecha = fecIni) And a.idctabanco = idctabanco
+                          Select New MovimientosEntidad With {.numrec = a.numrec, .fecha = a.fecha, .folio = a.folio, .tipo = a.tipo,
+                                                              .beneficiario = a.beneficiario, .concepto = a.concepto, .entrada = a.entrada,
+                                                              .salida = a.salida, .saldo = a.saldo, .cancelado = a.cancelado}).ToList()
+
+            For Each item As MovimientosEntidad In values
+
+                Dim a = New MovimientosEntidad
+
+                a.numrec = item.numrec
+                a.folio = item.folio
+                a.tipo = item.tipo.Trim()
+                a.beneficiario = item.beneficiario.Trim()
+                a.concepto = item.concepto.Trim()
+                a.entrada = item.entrada
+                a.salida = item.salida
+                a.saldo = item.saldo
+                a.fecha = item.fecha
+                a.cancel = IIf(item.cancelado, "Cancelado", "Movimiento Activo")
+
+                model.Add(a)
+            Next
+
+            respuesta.Ok = True
+
+        Catch ex As Exception
+            respuesta.Detalle = ex.Message
+
+        End Try
+
+        Return respuesta
+
+    End Function
+
+    Public Function movimientosCancelado(numrec As Integer, ByRef model As cuentas) As Result
+
+        Dim cancelado = New Result(False)
+        Dim context = New FactorContext
+
+        Dim values = (From a In context.movcuentas Where a.numrec = numrec Select a).SingleOrDefault()
+
+        cancelado.Ok = values.cancelado
+
+        Return cancelado
+
+    End Function
+
+
+#End Region
+
+#Region "Metodos transaccionales"
+
+#End Region
+
+    Function GuardarMovimientosDAL(numrec As Integer, tipo As Integer, model As MovimientosEntidad) As Result
+
+
+
+
+
+    End Function
+
+
+
+    Function consultaMovimientoDetalleDAL(numrec As Integer, ByRef model As MovimientosEntidad) As Result
+        'Tipo (1=Traspaso, 2=Cargos, 3=Depositos)
+
+
+        Dim respuesta = New Result(False)
+
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.movcuentas Where a.numrec = numrec
+                     Select a Select New MovimientosEntidad With {.numrec = a.numrec, .fecha = a.fecha, .beneficiario = a.beneficiario,
+                                                                  .concepto = a.concepto, .salida = a.salida, .concconta = a.concconta, .tipo = a.tipo}).SingleOrDefault()
+
+                If model IsNot Nothing Then
+                    respuesta.Ok = True
+                End If
+
+            Catch ex As Exception
+                respuesta.Detalle = ex.Message
+            End Try
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+
+
+
+End Class

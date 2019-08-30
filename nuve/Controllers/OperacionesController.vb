@@ -1,0 +1,76 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.OperacionesModels
+Imports nuve.Models
+
+Namespace nuve
+  <CustomAuthorize(Permisos.Acciones.OPERACIONES)>
+  Public Class OperacionesController
+    Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+
+#Region "Menu"
+    <HttpGet>
+    Function Index() As ViewResult
+
+      Dim model As New Helpers.Menu
+
+      model.sMenu = "<div class=""BoxFlex"" id="""" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<label>Regresar</label>"
+      model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcobranza"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Cobranza</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexautoriza"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Autorizaciones</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+    
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexNotificaciones"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Notificaciones</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""factmenu"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Facturación</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexConsolida"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Consolidaciones</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      Return View(model)
+    End Function
+
+#End Region
+#End Region
+
+#Region "Get"
+
+
+#End Region
+
+
+  End Class
+End Namespace

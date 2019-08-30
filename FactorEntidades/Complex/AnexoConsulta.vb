@@ -1,0 +1,22 @@
+﻿Public Class AnexoConsulta
+  Public Property anexoid As Integer
+  Public Property nombre As String '(char(100), null)
+  Public Property deuname As String '(char(100), null)
+  Public Property telefono As String '(char(50), null)
+	Public Property contrato As Integer	'(int, null)
+	Public Property deudor As Integer '(int, null)
+  Public Property imprimir As Boolean '(bit, null)
+  Public Property producto As Integer '(bit, null)
+	Public Property mancobranza As Boolean '(bit, null)
+	Public Property notifica As Boolean	'(bit, null)
+	Public Property activo As Boolean '(bit, null)
+	Public Property seguro As Boolean '(bit, null)
+	Public Property cobertura As Decimal '(decimal(15,2), null)
+	Public Property Disponible As Decimal '(decimal(18,0), null)
+	Public Property rfc As String '(char(15), null)
+	Public Property util As Decimal	'(int, not null)
+	Public Property limite As Decimal '(int, not null)
+	Public Property sobretasa As Decimal
+	Public Property catcte As String
+	Public Property tasadif As Boolean
+End Class

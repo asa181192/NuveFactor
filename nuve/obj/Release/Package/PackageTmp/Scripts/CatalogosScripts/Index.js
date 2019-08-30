@@ -1,38 +1,30 @@
 ﻿$(document).ready(function (e) {
 
     $('#dvflexParidad').click(function () {
-        window.location.href = '/Catalogos/paridadCambiaria';
+        window.location.href = '../Catalogos/paridadCambiaria';
     });
 
     $('#dvflexProveedores').click(function () {
-        window.location.href = '/Catalogos/Proveedores';
+        window.location.href = '../Catalogos/Proveedores';
     });
 
     $('#dvflexCompradores').click(function () {
-        window.location.href = '/Catalogos/Compradores';
+        window.location.href = '../Catalogos/Compradores';
     });
 
     $('#dvflexFinancieros').click(function () {
-        window.location.href = '/Catalogos/Financieros';
+        window.location.href = '../Catalogos/Financieros';
     });
 
     $('#dvflexSucursales').click(function () {
-        window.location.href = '/Catalogos/Sucursales';
-    });
-
-    $('#dvflexGarantia  ').click(function () {
-        window.location.href = '/Catalogos/CodigoGarantia';
-    });
-
-    $('#dvflexGarantiaTipo').click(function () {
-        window.location.href = '/Catalogos/TipoGarantia';
+        window.location.href = '../Catalogos/Sucursales';
     });
 
     $('#dvflexClientes').click(function () {
-        window.location.href = '/Catalogos/Clientes';
+        window.location.href = '../Catalogos/Clientes';
     });
 
     $('#dvflexPromotores').click(function () {
-        window.location.href = '/Catalogos/Promotores';
+        window.location.href = '../Catalogos/Promotores';
     });
 });

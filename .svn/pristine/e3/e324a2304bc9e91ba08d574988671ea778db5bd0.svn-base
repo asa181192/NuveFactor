@@ -1,0 +1,152 @@
+﻿var data =
+{
+   inicializacionControles : function(){
+       if ($("#pfisica1").is(':checked')) {
+           $("#GroupPM :input").val("")
+           $("#GroupPM :input").prop('disabled', true);
+       }
+       else {
+           $("#GroupPF :input").prop('disabled', true);
+           $("#GroupPF :input").val("")
+       }
+
+
+       if ($("#grupoemp").is(':checked')) {
+           $("#clave").prop('disabled', false);
+       } else {
+           $("#clave").prop('disabled', true);
+       }
+
+       $("#ac_fechaDataTime").datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+            ignoreReadonly: true,
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'top'
+            }
+       }).keydown(function () { return false });
+        $("#ac_fechareDataTime").datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es',
+            ignoreReadonly: true,
+            widgetPositioning: {
+                horizontal: 'left',
+                vertical: 'top'
+            }
+        }).keydown(function () { return false });
+        $("#clienteForm").find(':input').each(function () {
+
+            var value = $(this).val()
+            $(this).val(value.trim())
+
+        })
+        $("#promotor").chosen({
+            width: "100%",
+            no_results_text: "Ningun Resultado !"
+          
+        });
+        $("#cvecd").chosen({
+            width: "100%",
+            no_results_text: "Ningun Resultado !"
+
+        });
+    },
+   validacionCampos: function () {
+       jQuery.validator.setDefaults({           
+           ignore : ''
+       });
+        jQuery.validator.addMethod(
+            'date',
+            function (value, element, params) {
+                if (this.optional(element)) {
+                    return true;
+                };
+                var result = false;
+                try {
+                    $.datepicker.parseDate("dd/mm/yy", value);
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                return result;
+            },
+            ''
+        );
+   }
+}
+
+$(document).ready(function (e) {
+
+    data.inicializacionControles();
+    data.validacionCampos();
+
+
+    // Eventos 
+    $("#pfisica1").change(function (e) {
+        $("#GroupPF :input").prop('disabled', false);
+        $("#nombre").val("")
+        $("#GroupPM :input").prop('disabled', true);
+    });
+
+    $("#pfisica").change(function (e) {
+        $("#GroupPF :input").prop('disabled', true);
+        $("#GroupPF :input").val("")
+        $("#GroupPM :input").prop('disabled', false);
+    });
+
+    $('#rfc').keyup(function () {
+        $(this).val($(this).val().toUpperCase());
+    });
+    
+    $(document).on('submit',
+          '#clienteForm',
+          function (e) {
+              var url = $('#clienteForm')[0].action;
+              $.ajax({
+                  type: "POST",
+                  url: url,
+                  data: $('#clienteForm').serialize(),
+                  beforeSend: function () {
+                      $.Loading(true);
+                  },
+                  success: function (data) {
+                      if (data.Result) {
+                          mensajemodal(data.Text, data.color, data.titulo);
+                      } else {
+                          mensajemodal(data.Text, data.color, data.titulo);
+                      }                      
+                  },
+                  error: function () {
+                      mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+
+                  },
+                  complete: function () {
+                      $.Loading(false);
+                  }
+              });
+
+              e.preventDefault();
+          });
+    
+    $('#grupoemp').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+            $("#clave").prop('disabled', false);
+        } else {
+            $("#clave").prop('disabled', true);
+            $("#clave").val(0);
+        }
+    });
+    // Validacion de tool tip 
+
+    $('#clienteForm').tooltip({
+        items: ".input-validation-error",
+        content: function () {
+            return $("[data-valmsg-for='" + $(this).attr('id') + "']").text();
+        }
+    });
+
+    
+
+});

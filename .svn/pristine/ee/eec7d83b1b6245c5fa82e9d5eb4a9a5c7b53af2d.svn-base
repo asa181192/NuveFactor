@@ -1,0 +1,14 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+Public Class TesoreriaBAL
+
+    'Listado
+    Function ConsultaCuentasBAL(cancelado As Boolean, ByRef model As List(Of cuentas)) As Result
+
+        Dim cuentas = New FactorDAL.CuentasDAL()
+
+        Return cuentas.consultaCuentasBanco(cancelado, model)
+    End Function
+
+End Class

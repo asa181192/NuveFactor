@@ -1,0 +1,106 @@
+﻿Imports FactorEntidades
+Imports System.Data.Entity
+
+Public Class OperacionesDAL
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+    Public Function ConsultaOperacionesDAL(fecha As Date, ByRef model As List(Of OperacionesEntidad)) As Result
+
+        Dim respuesta = New Result(False)
+
+        Using context As New FactorContext
+            Try
+        model = (From A In context.operaciones
+          Join B In context.contratos
+          On A.contrato Equals B.contrato
+          Join C In context.clientes
+          On B.cliente Equals C.cliente
+          Join D In context.ctaprove
+          On A.cuenta Equals D.cuenta
+          Join E In context.webbancos
+          On D.cuentaid Equals E.cuentaid
+          Join p In context.proveedor
+          On A.proveedor Equals p.deudor
+        Where DbFunctions.TruncateTime(A.fecha) = fecha And D.identidad = 2
+          ).ToList().Select(Function(x) New OperacionesEntidad With {
+            .folio = x.A.folio,
+            .fecha = x.A.fecha,
+            .fpago = x.A.fpago,
+            .beneficiario = x.p.nombre,
+            .contrato = String.Concat("[", x.A.contrato, "] ", x.C.nombre.Trim(), " - ", If(x.B.moneda = 1, "MXN", "USD")),
+            .deposita = String.Concat(x.p.nombre.Trim(), " CTA: ", x.A.cuenta.Trim(), " BCO: ", x.E.shortname.Trim(), " CLABE: ", x.D.clabe.Trim()),
+            .totalpagar = x.A.totalpagar,
+        .cfdi = x.A.cfdi.Trim()
+            }).OrderBy(Function(x) x.folio).ToList()
+
+
+                respuesta.Ok = True
+            Catch e As Exception
+                respuesta.Detalle = e.Message
+            End Try
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+    Function ReporteDetalleOPeracionDAL(folio As Integer, ByRef model As ReporteOperacionDetalle) As Result
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+            Try
+
+                model.Detalle = context.detalle.Where(Function(x) x.folio = folio).Select(Function(x) New DetalleOperacionEntidad With {
+                                                    .docto = x.docto,
+                                                    .referencia = x.referencia,
+                                                    .fec_vence = x.fec_vence,
+                                                    .plazo = x.plazo,
+                                                    .importe = x.importe,
+                                                    .tinter = x.tinter,
+                                                    .hono = x.hono,
+                                                    .ivainteres = x.ivainteres
+                                                    }).ToList()
+                If model IsNot Nothing Then
+                    model.Operacion = (From A In context.operaciones
+                    Join B In context.contratos
+                    On A.contrato Equals B.contrato
+                    Join C In context.clientes
+                    On B.cliente Equals C.cliente
+                    Join D In context.ctaprove
+                    On A.cuenta Equals D.cuenta
+                    Join E In context.webbancos
+                    On D.cuentaid Equals E.cuentaid
+                    Join F In context.proveedor
+                    On A.proveedor Equals F.deudor
+                    Where A.folio = folio
+                    ).ToList().Select(Function(x) New OperacionesEntidad With {
+                        .folio = x.A.folio,
+                        .fecha = x.A.fecha,
+                        .contrato = String.Concat(x.A.contrato, " ", x.C.nombre),
+                        .deposita = String.Concat(x.A.cuenta.Trim(), " ", x.E.shortname.Trim()),
+                        .totalpagar = x.A.totalpagar,
+                        .moneda = IIf(x.B.moneda = 1, "MONEDA NACIONAL", "DOLARES"),
+                        .beneficiario = x.F.nombre
+                      }).FirstOrDefault()
+
+                End If
+
+            Catch e As Exception
+				respuesta.Detalle = e.Message
+                respuesta.Id_Out = 1
+            End Try
+
+        End Using
+        Return respuesta
+    End Function
+#End Region
+
+#Region "Metodos Transaccionales"
+
+#End Region
+
+End Class

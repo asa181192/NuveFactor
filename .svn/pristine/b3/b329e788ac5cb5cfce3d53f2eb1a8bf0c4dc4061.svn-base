@@ -1,0 +1,29 @@
+﻿@ModelType nuve.Reportes.modelohistoriaDoc
+
+@Code
+    ViewData("Title") = "HistoriaDocumento"
+End Code
+
+
+<div class="head">
+    <div class="headForma">
+        <div class="headFormaContenido">
+            <a href="@Request.UrlReferrer.ToString()">
+                <img src="~/Images/menu/menuregresar.png" /></a>
+            <span>História de un documento</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-inline">
+       @Html.TextBoxFor(Function(x) x.contrato)
+       @Html.TextBoxFor(Function(x) x.docto)
+</div>
+
+<hr />
+
+
+<div>
+
+</div>

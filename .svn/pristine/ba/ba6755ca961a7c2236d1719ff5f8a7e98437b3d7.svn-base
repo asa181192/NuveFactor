@@ -1,0 +1,56 @@
+﻿$(document).ready(function(e) {
+
+    $('#dvflexCatalogos').click(function() {
+        window.location.href = '../Catalogos/Index';
+    });
+
+    $('#dvflexAdministracion').click(function () {
+        window.location.href = '../Admin/Index';
+    });
+
+      $('#dvflexCuentasBancos').click(function () {
+        window.location.href = '../Tesoreria/Index';
+    });
+
+    $('#dvflexOperaciones').click(function () {
+      window.location.href = '../Operaciones/Index';
+    });
+
+    $('#dvflexPromocion').click(function () {
+      window.location.href = '../Promocion/Index';
+    });
+
+    $('#dvflexConta').click(function () {
+      window.location.href = '../Contabilidad/Index';
+    });
+
+    $('#dvflexPortal').click(function () {
+      window.location.href = '../Portal/Index';
+    });
+
+    $('#dvflexReportes').click(function () {
+      //window.location.href = '../Reportes/Reportes';
+      window.location.href = '../Reportes/Informes';
+    });
+
+    //$('#dvflexInformes').click(function () {
+    //  window.location.href = '../Informes/Informes';
+    //});
+
+
+    $('#dvflexAseguradoras').click(function () {
+        window.location.href = '../Aseguradora/Index';
+    });
+
+    
+    //alert('Esto que lo escriba en la 1ª línea, \n y esto en la 2ª')
+    //mensajemodal('Esta version del sistema se encuentra en construccion,los estilos presentados aqui'+
+    //    ' asi como interfaces podrian cambiar en su version final , cualquier error encontrado favor de reportarlo .'+ 
+    //    ' <br/><br/>Actualizaciones (26/07/2018) : ' +
+    //    ' <br/><br/>' +
+    //    ' <br/> -Control de riesgo muestra en color los grupos .' +
+    //    ' <br/> -Control de riesgo ahora tiene mas espacio en las celdas de nombre y descripcion .' +
+    //    ' <br/>  !! Favor de dar Ctrl + F5 en la pantalla de Control de riesgo para ver los cambios !!' +
+    //    ' <br/><br/> Revision 56'
+    //    , 'info');
+});

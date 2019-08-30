@@ -9,7 +9,18 @@
                 <span>@(IIf(Model.deudor > 0,String.Concat(Model.nombre,"(",Model.deudor.ToString(),")"),"Nuevo Registro")) </span>                
               </div>       
             </div>  
-        </div>        
+        </div>   
+    Else
+    
+    @<head>
+    <meta charset="utf-8" />
+    <title>@ViewData("Title")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/Images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Images/favicon.ico" type="image/x-icon">   
+    <meta name="viewport" content="width=device-width" />   
+   <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
+     </head>
     End If
 End Code
 
@@ -19,55 +30,44 @@ End Code
 @<div class="panel panel-default">
     <div class="panel-body highlight">
       
-            @Html.ValidationSummary(True)
-            
-            @If Model IsNot Nothing And Model.deudor > 0 Then
+             @Html.ValidationSummary(True)
+             @Html.HiddenFor(Function(model) model.deudor)
+          @*  @If Model IsNot Nothing And Model.deudor > 0 Then
                     @Html.HiddenFor(Function(model) model.deudor)
-            End If             
+            End If    *@         
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#General" class="nav-link" aria-controls="Generales" role="tab" data-toggle="tab">Generales</a></li>
+                <li role="presentation" class="active"><a href="#General" class="nav-link" aria-controls="General" role="tab" data-toggle="tab">Generales</a></li>
                 <li role="presentation" class="nav-item" ><a href="#Domicilio" class="nav-link" aria-controls="Domicilio" role="tab" data-toggle="tab">Domicilio</a></li>
                 <li role="presentation" class="nav-item"><a href="#Contacto" class="nav-link" aria-controls="Contacto" role="tab" data-toggle="tab">Contacto</a></li>
-                <li role="presentation" class="nav-item"><a href="#Notas" class="nav-link" aria-controls="Notas" role="tab" data-toggle="tab">Notas</a></li>
-                <li role="presentation" class="nav-item"><a href="#Seguro" class="nav-link" aria-controls="Seguro" role="tab" data-toggle="tab">Seguro de Credito</a></li>
-                <li role="presentation" class="nav-item"><a href="#Linea" class="nav-link" aria-controls="Linea" role="tab" data-toggle="tab">Línea </a></li>
-              </ul>             
+                <li role="presentation" class="nav-item"><a href="#Notas" class="nav-link" aria-controls="Notas" role="tab" data-toggle="tab">Notas</a></li>              
+             </ul>             
               <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="General" style="margin-top:50px">                    
+                <div role="tabpanel" class="tab-pane active" id="General">                    
                     <div class="row">
-                        <div class="col-md-6">                             
+                        <div class="col-xs-6">                             
                             <div class="form-group">       
                                  @Html.LabelFor(Function(model) model.fec_alta ,new with {.class = "control-label"}) 
-                                 <div class='input-group date'>                                    
-                                        @If Not Model.fec_alta.Equals(Nothing)  Then
-                                                @Html.TextBoxFor(Function(model) model.fec_alta,"{0:dd/MM/yyyy}", New With {.class = "form-control",.ReadOnly = True})
-                                                @<span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-			                                      </span>
+                                     @If Not Model.fec_alta.Equals(Nothing)  Then
+                                                @Html.TextBoxFor(Function(model) model.fec_alta,"{0:dd/MM/yyyy}", New With {.class = "form-control",.ReadOnly = True})                                           
                                                 @Html.ValidationMessageFor(Function(model) model.fec_alta)
                                             Else
                                                 @Html.TextBoxFor(Function(model) model.fec_alta,"{0:dd/MM/yyyy}", New With {.class = "form-control", .Value = Today.Date.ToShortDateString(), .ReadOnly = True})
-                                                @<span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-			                                      </span>
                                                 @Html.ValidationMessageFor(Function(model) model.fec_alta)
                                         End If
-                                 </div> 
-
                             </div>                                       
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                                 <div class="form-group">
                                   
                                             @Html.LabelFor(Function(model) model.sucursal , new with {.class = "control-label"} )                                    
-                                            @Html.DropDownListFor(Function(model) model.sucursal, Model.SucursalDropDown , "-- Seleccione --", New With {.Class = "form-control dropdown"})
+                                            @Html.DropDownListFor(Function(model) model.sucursal, Model.SucursalDropDown ,  New With {.Class = "form-control dropdown"})
                                             @Html.ValidationMessageFor(Function(model) model.sucursal)
                                     
                                </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:10px">
-                        <div class="col-md-6">
+                    <div class="row" >
+                        <div class="col-xs-6">
                              <div class="form-group">
                                     @Html.LabelFor(Function(model) model.nombre , new with {.class = "control-label"})                                
                                     @Html.TextBoxFor(Function(model) model.nombre, New With {.Class = "form-control"})
@@ -75,7 +75,7 @@ End Code
                                
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                                <div class="form-group">
                                     @Html.LabelFor(Function(model) model.giro)                             
                                     @Html.TextBoxFor(Function(model) model.giro ,New With {.Class = "form-control"})
@@ -84,7 +84,7 @@ End Code
                         </div>                      
                     </div>                    
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <div class="form-group">                                   
                             
                                             @Html.LabelFor(Function(model) model.rfc)
@@ -106,93 +106,116 @@ End Code
                                  
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group" style="padding-top:40px">
-                                <div class="form-check">                                    
-                                        @Html.LabelFor(Function(model) model.elaborado, New With {.class = "form-check-label"})                                   
-                                        @Html.CheckBoxFor(Function(model) model.elaborado, New With {.class = "form-check-input"} )
-                                        @Html.ValidationMessageFor(Function(model) model.elaborado )                                    
-                                </div>                                
-                                <div class="form-check">                                    
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                    <div class="form-check">                                    
+                                            <label class="chBox">
+                                              @Html.CheckBoxFor(Function(model) model.elaborado,New With {.Class = "form-check-input checked"})
+                                              <span class="checkmark"></span>
+                                            </label>                                    
+                                            @Html.LabelFor(Function(model) model.elaborado, New With {.class = "form-check-label"})
+                                            @Html.ValidationMessageFor(Function(model) model.elaborado )                                    
+                                    </div>  
+                                </div>  
+                            <div class="form-group">
+                                <div class="form-check"> 
+                                        <label class="chBox">
+                                          @Html.CheckBoxFor(Function(model) model.firmado,New With {.Class = "form-check-input checked"})
+                                          <span class="checkmark"></span>
+                                        </label> 
                                         @Html.LabelFor(Function(model) model.firmado,New With {.class = "form-check-label"})
-                                        @Html.CheckBoxFor(Function(model) model.firmado,New With {.class = "form-check-input"})
-                                        @Html.ValidationMessageFor(Function(model) model.firmado)
-                                 
-                                </div>                                  
-                                <div class="form-check">                                        
-                                        @Html.LabelFor(Function(model) model.rectificado,New With {.class = "form-check-label"})                                    
-                                        @Html.CheckBoxFor(Function(model) model.rectificado,New With {.class = "form-check-input"})
+                                        @Html.ValidationMessageFor(Function(model) model.firmado)                                 
+                                </div> 
+                            </div>                            
+                            <div class="form-group">
+                                <div class="form-check">       
+                                        <label class="chBox">
+                                          @Html.CheckBoxFor(Function(model) model.rectificado,New With {.Class = "form-check-input checked"})
+                                          <span class="checkmark"></span>
+                                        </label>
+                                        @Html.LabelFor(Function(model) model.rectificado,New With {.class = "form-check-label"})                                     
                                         @Html.ValidationMessageFor(Function(model) model.rectificado)                                    
                                 </div>
-                                 
-
-                                 
-                            </div>
+                            </div>          
                         </div>
                     </div>                                                    
                 </div>
                 <div role="tabpanel" class="tab-pane" id="Domicilio">
-
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                             <div class="form-group">
-
                                   @Html.LabelFor(Function(model) model.calle, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.calle,New With {.Class = "form-control"})
-                                  @Html.ValidationMessageFor(Function(model) model.calle)   
-                                                                                                
+                                  @Html.ValidationMessageFor(Function(model) model.calle)                                                                            
                                     
                             </div>
                         </div>                     
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.noext, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.noext ,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.noext) 
-                                   
+                               </div>   
+                               <div class="form-group">
                                   @Html.LabelFor(Function(model) model.colonia, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.colonia,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.colonia)
-                                   
+                               </div>
+                                 
+                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.estado, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.estado,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.estado) 
-                                   
+                               </div>   
+                                 
+                                 <div class="form-group">
                                   @Html.LabelFor(Function(model) model.telefono ,new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.telefono,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.telefono)
-                                   
+                               </div>  
+                                  
+                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.password, new with {.class = "control-label"})
                                   @Html.PasswordFor(Function(model) model.password,New With {.Class = "form-control"})
-                                  @Html.ValidationMessageFor(Function(model) model.password)        
+                                  @Html.ValidationMessageFor(Function(model) model.password)     
+                               </div>   
+                                     
                                 
-                               </div>
+                              
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                                 <div class="form-group">
-                                                                        
                                   @Html.LabelFor(Function(model) model.noint, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.noint,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.noint)  
-
+                                </div>                                       
+                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.municipio, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.municipio,New With {.Class = "form-control"})
                                   @Html.ValidationMessageFor(Function(model) model.municipio) 
-                                    
+                                </div>
+                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.cp, new with {.class = "control-label"})
-                                  @Html.TextBoxFor(Function(model) model.cp,New With {.Class = "form-control number"})
-                                    
+                                  @Html.TextBoxFor(Function(model) model.cp,New With {.Class = "form-control"})
+                                  @Html.ValidationMessageFor(Function(model) model.cp) 
+                                </div>
+                                <div class="form-group">
                                   @Html.LabelFor(Function(model) model.email, new with {.class = "control-label"})
                                   @Html.TextBoxFor(Function(model) model.email,New With {.Class = "form-control"})
-                                  @Html.ValidationMessageFor(Function(model) model.email)  
-                                    
+                                  @Html.ValidationMessageFor(Function(model) model.email)
+                                </div>  
+                                <div class="form-group" >
+                                  
+                                  <label class="chBox">
+                                          @Html.CheckBoxFor(Function(model) model.internet,New With {.Class = "form-check-input checked"})
+                                          <span class="checkmark"></span>
+                                  </label> 
                                   @Html.LabelFor(Function(model) model.internet, new with {.class = "control-label"})
-                                  @Html.CheckBoxFor(Function(model) model.internet,False)
-                                  @Html.ValidationMessageFor(Function(model) model.internet)  
-                                </div>
+                                  @Html.ValidationMessageFor(Function(model) model.internet) 
+                                </div>    
                         </div>
                     </div>                   
       
@@ -200,67 +223,63 @@ End Code
                 <div role="tabpanel" class="tab-pane" id="Contacto">
                    
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-xs-6">
                                 <div class="form-group">
                                     @Html.LabelFor(Function(model) model.responsable  , new with {.class = "control-label"})
                                     @Html.TextBoxFor(Function(model) model.responsable ,New With {.Class = "form-control"})
                                     @Html.ValidationMessageFor(Function(model) model.responsable)                   
-
+                                </div>
+                                <div class="form-group">
                                     @Html.LabelFor(Function(model) model.plaza, new with {.class = "control-label"})
                                     @Html.TextBoxFor(Function(model) model.plaza,New With {.Class = "form-control"})
                                     @Html.ValidationMessageFor(Function(model) model.plaza)
-                 
-                                    @Html.LabelFor(Function(model) model.plazacob, new with {.class = "control-label"})
-                                    @Html.DropDownListFor(Function(model) model.plazacob, Model.SucursalDropDown, "-- Seleccione --", New With {.Class = "form-control dropdown"})                                    
-                                    @Html.ValidationMessageFor(Function(model) model.plazacob)
-                   
                                 </div>
                             </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(Function(model) model.plazacob, new with {.class = "control-label"})
+                                    @Html.DropDownListFor(Function(model) model.plazacob, Model.SucursalDropDown,  New With {.Class = "form-control dropdown"})                                    
+                                    @Html.ValidationMessageFor(Function(model) model.plazacob)                  
+                                </div>
+                                                                 
+                               <div class="form-group">
+                                    @Html.LabelFor(Function(model) model.enviafact, new with {.class = "control-label"})
+                                    @Html.DropDownListFor(Function(model) model.enviafact, Model.FelectronicaDropDown, New With {.Class = "form-control dropdown"})                                    
+                                    @Html.ValidationMessageFor(Function(model) model.enviafact)
+                                </div>
+                                
+                            </div>
                         </div>
-
-                       
                 </div>
                 <div role="tabpanel" class="tab-pane" id="Notas">
 
                     <div class="row">
-                        <div class="col-md-6">
-
-                                @Html.LabelFor(Function(model) model.repeco  , new with {.class = "control-label"})
-                                @Html.TextBoxFor(Function(model) model.repeco ,New With {.Class = "form-control"})
-                                @Html.ValidationMessageFor(Function(model) model.repeco)                   
-
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
+                            <div class="form-group">
                                 @Html.LabelFor(Function(model) model.regiva, new with {.class = "control-label"})                                
-                                @Html.DropDownListFor(Function(model) model.regiva, Model.RegimenDropDown, "-- Seleccione --", New With {.Class = "form-control dropdown"})                                    
+                                @Html.DropDownListFor(Function(model) model.regiva, Model.RegimenDropDown,  New With {.Class = "form-control dropdown"})                                    
                                 @Html.ValidationMessageFor(Function(model) model.regiva)
-                 
-                        </div>                          
+                           </div>                           
+                        </div>                       
                    </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                              <div class="form-group">
-
-                                
                                 @Html.LabelFor(Function(model) model.notas, new with {.class = "control-label"})
-                                @Html.TextAreaFor(Function(model) model.notas, 5, Nothing, New With {.Class = "form-control"})
-                                @Html.ValidationMessageFor(Function(model) model.notas)
-                   
+                                @Html.TextAreaFor(Function(model) model.notas, 7, Nothing, New With {.Class = "form-control"})
+                                @Html.ValidationMessageFor(Function(model) model.notas)                   
                             </div>
-                        </div>
-                          
-                    </div>
-                                   
+                        </div>                          
+                    </div>                                   
                 </div>
-                <div role="tabpanel" class="tab-pane" id="Seguro">...</div>
-                <div role="tabpanel" class="tab-pane" id="Linea">...</div>
               </div>       
-       
+    
+         <input type="submit" value="Guardar" class="btn bold"  style="margin-top:20px"/>
+           
     </div>
+    
 </div>
 
-    @<p>
-        <input type="submit" value="Guardar" class="btn bold" />
-    </p>  
+
     
 End Using

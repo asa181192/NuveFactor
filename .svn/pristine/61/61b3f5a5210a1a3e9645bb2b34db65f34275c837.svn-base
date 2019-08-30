@@ -1,0 +1,55 @@
+﻿Imports FactorEntidades
+Imports FactorDAL
+
+Public Class Utility
+
+	'Encriptado 
+
+	Public Function Encripta(value As String, tipo As Enumerador.eTipoEncriptacion) As String
+
+		Select Case tipo
+			Case Enumerador.eTipoEncriptacion.eTipoPassword
+				Return CRC(value)
+			Case Enumerador.eTipoEncriptacion.eTipoConecciones
+				Return Nothing
+			Case Else
+				Return Nothing
+		End Select
+
+
+	End Function
+
+	Private Function CRC(Str As String) As String
+		Dim nPowers(7)
+		Dim nCRC, i, nBit, nByte, j
+		nCRC = &HFFFF
+		For i = 0 To 7
+			nPowers(i) = 2 ^ i
+		Next
+		For i = 1 To Len(Str)
+			nByte = Asc(Mid(Str, i, 1))
+			For j = 7 To 0 Step -1
+				nBit = CBool((nCRC And 32768) = 32768) Xor ((nByte And nPowers(j)) = nPowers(j))
+				nCRC = (nCRC And 32767) * 2
+				If nBit Then
+					nCRC = nCRC Xor 4129
+				End If
+			Next
+		Next
+		CRC = nCRC
+
+		Return CRC
+	End Function
+
+	'Validaciones
+	Function ConsultaRFC(rfc As String, tabla As String, ByRef Nombre1 As String, ByVal Id1 As String, param1 As String, param2 As String, ByVal clave As Integer, ByRef existe As Boolean) As Result
+		Dim paridad = New ValidacionesDAL()
+		Return paridad.ConsultaRFC(rfc, tabla, Nombre1, Id1, param1, param2, clave, existe)
+	End Function
+
+    Function ConsultaCLABE(clabe As String, ByRef existe As Boolean, numrec As Integer) As Object
+        Dim consulta = New ValidacionesDAL()
+        Return consulta.consultaClabeDAL(clabe, existe, numrec)
+    End Function
+
+End Class

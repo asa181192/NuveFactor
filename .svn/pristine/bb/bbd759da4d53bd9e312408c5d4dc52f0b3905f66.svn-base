@@ -1,0 +1,68 @@
+﻿Imports FactorEntidades
+Imports System.Data.SqlClient
+
+Public Class ValidacionesDAL
+	'tabla = Nombre de la tabla 
+	'Nombre1 = Nombre de campo columna 
+	'Id1 = Clave campo columna 
+	'Param1 = PRimer Parametro para Where 
+	'Param2 = Segundo parametro para Where 
+	'Existe = Regresa si existe el registro 
+	Function ConsultaRFC(RFC As String, tabla As String, ByRef Nombre1 As String, ByVal Id1 As String, ByVal Param1 As String, ByVal Param2 As String, ByVal clave As Integer, ByRef existe As Boolean) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				Dim value = context.Database.SqlQuery(Of String)(
+					"SELECT Top 1 CONCAT(RTRIM(" + Nombre1 + "),' Clave : '," + Id1 + ") as Resultado FROM " + tabla + " WHERE Rtrim(" + Param1 + ")=@rfc AND " + Param2 + " <> @clave  ",
+					New SqlParameter("tabla", tabla),
+					New SqlParameter("rfc", RFC.Trim()),
+					New SqlParameter("clave", clave)).SingleOrDefault()
+
+				If value IsNot Nothing Then
+					Nombre1 = value
+					existe = True
+				End If
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+
+		Return respuesta
+
+	End Function
+
+    Function consultaClabeDAL(clabe As String, ByRef existe As Boolean, numrec As Integer) As Object
+        Dim respuesta = New Result(False)
+
+        Using context As New FactorContext
+
+            Try
+                'Dim value = Aggregate a In context.ctaprove
+                '             Where a.clabe = clabe And a.numrec = numrec
+                '             Into Count()
+
+                Dim values As New List(Of ctaprove)
+
+                values = (From a In context.ctaprove
+                          Where a.clabe = clabe And a.numrec <> numrec
+                          Select a).ToList()
+
+                If values.Count() > 0 Then
+                    existe = True
+                End If
+
+                respuesta.Ok = True
+
+            Catch ex As Exception
+                respuesta.Detalle = ex.Message
+            End Try
+        End Using
+
+        Return respuesta
+
+    End Function
+
+End Class

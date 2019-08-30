@@ -1,0 +1,91 @@
+﻿Imports FactorEntidades
+Imports System.Xml.Serialization
+Imports System.Xml
+Imports System.Data.SqlClient
+
+
+Public Class Procesos
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos Consulta"
+	Public Function ConsultaControlRiesgoDAL(clienteId As Integer, ByRef model As List(Of ControlRiesgo)) As Result
+
+		Dim respuesta = New Result(False)
+		Dim proxy = New Proxy()
+		Using context As New FactorContext()
+			'Lista de Lista permite almacenar multiples consulta al servicio t24 para generar un solo xml 
+			Dim ListaLineasCredito = New List(Of List(Of ServicioT24.RespENQLineasCredito))()
+			Try
+
+				Dim claves = (From p In context.linea
+						Where p.cliente = clienteId And p.clientet24 <> 0 And p.clientet24 IsNot Nothing
+							Select p.clientet24).Distinct().ToList()
+
+
+
+				If (claves.Count > 0) Then
+					respuesta = proxy.ConsultaLineasCredito(claves, ListaLineasCredito)
+
+					If respuesta.Ok Then
+						Dim xml = New XElement("ArrayOfRespENQLineasCredito", From A In
+																 ListaLineasCredito From B In A
+																Select New XElement("RespENQLineasCredito",
+																					New XElement("sClave", B.sLineaCredito.Split(".")(0)),
+																					New XElement("sTipo", B.sLineaCredito.Split(".")(1)),
+																					New XElement("sNumero", B.sLineaCredito.Split(".")(2)),
+																					New XElement("sLineaCredito", B.sLineaCredito),
+																					New XElement("sDescripcionLinea", B.sDescripcionLinea),
+																					New XElement("sMoneda", B.sMoneda),
+																					New XElement("sMontoOtorgado", B.sMontoOtorgado),
+																					New XElement("sMontoDispuesto", B.sMontoDispuesto),
+																					New XElement("sMontoDisponer", B.sMontoDisponer),
+																					New XElement("sVencimiento", B.sVencimiento),
+																					New XElement("sUtilizado", B.sUtilizado))
+																				 )
+						Dim parameters = New List(Of SqlParameter)
+						parameters.Add(New SqlParameter("@ServicioT24XML", xml.ToString()))
+						parameters.Add(New SqlParameter("@Opcion", 1))
+						parameters.Add(New SqlParameter("@ClienteID", clienteId))
+
+						model = context.Database.SqlQuery(Of ControlRiesgo)("Exec SP_ConsultaControlRiesgo @ServicioT24XML,@ClienteID,@Opcion",
+													   parameters.ToArray()).ToList()
+
+					End If
+
+				Else
+					Dim parameters = New List(Of SqlParameter)
+					parameters.Add(New SqlParameter("@ServicioT24XML", ""))
+					parameters.Add(New SqlParameter("@Opcion", 0))
+					parameters.Add(New SqlParameter("@ClienteID", clienteId))
+
+					model = context.Database.SqlQuery(Of ControlRiesgo)("Exec SP_ConsultaControlRiesgo @ServicioT24XML,@ClienteID,@Opcion",
+												   parameters.ToArray()).ToList()
+
+
+					respuesta.Ok = True
+				End If
+
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+#End Region
+
+End Class

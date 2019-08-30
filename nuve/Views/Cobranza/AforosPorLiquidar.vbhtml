@@ -1,0 +1,68 @@
+﻿@ModelType nuve.Models.ModeloAforos
+
+@Code
+    ViewData("Title") = "Aforos por liquidar"
+End Code
+
+@Section Scripts
+    <script src="~/Scripts/CobranzaScripts/aforosPorLiquidar.js?v=@String.Concat(Today.Day, Today.Month, Today.Year, TimeOfDay.Hour, TimeOfDay.Minute, TimeOfDay.Second)"></script>
+End Section
+
+@Html.HiddenFor(Function(model) model.contrato)
+
+<div class="head">
+    <div class="headForma">
+        <div class="headFormaContenido">
+            <a href="~/Cobranza/Aforos">
+                <img src="~/Images/menu/menuregresar.png" /></a>
+            <span>Aforos por Liquidar</span>
+        </div>
+    </div>
+</div>
+
+<div id="tableContainer" class="tableContainer">
+    <div class="panel-heading">
+        <div class="topmargin">     
+            <p>
+              @*  @Html.ActionLink("Liquidar", "GuardarAforo", nothing , New With {.Class = "popup btn bold", .style = "margin-top:15px" , .id = "BtnLiquida"})*@
+           @*     @Html.ActionLink("Inicializa", "AforosPorLiquidar", Nothing, New With {.Class = "popup btn bold", .style = "margin-top:15px"})*@
+            </p>
+
+        </div>
+    </div>
+    <div class="panel panel-default material-panel">
+        <div class="panel-body material-panel__body">
+            <div class="table-responsive">
+                <table id="table" class="table cell-border compact hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(Function(model) model.contrato)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Function(model) model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Function(model) model.benef)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(Function(model) model.pago)
+                            </th>
+                            <th>
+                               Liquidar
+                            </th>
+                            <th>
+                               Inicializar
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog-confirm" title="" style="display: none">
+    <p>
+        <span class="glyphicon glyphicon-remove" style="float: left; margin: 12px 12px 20px 0;"></span>
+    </p>
+</div>

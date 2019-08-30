@@ -1,0 +1,175 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Data.Entity.Validation
+
+Public Class CuentasDAL
+
+#Region "Metodos de Consulta"
+
+    Public Function consultaCuentasBanco(cancel As Boolean, ByRef model As List(Of cuentasEntidad)) As Result
+
+        Dim Respuesta = New Result(False)
+        Dim context As New FactorContext
+        '
+        Try
+            Dim values = (From a In context.cuentas
+                          Join b In context.bancos On a.idbanco Equals (b.idbanco)
+                          Where a.cancelado = cancel
+                          Select New cuentasEntidad With {.idctabanco = a.idctabanco, .ctabanco = a.ctabanco, .banco = b.banco, .saldo = a.saldo, .cancelado = a.cancelado, .moneda = a.moneda}).ToList()
+
+            For Each item As cuentasEntidad In values
+
+                Dim a = New cuentasEntidad
+
+                a.idctabanco = item.idctabanco
+                a.ctabanco = item.ctabanco
+                a.saldo = item.saldo
+                a.banco = item.banco
+
+                If item.moneda = 1 Then
+                    a.divisa = "MXN"
+                Else
+                    a.divisa = "DLLS"
+                End If
+
+                a.cancel = IIf(item.cancelado, "Cancelada", "Activa")
+
+                model.Add(a)
+            Next
+
+            Respuesta.Ok = True
+
+        Catch ex As Exception
+            Respuesta.Detalle = ex.Message
+
+        End Try
+
+        Return Respuesta
+
+    End Function
+
+    Function ConsultaCuentaDetalle(idcta As Integer, ByRef model As cuentasEntidad) As Result
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.cuentas
+                         Join b In context.bancos On a.idbanco Equals (b.idbanco)
+                         Where a.idctabanco = idcta
+                         Select New cuentasEntidad With {
+                             .idctabanco = a.idctabanco, .ctabanco = a.ctabanco, .ctacontable = a.ctacontable, .banco = b.banco, .sucbancaria = a.sucbancaria, .sucursal = a.sucursal,
+                             .fecha = a.fecha, .saldo = a.saldo, .moneda = a.moneda, .numbanco = a.numbanco, .nosucur = a.nosucur, .idbanco = a.idbanco, .cancelado = a.cancelado,
+                             .slogan = a.slogan}).SingleOrDefault()
+
+                If model IsNot Nothing Then
+                    respuesta.Ok = True
+                End If
+
+            Catch e As Exception
+                respuesta.Detalle = e.Message
+            End Try
+
+        End Using
+        Return respuesta
+
+    End Function
+
+    Public Function consultaBanco(idbanco As Integer, ByRef model As DropDownEntidad) As Result
+
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.bancos
+                         Where a.idbanco = idbanco
+                         Select New DropDownEntidad With {.nombre = a.banco})
+            Catch ex As Exception
+
+            End Try
+
+        End Using
+
+        Return Nothing
+    End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+    Public Function altaCuentaBanco(model As cuentas) As Result
+
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+            Try
+                If Not context.cuentas.Any(Function(p) p.ctabanco = model.ctabanco) Then
+
+
+                    Dim banco = context.bancos.Where(Function(x) x.idbanco = model.idbanco).SingleOrDefault()
+
+                    model.ctacontable = model.ctabanco.Trim()
+                    model.numbanco = model.numbanco.Trim()
+                    model.nosucur = model.nosucur
+                    model.idbanco = model.idbanco
+                    model.banco = banco.banco.Trim()
+                    model.sucbancaria = model.sucbancaria.Trim()
+                    model.slogan = model.slogan.Trim()
+                    model.ctacontable = model.ctacontable.Trim()
+                    model.saldo = model.saldo
+                    model.moneda = model.moneda
+                    model.cancelado = model.cancelado
+
+                    context.cuentas.Add(model)
+                    context.SaveChanges()
+                    respuesta.Ok = True
+                Else
+                    respuesta.Mensaje = "La cuenta capturada ya existe."
+                End If
+            Catch ex As Exception
+                respuesta.Detalle = ex.InnerException.Message
+            End Try
+        End Using
+
+        Return respuesta
+
+    End Function
+
+    Public Function actualizarCuentaBanco(model As cuentas) As Result
+
+        Dim respuesta = New Result(False)
+        Using context As New FactorContext
+
+            Try
+                Dim cuenta = context.cuentas.Where(Function(x) x.idctabanco = model.idctabanco).SingleOrDefault()
+
+                cuenta.numbanco = model.numbanco.Trim()
+                cuenta.nosucur = model.nosucur
+                cuenta.idbanco = model.idbanco
+                cuenta.banco = model.banco.Trim()
+                cuenta.sucbancaria = model.sucbancaria
+                cuenta.slogan = model.slogan
+                cuenta.ctacontable = model.ctacontable
+                cuenta.saldo = model.saldo
+                cuenta.moneda = model.moneda
+                cuenta.cancelado = model.cancelado
+
+                context.cuentas.Attach(cuenta)
+                context.Entry(cuenta).State = EntityState.Modified
+                context.SaveChanges()
+                respuesta.Ok = True
+
+            Catch ex As Exception
+                respuesta.Detalle = ex.InnerException.InnerException.Message
+
+            End Try
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+#End Region
+
+End Class

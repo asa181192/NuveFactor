@@ -1,0 +1,262 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.OperacionesModels
+Imports nuve.Models
+
+Namespace nuve
+	<CustomAuthorize(Permisos.Acciones.OPERACIONES)>
+	Public Class OperacionesController
+		Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+#Region "Contratos"
+		<HttpGet>
+		Public Function Contratos(ClienteId As Integer, Nombre As String) As ActionResult
+			Dim model = New Contrato_Cliente
+			model.Cliente.nombre = Nombre
+			model.Contrato.cliente = ClienteId
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Menu"
+		<HttpGet>
+		Function Index() As ViewResult
+
+			Dim model As New Helpers.Menu
+
+			model.sMenu = "<div class=""BoxFlex"" id="""" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<label>Regresar</label>"
+			model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcontratos"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Contratos</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexnotifica"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Notificaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexfacturas"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Facturación</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcobranza"" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<p>Cobranza</p>"
+			'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexconsolida"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Consolidaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCierre"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Cierre mensual</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexautoriza"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Autorizaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexinformes"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Informes</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+            'model.sMenu &= "</div>"
+
+            model.sMenu &= "<div class=""BoxFlex"" id=""dvflexNotificaciones"" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<p>Notificaciones</p>"
+            'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+
+			Return View(model)
+		End Function
+
+#End Region
+#End Region
+
+#Region "Get"
+
+#Region "Contratos"
+		<HttpGet>
+		Public Function ObtenerContratos(ClienteID As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.OperacionesBAL()
+
+			Dim lista = New List(Of OperacionContrato)
+
+			resultado = consulta.ConsultaContratosBAL(ClienteID, lista)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				'jresult = Json(New With {Key .Results = lista}, JsonRequestBehavior.AllowGet)
+
+				jresult = New CustomJsonResult With {
+				  .Data = New With {Key .Results = lista},
+				  .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				}
+
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarContrato(clienteId As Integer, ContratoId As Int32) As ActionResult
+
+			Dim model = New Contrato_Cliente()
+			Dim consulta = New FactorBAL.OperacionesBAL()
+			Dim contrato = New ContratoCliente
+			contrato.clientes = New clientes
+			contrato.contrato = New contratos
+			Dim resultado = consulta.ConsultaDetalleContratoBAL(clienteId, ContratoId, contrato)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+
+				TinyMapper.Bind(Of contratos, ModeloContrato)()	 'Mapeo de propiedad para modelo.
+				model.Contrato = TinyMapper.Map(Of ModeloContrato)(contrato.contrato)
+				model.Contrato.CargaControles()
+
+				TinyMapper.Bind(Of clientes, ModeloClientes)()	 'Mapeo de propiedad para modelo.
+				model.Cliente = TinyMapper.Map(Of ModeloClientes)(contrato.clientes)
+				model.Cliente.CargaControles()
+
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.Contrato.CargaControles()
+					TinyMapper.Bind(Of clientes, ModeloClientes)()	 'Mapeo de propiedad para modelo.
+					model.Cliente = TinyMapper.Map(Of ModeloClientes)(contrato.clientes)
+					model.Cliente.CargaControles()
+
+					Return PartialView(model)
+				End If
+			End If
+
+		End Function
+
+		<HttpGet>
+		Public Function ObtenerClienteContrato(ClienteID As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.OperacionesBAL()
+
+			Dim cliente = New OperacionContrato
+
+			resultado = consulta.ConsultaClienteContratoBAL(ClienteID, cliente)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+
+				jresult = New CustomJsonResult With {
+				  .Data = New With {Key .Results = cliente},
+				  .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				}
+
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+#End Region
+
+#End Region
+
+#Region "Post"
+		<HttpPost>
+		<ValidateIncludeAttributes>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarContrato(ModeloContrato As Contrato_Cliente) As ActionResult
+			Dim resultado
+			If ModelState.IsValid Then
+
+				Dim bs = New FactorBAL.OperacionesBAL()
+				ModeloContrato.Contrato.cliente = ModeloContrato.Cliente.cliente 'Mapeamos Cliente que se encuentra en otra propiedad compleja
+				TinyMapper.Bind(Of Contrato_Cliente, contratos)()	 'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of contratos)(ModeloContrato.Contrato)
+				model.sucursal = ModeloContrato.Cliente.sucursal
+				model.promotor = ModeloContrato.Cliente.promotor
+
+				FieldsReflect.initialize(model)	' inicializamos todos los campos string a blanco 
+
+				If ModeloContrato.Contrato.contrato > 0 Then
+					resultado = bs.ActualizarContratoBAL(model)
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						FactorBAL.Utility.Monitor(Session("USERID"), "Actualizado Contrato : " + model.contrato.ToString())
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+												  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+
+				Else
+
+					resultado = bs.AltaContratoBAL(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						FactorBAL.Utility.Monitor(Session("USERID"), "Agregado nuevo contrato clave  : " + model.contrato.ToString())
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .color = "success", .Text = resultado.Mensaje, .Tipo = resultado.tipo, .titulo = ""})
+			Else
+				resultado = New Result(False)
+				Return Json(New With {Key .Result = resultado.Ok, .color = "warning", .Text = "Problema con uno o mas campos.", .titulo = "Error !!"})
+			End If
+
+
+
+		End Function
+#End Region
+
+	End Class
+End Namespace

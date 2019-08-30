@@ -1,0 +1,11 @@
+﻿Imports FactorEntidades
+Imports FactorDAL
+
+Public Class ReportesBAL
+
+    Function ReporteVencimientosNafinBAL(moneda As Integer, tipo As String, inicio As Date, fin As Date, ByRef model As sp_vencimientosnafin) As Result
+        Dim consulta = New ReportesDAL()
+        Return consulta.vencimientoFondeoNafin(moneda, tipo, inicio, fin, model)
+    End Function
+
+End Class

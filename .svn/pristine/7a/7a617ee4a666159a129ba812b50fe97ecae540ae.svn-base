@@ -1,0 +1,43 @@
+﻿Imports System.ComponentModel.DataAnnotations.Schema
+
+Public Class ControlRiesgo
+
+	Public Property id_rec As String
+
+	Public Property clientet24 As Integer
+
+	Public Property cliente As Integer
+
+	Public Property nombre As String
+
+	Public Property ldescrip As String
+
+	Public Property lmonto As Decimal
+
+	Public Property lutilizado As Decimal
+
+	Public Property ldisponibl As Decimal
+
+	Public Property lvence As Date
+
+	Public Property porcentaje As Decimal
+
+	Public Property cuenta As String
+
+	Public Property adeudo As Decimal
+
+	Public Property vencida As Decimal
+
+	Public Property garantsdo As Decimal
+
+	Public Property garantutl As Decimal
+
+	Public Property lmultiple As Decimal
+
+	Public Property RgoDesc As String
+	Public Property gliq As String
+	Public Property Cancela As String
+	Public Property Infolinea As String
+	Public Property Div As String
+
+End Class

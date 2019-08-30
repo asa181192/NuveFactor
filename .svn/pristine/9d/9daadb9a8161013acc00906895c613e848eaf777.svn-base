@@ -1,0 +1,24 @@
+﻿Public Class Rebate
+
+  Public Property contrato As Integer '(int, not null)
+  Public Property nombre As String '(int, not null)
+  Public Property proveedor As String '(int, not null)
+  Public Property cesion As Integer '(int, not null)
+  Public Property docto As String '(int, not null)
+  Public Property referencia As String '(int, not null)
+  Public Property monto As Decimal
+  Public Property plazo As Integer '(int, not null)
+  Public Property fec_alta As DateTime? '(date, null)
+  Public Property fec_vence As DateTime? '(date, null)
+  Public Property deudor As Integer '(int, not null)
+  Public Property tasaoper As Decimal '(int, not null)
+  Public Property rebatepts As Decimal '(int, not null)
+  Public Property interes As Decimal '(int, not null)
+  Public Property intbxmas As Decimal '(int, not null)
+  Public Property rebate As Decimal '(int, not null)
+
+End Class
+
+
+
+

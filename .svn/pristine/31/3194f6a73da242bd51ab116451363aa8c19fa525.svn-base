@@ -1,0 +1,46 @@
+﻿@Code
+    ViewData("Title") = "carteravencida"
+    Layout = "~/Views/Shared/_Layout.vbhtml"
+End Code
+
+@Section Scripts
+    <script src="~/Scripts/CobranzaScripts/carteravencida.js?v=@String.Concat(Today.Day, Today.Month, Today.Year, TimeOfDay.Hour, TimeOfDay.Minute, TimeOfDay.Second)"></script>
+End Section
+
+@Html.Hidden("contrato",ViewBag.contrato)
+
+<div id="tableContainer" class="tableContainer">
+    <div class="panel-body">
+        <div class="jumbotron">
+            <div class="table-responsive">
+                <table id="table" class="table cell-border compact hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Contrato 
+                            </th>
+                            <th>
+                                Deudor 
+                            </th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Docto
+                            </th>
+                            <th>
+                                Saldo
+                            </th>
+                            <th>
+                                Vecimiento 
+                            </th>
+                            <th>
+                                Plazo
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

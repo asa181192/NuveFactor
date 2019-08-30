@@ -1,0 +1,119 @@
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports FactorEntidades
+
+
+Public Class TesoreriaModel
+
+    Public Class CuentasModel
+
+        <Key>
+        Public Property idctabanco As Integer
+        
+        <Display(Name:="N° Cuenta")>
+        <Required(ErrorMessage:="Capture el número de cuenta")>
+        <RegularExpression("^[0-9]*$", ErrorMessage:="El Valor debe ser numerico")>
+        Public Property ctabanco As String
+
+        <Display(Name:="N° Banco")>
+        <Required(ErrorMessage:="Capture el número de cuenta")>
+        <RegularExpression("^[0-9]*$", ErrorMessage:="El Valor debe ser numerico")>
+        Public Property idbanco As Integer?
+
+        <Display(Name:="N° Sucursal")>
+        <RegularExpression("^[0-9]*$", ErrorMessage:="El Valor debe ser numerico")>
+        Public Property sucursal As Integer?
+
+        <StringLength(35)>
+        <Display(Name:="Banco")>
+        <Required(ErrorMessage:="Capture el nombre del banco")>
+        Public Property banco As String
+
+        <StringLength(35)>
+        <Display(Name:="Sucursal Bancaria")>
+        <Required(ErrorMessage:="Seleccione el banco")>
+        Public Property sucbancaria As String
+
+        <StringLength(60)>
+        <Display(Name:="Slogan")>
+        Public Property slogan As String
+
+        <StringLength(20)>
+        <Display(Name:="Cuenta Contable")>
+        <RegularExpression("^[0-9]*$", ErrorMessage:="El Valor debe ser numerico")>
+        Public Property ctacontable As String
+
+        <Column(TypeName:="numeric")>
+        <Display(Name:="Saldo")>
+        <Required(ErrorMessage:="El saldo es requerido")>
+        Public Property saldo As Decimal?
+
+        <Display(Name:="Oficina")>
+        Public Property oficina As String
+
+        Public Property moneda As Integer?
+
+        <Display(Name:="Divisa")>
+        Public Property divisa As String = IIf(moneda = 1, "MXN", "DLLS")
+
+        Public Property cancelado As Boolean
+
+        <Display(Name:="Cancelado")>
+        Public Property cancel As String = IIf(cancelado = False, "X", "")
+
+        Public Property cheques As Integer?
+
+        Public Property traspasos As Integer?
+
+        Public Property depositos As Integer?
+
+        Public Property cargos As Integer?
+
+        Public Property inversion As Integer?
+
+        Public Property cancelacion As Integer?
+
+        Public Property fichas As Integer?
+
+        Public Property traspactivo As Boolean
+
+        <Column(TypeName:="numeric")>
+        Public Property cobrado As Decimal?
+
+        Public Property fecha As Date?
+
+        <Column(TypeName:="numeric")>
+        Public Property entradas As Decimal?
+
+        <Column(TypeName:="numeric")>
+        Public Property salidas As Decimal?
+
+        <StringLength(40)>
+        Public Property banda As String
+
+        <StringLength(3)>
+        Public Property codigoseg As String
+
+        <StringLength(3)>
+        Public Property numbanco As String
+
+        <StringLength(3)>
+        Public Property plazacomp As String
+
+        Public Property nosucur As Integer?
+
+        Public Property interbanco As Boolean
+
+        Public Property impbanda As Boolean
+
+        Public Property fondeaoper As Boolean
+
+        Public Property chequesfora As Boolean
+
+        Public Property exporta As Boolean
+
+        Public Property void As Boolean
+
+    End Class
+
+End Class

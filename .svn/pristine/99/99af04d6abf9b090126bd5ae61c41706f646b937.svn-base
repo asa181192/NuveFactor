@@ -1,0 +1,113 @@
+﻿Imports FactorEntidades
+
+Public Class ContratosDAL
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+
+	Public Function ConsultaContratosDAL(ClienteId As Integer, ByRef model As List(Of OperacionContrato)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+
+				model = (From A In context.contratos
+						 Join C In context.producto
+						 On A.producto Equals C.id
+						 Where A.cliente = ClienteId
+							Select New OperacionContrato With {
+							.Contratos = New ContratosEntidad With {
+											 .altalinea = A.altalinea,
+											 .contrato = A.contrato,
+											 .linea = A.linea,
+											 .moneda = A.moneda,
+											 .producto = A.producto,
+											 .vencelinea = A.vencelinea
+										},
+							.Producto = New ProductoEntidad With {
+											.id = C.id,
+											.nombre = C.producto1
+										}
+						}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaDetalleContratoDAL(ContratoId As Int32, ByRef model As contratos) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model = (From p In context.contratos
+						Where p.contrato = ContratoId).SingleOrDefault()
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	'Public Function AltaPromotor(model As promotor) As Result
+
+	'	Dim respuesta = New Result(False)
+
+	'	Using context As New FactorContext
+
+	'		Try
+	'			context.promotor.Add(model)
+	'			context.SaveChanges()
+	'			respuesta.Ok = True
+	'		Catch e As Exception
+	'			respuesta.Detalle = e.InnerException.InnerException.Message
+	'		End Try
+
+	'	End Using
+
+	'	Return respuesta
+
+	'End Function
+
+	'Public Function ActualizarPromotor(model As promotor) As Result
+	'	Dim respuesta = New Result(False)
+	'	Using context As New FactorContext
+
+	'		Try
+	'			context.promotor.Attach(model)
+	'			context.Entry(model).State = EntityState.Modified
+	'			context.Entry(model).Property(Function(x) x.void).IsModified = False
+
+	'			context.SaveChanges()
+
+	'			respuesta.Ok = True
+
+	'		Catch e As Exception
+	'			respuesta.Detalle = e.InnerException.InnerException.Message
+	'		End Try
+
+	'	End Using
+
+	'	Return respuesta
+	'End Function
+
+#End Region
+End Class

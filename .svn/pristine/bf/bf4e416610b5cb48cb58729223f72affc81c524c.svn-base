@@ -1,0 +1,337 @@
+﻿Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.IO
+Imports System.Globalization
+
+Public Class NotificacionesDAL
+
+#Region "Metódos de Consulta"
+
+    Public Function ConsultaNotificacionesDAL(fecha1 As String, ByRef model As List(Of NotificacionesEntidad)) As Result
+        Dim response = New Result(False)
+        Dim fecha As Date
+
+        If fecha1 Is Nothing Or fecha1 = "" Then
+            fecha = Today.Date
+        Else
+            fecha = Date.Parse(fecha1)
+        End If
+
+        Using context As New FactorContext
+            Try
+                model = (From a In context.notifica_e
+                         Join b In context.contratos On a.contrato Equals (b.contrato)
+                         Join c In context.anexo On b.contrato Equals (c.contrato)
+                         Join d In context.comprador On a.deudor Equals (d.deudor)
+                         Join e In context.clientes On b.cliente Equals (e.cliente)
+                         Where (DbFunctions.TruncateTime(a.fecha) = fecha) And a.descrip = "NRECURSO"
+                         Select New NotificacionesEntidad With {.idrec = a.idrec, .contrato = a.contrato, .nombre = e.nombre, .deudor = a.deudor, .deudorname = d.nombre, .envio = a.email, .filename = a.filename, .descrip = a.descrip, .void = a.void, .void2 = a.void}).Union(
+                         From a In context.notifica_e
+                         Join b In context.contratos On a.contrato Equals (b.contrato)
+                         Join c In context.anexo On b.contrato Equals (c.contrato)
+                         Join d In context.clientes On b.cliente Equals (d.cliente)
+                         Where (DbFunctions.TruncateTime(a.fecha) = fecha) And a.descrip = "NPROVEEDOR"
+                         Select New NotificacionesEntidad With {.idrec = a.idrec, .contrato = a.contrato, .nombre = d.nombre, .deudor = a.deudor, .deudorname = d.nombre, .envio = a.email, .filename = a.filename, .descrip = a.descrip, .void = a.void, .void2 = a.void}).ToList()
+
+                response.Ok = True
+            Catch ex As Exception
+                response.Detalle = ex.InnerException.InnerException.Message
+            End Try
+        End Using
+
+        Return response
+    End Function
+
+    Public Function NotificarDAL(fecha As Date, ByRef model As List(Of NotificacionesEntidad), ByRef modelDet As List(Of NotificacionesEntidad), ByRef existe As Boolean, ByRef ruta As String) As Result
+        Dim response = New Result(False)
+        Dim consulta = New UtilitiesDAL()
+
+        Try
+
+            'consulta.ConsultaParametros("Enotifica", ruta)
+            ruta = "C:\"
+
+            'ruta = ruta & fecha.ToString("yyyyMMdd", CultureInfo.InvariantCulture) + "\"
+            ruta = ruta & Format(fecha, "yyyyMMdd") + "\"
+
+            If Directory.Exists(ruta) Then
+                existe = True
+                response.Ok = True
+                response.Mensaje = "Las notificaciones del día " + fecha.ToShortDateString() + " ya fueron enviadas anteriormente."
+            Else
+
+                Directory.CreateDirectory(ruta)
+
+                ExistNoticaciones(fecha, model, modelDet, response)
+
+                If model.Count = 0 Then
+                    response.Ok = True
+                    response.Mensaje = "No hay notificaciones pendientes a generar"
+                    Directory.Delete(ruta)
+                End If
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+        
+
+        Return response
+    End Function
+
+    Public Function ExistNoticaciones(fecha As Date, ByRef model As List(Of NotificacionesEntidad), ByRef modelDet As List(Of NotificacionesEntidad), ByRef response As Result) As Result
+
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.doctos
+                          Join b In context.contratos On a.contrato Equals b.contrato
+                          Join c In context.clientes On b.cliente Equals c.cliente
+                          Join d In context.ciudades On c.cvecd Equals d.clave
+                          Join e In context.estadosdemexico On c.cveedo Equals e.num
+                          Join f In context.comprador On a.deudor Equals f.deudor
+                          Where (DbFunctions.TruncateTime(a.fec_alta) = fecha) And a.c_delegada = False And b.producto = 1
+                          Select New NotificacionesEntidad With {.contrato = a.contrato, .deudor = a.deudor, .nombre = c.nombre, .producto = b.producto, .fec_alta = (DbFunctions.TruncateTime(a.fec_alta)),
+                                                                 .calle = f.calle, .noint = f.noint, .noext = f.noext, .cp = f.cp, .ciudad = f.municipio, .estado = e.estado,
+                                                                 .colonia = f.colonia, .email = f.email}).Distinct().Union(
+                          From a In context.doctos
+                          Join b In context.contratos On a.contrato Equals b.contrato
+                          Join c In context.clientes On b.cliente Equals c.cliente
+                          Join d In context.ciudades On c.cvecd Equals d.clave
+                          Join e In context.estadosdemexico On c.cveedo Equals e.num
+                          Join f In context.proveedor On a.deudor Equals f.deudor
+                          Where (DbFunctions.TruncateTime(a.fec_alta) = fecha) And a.c_delegada = False And {2, 11}.Contains(b.producto)
+                          Select New NotificacionesEntidad With {.contrato = a.contrato, .deudor = c.cliente, .nombre = c.nombre, .producto = b.producto, .fec_alta = (DbFunctions.TruncateTime(a.fec_alta)),
+                                                                 .calle = c.calle, .noint = c.noint, .noext = c.noext, .cp = c.cp, .ciudad = d.ciudad, .estado = e.estado,
+                                                                 .colonia = c.colonia, .email = c.email}).Distinct().ToList()
+
+                If model.Count > 0 Then
+
+                    modelDet = (From a In context.doctos
+                               Join b In context.contratos On a.contrato Equals b.contrato
+                               Join c In context.clientes On b.cliente Equals c.cliente
+                               Join d In context.comprador On a.deudor Equals d.deudor
+                               Join e In context.anexo On a.contrato Equals e.contrato And a.deudor Equals e.deudor
+                               Where (DbFunctions.TruncateTime(a.fec_alta) = fecha) And a.c_delegada = False And b.producto = 1
+                               Order By a.contrato, a.deudor, a.cesion
+                               Select New NotificacionesEntidad With {.contrato = a.contrato, .cesion = a.cesion, .docto = a.docto, .nombre = c.nombre,
+                                                                     .deuname = d.nombre, .calle = d.calle, .noext = d.noext, .noint = d.noint, .domicilio = d.domicilio,
+                                                                     .municipio = d.municipio, .estado = d.estado, .colonia = d.colonia, .moneda = b.moneda,
+                                                                     .fec_alta = DbFunctions.TruncateTime(a.fec_alta), .fec_vence = DbFunctions.TruncateTime(a.fec_vence), .monto = a.monto, .pagare = a.pagare,
+                                                                     .Cdomicilio = c.domicilio, .Cmunicipio = c.municipio, .cveedo = c.cveedo, .cvecd = c.cvecd,
+                                                                     .Cestado = c.estado, .Cnombre = c.nombre, .cColonia = c.colonia, .mancobranza = e.mancobranza,
+                                                                     .cp = d.cp, .ccp = c.cp,
+                                                                      .email = d.email}).Distinct().Union(
+                               From a In context.doctos
+                               Join b In context.contratos On a.contrato Equals b.contrato
+                               Join c In context.clientes On b.cliente Equals c.cliente
+                               Join d In context.proveedor On a.deudor Equals d.deudor
+                               Join e In context.anexo On a.contrato Equals e.contrato And a.deudor Equals e.deudor
+                               Where (DbFunctions.TruncateTime(a.fec_alta) = fecha) And a.c_delegada = False And {2, 11}.Contains(b.producto)
+                               Order By a.contrato, a.deudor, a.cesion
+                               Select New NotificacionesEntidad With {.contrato = a.contrato, .cesion = a.cesion, .docto = a.docto, .nombre = c.nombre,
+                                                                     .deuname = d.nombre, .calle = d.calle, .noext = d.noext, .noint = d.noint, .domicilio = d.domicilio,
+                                                                     .municipio = d.municipio, .estado = d.estado, .colonia = d.colonia, .moneda = b.moneda,
+                                                                     .fec_alta = DbFunctions.TruncateTime(a.fec_alta), .fec_vence = DbFunctions.TruncateTime(a.fec_vence), .monto = a.monto, .pagare = a.pagare,
+                                                                     .Cdomicilio = c.domicilio, .Cmunicipio = c.municipio, .cveedo = c.cveedo, .cvecd = c.cvecd,
+                                                                     .Cestado = c.estado, .Cnombre = c.nombre, .cColonia = c.colonia, .mancobranza = e.mancobranza,
+                                                                     .cp = d.cp, .ccp = c.cp,
+                                                                      .email = d.email}).distinct().ToList()
+
+                End If
+
+                response.Ok = True
+            Catch ex As Exception
+                response.Detalle = ex.Message
+            End Try
+        End Using
+
+        Return response
+    End Function
+
+    Function ConsultaDeunameDAL(deudor As Integer) As String
+        Dim respuesta As String
+
+        Using context As New FactorContext
+
+            Try
+                respuesta = (From a In context.comprador
+                        Where a.deudor = deudor
+                        Select a.nombre).SingleOrDefault()
+
+            Catch ex As Exception
+
+            End Try
+
+
+        End Using
+
+        Return respuesta
+    End Function
+#End Region
+
+#Region "Metódos Transaccionales"
+
+    Function GuardarNotificacionesDAL(mailList As List(Of notifica_e), ruta As String) As Result
+        Dim result = New Result(False)
+
+        Using scope As New Transactions.TransactionScope
+
+            Using context As New FactorContext
+
+                For Each b As notifica_e In mailList
+
+                    Dim a = New notifica_e
+
+                    a.fecha = b.fecha
+                    a.contrato = b.contrato
+                    a.deudor = b.deudor
+                    a.filename = b.filename
+                    a.descrip = b.descrip
+                    a.email = b.email
+                    a.confirma = False
+                    a.evidencia = ""
+                    a.void = False
+
+                    context.notifica_e.Add(a)
+                    context.SaveChanges()
+                Next
+                Try
+                    scope.Complete()
+                    result.Ok = True
+                    result.Mensaje = "La generación de notificaciones se realizó correctamente."
+                Catch ex As Exception
+                    result.Mensaje = "Error al guardar las notificaciones"
+
+                End Try
+
+            End Using
+
+        End Using
+
+        Return result
+    End Function
+
+    Sub EnviarNotificacionesDAL(mailList As List(Of notifica_e))
+
+        Dim consulta = New mail.sendMail()
+        Dim consulta1 = New UtilitiesDAL()
+
+
+
+        For Each a As notifica_e In mailList
+
+            Dim listTo As String()
+            Dim cc As String = ""
+            Dim ccArr As String()
+            Dim subject As String = ""
+            Dim body As String = ""
+            Dim archivos As String()
+
+            If a.email.Trim() <> "" Then
+
+                consulta1.ConsultaParametros("ENOTIFICALIST", cc)
+                listTo = a.email.Split(";")
+                ccArr = cc.Split(";")
+                subject = "Notificación de Operación de Factoraje Contrato-" & a.contrato.ToString()
+                archivos = a.filename.Split(";")
+
+                body = "<p>Buen Día.<br>"
+                body = body & "Asunto: Notificación Operación de Factoraje -" & a.contrato.ToString() & "<br>"
+                body = body & "Fecha de Operación: " & Format(a.fecha, "dd/MM/yyyy") & "<br>"
+                body = body & "___________________________________________________________________________________________ <br></p>"
+                body = body & "<p>Atentamente<br>"
+                body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+                'body = body & "<p>VAMOS POR MAS CONCIENCIA ANTES DE IMPRIMIR ESTE CORREO, CUIDEMOS EL MEDIO AMBIENTE. Los acentos y caracteres especiales han sido removidos de este mensaje para facilitar su lectura en cualquier programa de correo electronico. La informacion contenida en este mensaje de correo electronico es " & vbCr
+                'body = body & "confidencial y restringida y para uso exclusivo de los destinatarios de la misma y de quienes hayan sido autorizados especificamente para leerla, por lo que se le notifica que esta estrictamente prohibido y sujeto a las sanciones establecidas en las leyes correspondientes cualquier difusion, distribucion o copia del " & vbCr
+                'body = body & "mismo.  Si usted ha recibido este mensaje de correo electronico por error, favor de destruirlo y notificarlo al remitente a la direccion electronica indicada. Los correos electronicos no son necesariamente seguros, por lo que esta institucion no sera responsable en ningun momento por los cambios que el mismo " & vbCr
+                'body = body & "sufra en su transferencia o posteriormente. Asimismo, los archivos adjuntos a este correo electronico pueden contener virus que pueden danar los sistemas del destinatario; aun cuando se han revisado los archivos adjuntos respecto a virus, tampoco sera responsable en caso de mutaciones en su transferencia, " & vbCr
+                'body = body & "por lo cual sera necesario revisarlos antes de abrirlos.  Si desea una opinion formal, por favor hagalo saber al remitente para proceder como corresponda.</p>"
+
+                consulta.enviarMail(listTo, subject, body, Net.Mail.MailPriority.Normal, ccArr, Nothing, archivos)
+
+            End If
+
+        Next
+
+
+    End Sub
+
+    Sub DescargarArchivoDAL(ByRef model As notifica_e, idrec As Integer)
+
+        Using context As New FactorContext
+
+            Try
+                model = (From a In context.notifica_e
+                     Where a.idrec = idrec
+                     Select a).SingleOrDefault()
+            Catch ex As Exception
+
+            End Try
+
+        End Using
+
+    End Sub
+
+    Function ReenviarCorreoDAL(idrec As Integer, ByRef notificaciones As notifica_e) As Result
+        Dim result = New Result(False)
+        'Dim notificaciones = New notifica_e()
+        Dim util = New UtilitiesDAL()
+        Dim para As String()
+        Dim copia As String
+        Dim cc As String()
+        Dim subject As String
+        Dim body As String = ""
+        Dim archivos As String()
+        Dim enviarMail = New mail.sendMail()
+
+        Using contex As New FactorContext
+
+            Try
+
+                notificaciones = (From a In contex.notifica_e
+                                  Where a.idrec = idrec
+                                  Select a).SingleOrDefault()
+
+                result.Ok = True
+                result.Mensaje = "Se realizó el reenvío de la notificación correctamente."
+
+                util.ConsultaParametros("ENOTIFICALIST", copia)
+
+                para = notificaciones.email.Split(";")
+                cc = copia.Split(";")
+                subject = "Notificación de Operación de Factoraje Contrato " & notificaciones.contrato.ToString()
+                archivos = notificaciones.filename.Split(";")
+
+                body = "<p>Buen Día.<br>"
+                body = body & "Asunto: Notificación Operación de Factoraje -" & notificaciones.contrato.ToString() & "<br>"
+                body = body & "Fecha de Operación: " & Format(notificaciones.fecha, "dd/MM/yyyy") & "<br>"
+                body = body & "___________________________________________________________________________________________ <br></p>"
+                body = body & "<p>Atentamente<br>"
+                'body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+                'body = body & "<p>VAMOS POR MAS CONCIENCIA ANTES DE IMPRIMIR ESTE CORREO, CUIDEMOS EL MEDIO AMBIENTE. Los acentos y caracteres especiales han sido removidos de este mensaje para facilitar su lectura en cualquier programa de correo electronico. La informacion contenida en este mensaje de correo electronico es " & vbCr
+                'body = body & "confidencial y restringida y para uso exclusivo de los destinatarios de la misma y de quienes hayan sido autorizados especificamente para leerla, por lo que se le notifica que esta estrictamente prohibido y sujeto a las sanciones establecidas en las leyes correspondientes cualquier difusion, distribucion o copia del " & vbCr
+                'body = body & "mismo.  Si usted ha recibido este mensaje de correo electronico por error, favor de destruirlo y notificarlo al remitente a la direccion electronica indicada. Los correos electronicos no son necesariamente seguros, por lo que esta institucion no sera responsable en ningun momento por los cambios que el mismo " & vbCr
+                'body = body & "sufra en su transferencia o posteriormente. Asimismo, los archivos adjuntos a este correo electronico pueden contener virus que pueden danar los sistemas del destinatario; aun cuando se han revisado los archivos adjuntos respecto a virus, tampoco sera responsable en caso de mutaciones en su transferencia, " & vbCr
+                'body = body & "por lo cual sera necesario revisarlos antes de abrirlos.  Si desea una opinion formal, por favor hagalo saber al remitente para proceder como corresponda.</p>"
+
+
+                enviarMail.enviarMail(para, subject, body, Net.Mail.MailPriority.Normal, cc, Nothing, archivos)
+
+
+            Catch ex As Exception
+                result.Mensaje = "Error al consultar la notificación"
+            End Try
+
+        End Using
+
+        Return result
+    End Function
+
+#End Region
+
+    
+
+End Class

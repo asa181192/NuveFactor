@@ -1,0 +1,195 @@
+﻿Imports FactorEntidades
+Imports FactorBAL
+Imports Microsoft.Reporting.WebForms
+
+
+<CustomAuthorize(Permisos.Acciones.NOTIFICACIONES)>
+Public Class NotificacionesController
+    Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+    <HttpGet>
+    Public Function HistorialNotificaciones() As ViewResult
+        Return View()
+    End Function
+
+#End Region
+
+#Region "Get"
+
+    <HttpGet>
+    Public Function ConsultaNotificaciones(fecha As String) As ActionResult
+        Dim jresult = New JsonResult()
+        Dim response
+        Dim consulta = New NotificacionesBAL()
+
+        Dim notificaList = New List(Of NotificacionesEntidad)
+
+        response = consulta.ConsultaNotificacionesBAL(fecha, notificaList)
+        If response.Ok And response IsNot Nothing Then
+            jresult = Json(New With {Key .Results = notificaList}, JsonRequestBehavior.AllowGet)
+        Else
+            response.Mensaje = "Ocurrió un Error al consultar la información.(Controller)"
+            jresult = Json(New With {Key .Mensaje = response.Mensaje + " " + response.Detalle}, JsonRequestBehavior.AllowGet)
+        End If
+
+        Return jresult
+    End Function
+
+    Public Function DescargarArchivo(idrec As Integer) As FileResult
+        Dim consulta As New NotificacionesBAL()
+        Dim model As New notifica_e()
+
+        consulta.DescargarArchivoBAL(model, idrec)
+
+        Return File(model.filename, "applications/pdf", model.contrato.ToString() & "_" & model.deudor.ToString() & "_" & String.Format("{0:yyyyMMdd}", model.fecha()) & ".pdf")
+    End Function
+
+
+#End Region
+
+#Region "Post"
+
+    <CustomAuthorize(Permisos.Acciones.NOTIFICACIONES_ACTUALIZAR)>
+    <HttpPost>
+    Public Function Notificar(fecha As Date) As JsonResult
+
+        Dim jresult = New JsonResult()
+        Dim consulta = New NotificacionesBAL()
+        Dim resultado
+        Dim model As List(Of NotificacionesEntidad)
+        Dim modelDet As List(Of NotificacionesEntidad)
+        Dim existe As Boolean = False
+        Dim ruta As String = ""
+        Dim localReport = New Microsoft.Reporting.WebForms.LocalReport()
+        Dim mailList = New List(Of notifica_e)
+
+        resultado = consulta.NotificarBAL(fecha, model, modelDet, existe, ruta)
+
+        If resultado.ok And model IsNot Nothing Then
+
+            If model.Count > 0 And existe = False Then
+
+                For Each item As NotificacionesEntidad In model
+
+                    Select Case item.producto
+                        Case Is = 1
+                            localReport.ReportPath = Server.MapPath("~/Reports/Notificaciones_NRec.rdlc")
+                        Case Is = 11
+                            localReport.ReportPath = Server.MapPath("~/Reports/Notificaciones_NProve.rdlc")
+                    End Select
+
+                    localReport.DataSources.Clear()
+
+
+
+                    Dim filename As String = item.contrato.ToString() + "_" + item.deudor.ToString() + "_" + item.fec_alta.ToString("yyyyMMdd") + ".pdf"
+                    Dim domicilio As String = item.calle.Trim() + " " + item.noext.Trim() + " " + item.noint.Trim() + ", " + item.colonia.Trim() + ", " + item.cp.ToString()
+                    Dim listDet = New List(Of NotificacionesEntidad)
+
+          listDet = (From a In modelDet
+                  Where a.contrato = item.contrato And a.deudor = If(item.producto = 1, item.deudor, a.deudor)
+                  Select New NotificacionesEntidad With {.contrato = a.contrato, .cesion = a.cesion, .docto = a.docto, .nombre = a.nombre,
+                                                       .deuname = a.deuname, .calle = a.calle, .noext = a.noext, .noint = a.noint, .domicilio = a.domicilio,
+                                                       .municipio = a.municipio, .estado = a.estado, .colonia = a.colonia, .moneda = a.moneda,
+                                                       .fec_alta = a.fec_alta, .fec_vence = a.fec_vence, .monto = a.monto, .pagare = a.pagare,
+                                                       .Cdomicilio = a.domicilio, .Cmunicipio = a.municipio, .cveedo = a.cveedo, .cvecd = a.cvecd,
+                                                       .Cestado = a.estado, .Cnombre = a.nombre, .cColonia = a.colonia, .mancobranza = a.mancobranza,
+                                                       .cp = a.cp, .ccp = a.cp, .email = a.email, .deudor = a.deudor}).Distinct().ToList()
+
+
+                    Dim deuname As String = ""
+
+                    If item.producto = 1 Then
+                        deuname = consulta.ConsultaDeunameBAL(item.deudor)
+                    Else
+                        deuname = item.nombre
+                    End If
+
+
+                    Dim reportDs = New ReportDataSource()
+                    reportDs.Name = "dataset"
+                    reportDs.Value = listDet
+
+                    localReport.DataSources.Add(reportDs)
+
+                    Dim reportType As String = "PDF"
+                    Dim mimeType As String = ""
+                    Dim encoding As String = ""
+                    Dim fileNameExtension As String = ""
+
+                    Dim Waring() As Warning = Nothing   'Array
+                    Dim Streams() As String = Nothing   'Array 
+                    Dim renderedBytes() As Byte 'Array
+
+                    Dim list(6) As ReportParameter
+
+                    list(0) = New ReportParameter("nombre", item.nombre.Trim())
+                    list(1) = New ReportParameter("contrato", item.contrato)
+                    list(2) = New ReportParameter("fec_alta", item.fec_alta)
+                    list(3) = New ReportParameter("edo", item.estado.Trim())
+                    list(4) = New ReportParameter("cd", item.ciudad.Trim())
+                    list(5) = New ReportParameter("domicilio", domicilio.Trim())
+                    list(6) = New ReportParameter("deuname", deuname)
+
+                    localReport.SetParameters(list)
+
+                    renderedBytes = localReport.Render(reportType, Nothing, mimeType, encoding, fileNameExtension, Streams, Waring)
+
+                    'Para crear archivo directamente sin vista previa
+                    Dim pdfPath As String = ruta + filename
+                    Dim pdfFile As New System.IO.FileStream(pdfPath, System.IO.FileMode.Create)
+                    pdfFile.Write(renderedBytes, 0, renderedBytes.Length)
+                    pdfFile.Close()
+
+                    Dim entNotif = New notifica_e
+
+                    entNotif.fecha = item.fec_alta
+                    entNotif.contrato = item.contrato
+                    entNotif.deudor = item.deudor
+                    entNotif.filename = pdfPath
+                    entNotif.descrip = IIf(item.producto = 1, "NRECURSO", "NPROVEEDOR")
+                    entNotif.email = item.email
+
+                    mailList.Add(entNotif)
+                Next
+
+                resultado = consulta.GuardarNotificacionesBAL(mailList, ruta)
+
+                If resultado.Ok Then
+                    consulta.EnviarNotificacionesBAL(mailList)
+                    FactorBAL.Utility.Monitor(Session("userid"), "Generación de notificaciones del día " & Format(fecha, "dd/MM/yyyy"))
+                End If
+
+            End If
+
+
+        End If
+
+        jresult = Json(resultado.Mensaje, JsonRequestBehavior.AllowGet)
+
+        Return jresult
+
+    End Function
+
+    <CustomAuthorize(Permisos.Acciones.NOTIFICACIONES_ACTUALIZAR)>
+    Public Function ReenvioMail(idrec As Integer) As JsonResult
+        Dim jresult
+        Dim consulta As New NotificacionesBAL()
+        Dim result As New Result(False)
+        Dim model As notifica_e
+
+        result = consulta.ReenviarCorreoBAL(idrec, model)
+
+        If result.Ok Then
+            FactorBAL.Utility.Monitor(Session("userid"), "Reenvío de notificación (" & model.idrec.ToString() & ") contrato( " & model.contrato.ToString() & " deudor (" & model.deudor.ToString() & ")")
+        End If
+
+        jresult = Json(New With {Key .Mensaje = result.Mensaje}, JsonRequestBehavior.AllowGet)
+
+        Return jresult
+    End Function
+
+#End Region
+
+End Class

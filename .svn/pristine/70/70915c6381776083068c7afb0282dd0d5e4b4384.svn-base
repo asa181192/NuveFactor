@@ -1,0 +1,434 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Data.Entity.Validation
+Imports System.Transactions
+Imports Nelibur.ObjectMapper
+
+Public Class MovimientosDAL
+
+#Region "Metodos de consulta"
+
+    Public Function consultaMovimientosDAL(fecIni As Date, idctabanco As Integer, ByRef model As List(Of MovimientosEntidad)) As Result
+
+        Dim respuesta = New Result(False)
+        Dim context As New FactorContext
+
+        Try
+
+            Dim values = (From a In context.movcuentas
+                          Where (DbFunctions.TruncateTime(a.fecha) = fecIni) And a.idctabanco = idctabanco
+                          Order By a.numrec Descending
+                          Select New MovimientosEntidad With {.numrec = a.numrec, .fecha = a.fecha, .folio = a.folio, .tipo = a.tipo,
+                                                              .beneficiario = a.beneficiario, .concepto = a.concepto, .entrada = a.entrada,
+                                                              .salida = a.salida, .saldo = a.saldo, .cancelado = a.cancelado}).ToList()
+
+            For Each item As MovimientosEntidad In values
+
+                Dim a = New MovimientosEntidad
+
+                a.numrec = item.numrec
+                a.folio = item.folio
+                a.tipo = item.tipo.Trim()
+                a.beneficiario = item.beneficiario.Trim()
+                a.concepto = item.concepto.Trim()
+                a.entrada = item.entrada
+                a.salida = item.salida
+                a.saldo = item.saldo
+                a.fecha = item.fecha
+                a.cancel = IIf(item.cancelado, "Cancelado", "Movimiento Activo")
+
+                model.Add(a)
+            Next
+
+            respuesta.Ok = True
+
+        Catch ex As Exception
+            respuesta.Detalle = ex.Message
+
+        End Try
+
+        Return respuesta
+
+    End Function
+
+    Public Function movimientosCancelado(numrec As Integer, ByRef model As cuentas) As Result
+
+        Dim cancelado = New Result(False)
+        Dim context = New FactorContext
+
+        Dim values = (From a In context.movcuentas Where a.numrec = numrec Select a).SingleOrDefault()
+
+        cancelado.Ok = values.cancelado
+
+        Return cancelado
+
+    End Function
+
+    Public Function obtenerNuevoFolioDAL(idcta As Integer, tipo As String, ByRef context As FactorContext) As Integer
+        Dim folio As Integer
+        Using context 'As New FactorContext
+
+            Dim values = (From a In context.cuentas Where a.idctabanco = idcta Select a).SingleOrDefault()
+
+            Select Case tipo
+                Case "TR"
+                    values.traspasos = values.traspasos + 1
+                    folio = values.traspasos
+                Case "CA"
+                    values.cargos = values.cargos + 1
+                    folio = values.cargos
+                Case "DE"
+                    values.depositos = values.depositos + 1
+                    folio = values.depositos
+                Case Else
+                    values.cancelacion = values.cancelacion + 1
+                    folio = values.cancelacion
+
+            End Select
+
+        End Using
+
+        Return folio
+    End Function
+
+    Function consultaMovimientoDetalleDAL(numrec As Integer, ByRef model As MovimientosEntidad) As Result
+        'Tipo (1=Traspaso, 2=Cargos, 3=Depositos)
+
+
+        Dim respuesta = New Result(False)
+
+        Using context As New FactorContext
+
+            Try
+
+                If model.tipo = "DE" Then
+                    model = (From a In context.movcuentas
+                            Join b In context.depositos On a.folio Equals b.folio And a.idctabanco Equals b.idctabanco
+                            Where a.numrec = numrec
+                            Select a, b Select New MovimientosEntidad With {.numrec = a.numrec, .fecha = a.fecha, .beneficiario = a.beneficiario,
+                            .salida = a.salida, .concconta = a.concconta, .tipo = a.tipo, .cancelado = a.cancelado, .banco = b.banco,
+                            .contrato = b.contrato, .capital = b.capital, .concepto = b.concepto, .entrada = b.entrada, .docto = b.docto, .generales = b.entrada - b.capital}).SingleOrDefault()
+
+                Else
+                    model = (From a In context.movcuentas Where a.numrec = numrec
+                            Select a Select New MovimientosEntidad With {.numrec = a.numrec, .fecha = a.fecha, .beneficiario = a.beneficiario,
+                            .concepto = a.concepto, .entrada = a.entrada, .salida = a.salida, .concconta = a.concconta,
+                            .tipo = a.tipo, .cancelado = a.cancelado}).SingleOrDefault()
+
+                End If
+
+                If model IsNot Nothing Then
+                    respuesta.Ok = True
+                End If
+
+            Catch ex As Exception
+                respuesta.Detalle = ex.Message
+            End Try
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+    Function consultarClienteDAL(contrato As Integer, ByRef model As MovimientosEntidad) As Result
+        Dim respuesta = New Result(False)
+
+        Using context As New FactorContext
+            Try
+
+                model = (From a In context.clientes
+                         Join b In context.contratos
+                         On a.cliente Equals b.cliente
+                         Where b.contrato = contrato Select a Select New MovimientosEntidad With {.nombre = a.nombre}).SingleOrDefault()
+
+                respuesta.Ok = True
+
+
+            Catch ex As Exception
+                respuesta.Detalle = ex.Message
+
+            End Try
+        End Using
+        Return respuesta
+    End Function
+
+#End Region
+
+#Region "Metodos transaccionales"
+
+    Function altaMovimientosDAL(model As MovimientosEntidad) As Result
+
+        Dim respuesta As New Result(False)
+
+        Using scope As New TransactionScope
+            actualizarFolioSaldoDAL(model)
+            insertarMovimientoDAL(model)
+
+            If model.tipo = "DE" Then
+                insertarDepositoDAL(model)
+            End If
+
+            Try
+                scope.Complete()
+                respuesta.Ok = True
+            Catch ex As Exception
+                respuesta.Detalle = ex.Message
+            End Try
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+    Private Function insertarMovimientoDAL(model As MovimientosEntidad) As Result
+        Dim response As New Result(False)
+        Dim mov As New movcuentas
+
+        Using context As New FactorContext
+
+            mov.idctabanco = model.idctabanco
+            mov.fecha = model.fecha
+            mov.ctabancobk = ""
+            mov.tipo = model.tipo
+            mov.folio = model.folio
+            mov.contrato = model.contrato
+            mov.cesion = model.cesion
+            mov.beneficiario = model.beneficiario
+            mov.concepto = model.concepto
+            mov.concconta = IIf(model.tipo = "TR", model.concconta, "")
+            mov.depoencta = 1
+            mov.impresiones = 0
+            mov.entrada = model.entrada
+            mov.salida = model.salida
+            mov.saldo = model.saldo
+            mov.ficha = 0
+            mov.cancelado = False
+            mov.feccanc = Nothing
+            mov.vence = model.fecha
+            mov.tasa = 0
+            mov.sucursal = 1
+
+            context.movcuentas.Add(mov)
+
+            Try
+
+                context.SaveChanges()
+                response.Ok = True
+
+            Catch ex As Exception
+
+                response.Detalle = "Ocurrio un error al insertar el movimiento"
+
+            End Try
+
+        End Using
+
+        Return response
+
+    End Function
+
+    Private Function actualizarFolioSaldoDAL(ByRef model As MovimientosEntidad) As Result
+        Dim response As New Result(False)
+        Dim idcta As Integer = model.idctabanco
+
+        Using context As New FactorContext
+
+            Dim values = (From a In context.cuentas Where a.idctabanco = idcta Select a).SingleOrDefault()
+
+            Select Case model.tipo
+                Case "CA"
+                    values.cargos = values.cargos + 1
+                    model.folio = values.cargos
+                    values.saldo = values.saldo + (model.salida * -1)
+
+                Case "DE"
+                    values.depositos = values.depositos + 1
+                    model.folio = values.depositos
+                    values.saldo = values.saldo + model.entrada
+
+                Case "TR"
+                    values.traspasos = values.traspasos + 1
+                    model.folio = values.traspasos
+                    values.saldo = values.saldo + (model.salida * -1)
+
+                Case "CC"
+                    values.cancelacion = values.cancelacion + 1
+                    model.folio = values.cancelacion
+                    values.saldo = values.saldo + model.entrada
+
+                Case "DC"
+                    values.cancelacion = values.cancelacion + 1
+                    model.folio = values.cancelacion
+                    values.saldo = values.saldo + (model.salida * -1)
+
+                Case "TC"
+                    values.cancelacion = values.cancelacion + 1
+                    model.folio = values.cancelacion
+                    values.saldo = values.saldo + model.entrada
+
+            End Select
+
+            model.saldo = values.saldo
+
+            Try
+                context.SaveChanges()
+                response.Ok = True
+
+            Catch ex As Exception
+                response.Mensaje = "Error al intentar actualizar la cuenta."
+
+            End Try
+
+        End Using
+
+        Return response
+
+    End Function
+
+    Private Function insertarDepositoDAL(model As MovimientosEntidad) As Result
+        Dim response As New Result(False)
+        Dim depositos As New depositos
+
+        Using context As New FactorContext
+
+            depositos.fecha = Date.Today()
+            depositos.idctabanco = model.idctabanco
+            depositos.ctabanco = ""
+            depositos.folio = model.folio
+            depositos.contrato = model.contrato
+            depositos.concepto = model.concepto
+            depositos.detalle = ""
+            depositos.capital = model.capital
+            depositos.entrada = model.entrada
+            depositos.saldo = model.saldo
+            depositos.ficha = 0
+            depositos.cancelado = 0
+            depositos.feccanc = Nothing
+            depositos.banco = model.banco
+            depositos.tipodocto = 1
+            depositos.otrobanco = 0
+            depositos.docto = model.docto
+            depositos.folioevento = ""
+            depositos.identidad = 0
+            depositos.id = 0
+            depositos.void = 0
+
+            Try
+                context.depositos.Add(depositos)
+                context.SaveChanges()
+                response.Ok = True
+            Catch ex As Exception
+                response.Detalle = "Ocurrió un error al insertar el depósito"
+            End Try
+
+        End Using
+
+        Return response
+
+    End Function
+
+    Function actualizarMovimientosDAL(model As MovimientosEntidad) As Result
+
+        Dim respuesta = New Result(False)
+
+        Using scope As New TransactionScope
+
+            Using context As New FactorContext
+
+                Try
+                    Dim mov = (From a In context.movcuentas Where a.numrec = model.numrec Select a).SingleOrDefault()
+                    mov.concepto = model.concepto
+
+                    If mov.tipo = "DE" Then
+                        Dim dep = (From a In context.depositos Where a.folio = mov.folio And mov.idctabanco Select a).SingleOrDefault()
+                        dep.concepto = model.concepto
+
+                    End If
+
+                    context.SaveChanges()
+                    respuesta.Ok = True
+                    scope.Complete()
+                Catch ex As Exception
+                    respuesta.Detalle = "Ocurrió un error al intentar actualizar el movimiento."
+                End Try
+
+            End Using
+
+        End Using
+
+        Return respuesta
+
+    End Function
+
+    Public Function cancelarMovtoDAL(numrec As Integer) As Result
+
+        Dim response = New Result(False)
+        Dim model = New MovimientosEntidad
+        Using scope As New TransactionScope
+
+            Using context As New FactorContext
+
+                Try
+                    Dim mov = (From a In context.movcuentas Where a.numrec = numrec Select a).SingleOrDefault()
+
+                    mov.cancelado = True
+
+                    model.idctabanco = mov.idctabanco
+                    model.fecha = Date.Today
+                    model.folio = mov.folio
+                    model.contrato = mov.contrato
+                    model.cesion = mov.cesion
+                    model.beneficiario = mov.beneficiario
+                    model.concconta = mov.concconta
+
+                    Select Case mov.tipo
+                        Case "DE"
+                            model.concepto = "Cancelación del depósito N° " + mov.folio.ToString()
+                            model.tipo = "DC"
+                            model.salida = mov.entrada
+
+                            Dim dep = (From a In context.depositos Where a.folio = mov.folio And a.idctabanco = mov.idctabanco Select a).SingleOrDefault()
+                            dep.cancelado = True
+                            dep.feccanc = Date.Today
+
+                        Case "TR"
+                            model.concepto = "Cancelación del Traspaso N° " + mov.folio.ToString()
+                            model.tipo = "TC"
+                            model.entrada = mov.salida
+
+                        Case "CA"
+                            model.concepto = "Cancelación del cargo N° " + mov.folio.ToString()
+                            model.tipo = "CC"
+                            model.entrada = mov.salida
+
+                    End Select
+
+                    altaMovimientosDAL(model)
+
+                    context.SaveChanges()
+                    scope.Complete()
+                    response.Ok = True
+                    response.Mensaje = "Se realizó la " + model.concepto
+                Catch ex As Exception
+                    response.Detalle = "Ocurrio un error al realizar la cancelación."
+                End Try
+
+            End Using
+
+        End Using
+
+        Return response
+
+    End Function
+
+#End Region
+
+    
+
+
+
+End Class

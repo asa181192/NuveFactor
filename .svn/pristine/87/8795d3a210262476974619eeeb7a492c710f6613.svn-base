@@ -1,0 +1,79 @@
+﻿@ModelType nuve.Models.Modeloadeudos
+
+@Code
+  ViewData("Title") = "Factoraje - Adeudos por pagar"
+End Code
+
+@Section Scripts
+  <script src="~/Scripts/CobranzaScripts/adeudos.js"></script>
+End Section
+
+<div class="head">
+  <div class="headForma">
+    <div class="headFormaContenido">
+      <a href="~/Cobranza/Index">
+        <img src="~/Images/menu/menuregresar.png" /></a>
+      <span>Adeudos por pagar</span>
+    </div>
+  </div>
+</div>
+
+<div id="tableContainer" class="tableContainer">
+  <div class="panel-heading">
+    <div class="topmargin">
+      <div class="form-inline">
+        <div class="form-group">
+          @*@Html.Label("Seleccionar mes : ")*@
+          @*<input id="month" class='month-year-input' type="text"/>*@
+        </div>
+        @*<button id="btnConsultar" type="button" class="btn bold">Consultar</button>*@
+      </div>
+      <p>
+        @*@Html.ActionLink("Nuevo Registro", "GuardarParidad", New With {.fecha = Nothing},New With{.Class="popup btn bold"})*@
+      </p>
+
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="jumbotron">
+      <div class="table-responsive">
+        <table id="tableAdeudos" class="table cell-border compact hover" style="width: 100%">
+          <thead>
+            <tr>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.idadeudo)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.monedaStr)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.Adeudo)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.contrato)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.Nombre)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.fec_alta)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.monto)
+              </th>
+              <th>
+                @Html.DisplayNameFor(Function(model) model.saldo)
+              </th>
+              <th>Pagar
+              </th>
+              <th>Baja
+              </th>
+
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

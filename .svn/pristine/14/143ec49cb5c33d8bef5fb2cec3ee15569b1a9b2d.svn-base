@@ -1,0 +1,21 @@
+﻿$(document).ready(function(e) {
+
+    $('#dvflexCatalogos').click(function() {
+        window.location.href = '../Catalogos/Index';
+    });
+
+    $('#dvflexAdministracion').click(function () {
+        window.location.href = '../Admin/Index';
+    });
+    //alert('Esto que lo escriba en la 1ª línea, \n y esto en la 2ª')
+    mensajemodal('Esta version del sistema se encuentra en construccion,los estilos presentados aqui'+
+        ' asi como interfaces podrian cambiar en su version final , cualquier error encontrado favor de reportarlo .'+ 
+        ' <br/><br/>Actualizaciones : ' +
+        ' <br/><br/> -Se creo reloj de sesion , ahora indica el tiempo restante de la sesion .' +
+        ' <br/> -Se genero pantalla de confirmacion para salir o seguir en sesion . ' +
+        ' <br/> -Se modificaron las validaciones de catalogos .' +
+        ' <br/> -Busqueda global funciona mas rapido .' +
+        ' <br/> -Añadido UI de carga al logearse en el sistema. ' +
+        ' <br/><br/> Version 1.10'
+        , 'info');
+});

@@ -1,0 +1,709 @@
+﻿.btn-black {
+  color: #fff;
+  background-color: rgba(18, 43, 64, 1);
+  border-color: gray;
+}
+.btn-black:focus,
+.btn-black.focus {
+  color: #fff;
+  background-color: rgba(18, 43, 64, 1);
+  border-color: gray;
+}
+.btn-black:hover {
+  color: #fff;
+  background-color: rgba(140, 140, 140, 1);
+  border-color: gray;
+}
+
+.btn-bxmas {
+  border: 1px solid #c4d600;
+  background: #c4d600;
+  font-weight: bold;
+  color: #333e48;
+}
+.btn-bxmas:focus,
+.btn-bxmas.focus {
+  border: 1px solid #c4d660;
+  background: #c4d600;
+  font-weight: bold;
+  color: #ffffff;
+}
+.btn-bxmas:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.bodyback {
+  background-image: url("../Images/login-bg-nuve.png");
+  background-clip: content-box;
+  background-size: cover;
+}
+
+.loginBox {
+	max-width: 520px;
+	padding: 25px 100px 10px 100px;
+	border-radius: 30px;
+	border: 0px currentColor;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	-o-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-khtml-border-radius: 30px;
+	background-color: #C4D600;
+	margin: 20px auto 0px;
+	color: #333E48;
+}
+
+.loginWrapper {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+
+
+}
+
+.head {
+  color: #333E48;
+  background-color: #ffffff;
+  font-size: 18px;
+  text-align: left;    
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  margin-left: -3px;
+}
+.headForma {
+  width: 80%;
+  height: 0px;
+  border-right: 60px solid transparent;
+  border-top: 30px solid #C4D600;
+}
+.headFormaContenido {    
+  margin-top: -25px;
+  margin-left: 5px;
+}  
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #3BB0C9;
+    filter: alpha(Opacity=50);
+    color: #ffffff;
+    font-size: large;
+    box-shadow: 0px 0px 20px #333e48;
+}
+
+.highlight {
+    border: 1px solid #D2D3D4;
+    background: #ffffff;
+    color: #333e48;
+}
+
+.REDALERT {
+  color: #991426;
+}
+
+.BoxFlex {
+    width: 210px;
+	height: 210px;
+	text-align: center;
+
+}
+
+.BoxFlexShadow {
+    background-color: #ffffff;
+	border-top: solid 1px #99A4AE;
+	border-bottom: solid 1px #99A4AE;
+	border-left: solid 1px #99A4AE;
+	border-right: solid 1px #99A4AE;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-o-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	width: 190px;
+	height: 190px;
+	text-align: center;
+	font-size: 24px;
+	cursor: pointer;
+	box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-webkit-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-moz-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	-o-box-shadow: inset 0px 0px 0px #99A4AE, 0px 38px 40px -30px #99A4AE;
+	margin: 5px;
+}
+
+.ContenedorFlexbox {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.topmargin {
+    margin-top: 50px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.fullwidth {
+    width: 100%
+}
+
+.input-validation-error{ border: 1px solid red; }
+
+.tableContainer {
+    margin-bottom: 50px
+}
+
+/*SpinnerCSS*/
+#circularG{
+	position:relative;
+	width:58px;
+	height:58px;
+	margin: auto;
+}
+
+.circularG{
+	position:absolute;
+	background-color:rgb(195,213,0);
+	width:14px;
+	height:14px;
+	border-radius:9px;
+		-o-border-radius:9px;
+		-ms-border-radius:9px;
+		-webkit-border-radius:9px;
+		-moz-border-radius:9px;
+	animation-name:bounce_circularG;
+		-o-animation-name:bounce_circularG;
+		-ms-animation-name:bounce_circularG;
+		-webkit-animation-name:bounce_circularG;
+		-moz-animation-name:bounce_circularG;
+	animation-duration:0.628s;
+		-o-animation-duration:0.628s;
+		-ms-animation-duration:0.628s;
+		-webkit-animation-duration:0.628s;
+		-moz-animation-duration:0.628s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:normal;
+		-o-animation-direction:normal;
+		-ms-animation-direction:normal;
+		-webkit-animation-direction:normal;
+		-moz-animation-direction:normal;
+}
+
+#circularG_1{
+	left:0;
+	top:23px;
+	animation-delay:0.238s;
+		-o-animation-delay:0.238s;
+		-ms-animation-delay:0.238s;
+		-webkit-animation-delay:0.238s;
+		-moz-animation-delay:0.238s;
+}
+
+#circularG_2{
+	left:6px;
+	top:6px;
+	animation-delay:0.314s;
+		-o-animation-delay:0.314s;
+		-ms-animation-delay:0.314s;
+		-webkit-animation-delay:0.314s;
+		-moz-animation-delay:0.314s;
+}
+
+#circularG_3{
+	top:0;
+	left:23px;
+	animation-delay:0.39s;
+		-o-animation-delay:0.39s;
+		-ms-animation-delay:0.39s;
+		-webkit-animation-delay:0.39s;
+		-moz-animation-delay:0.39s;
+}
+
+#circularG_4{
+	right:6px;
+	top:6px;
+	animation-delay:0.466s;
+		-o-animation-delay:0.466s;
+		-ms-animation-delay:0.466s;
+		-webkit-animation-delay:0.466s;
+		-moz-animation-delay:0.466s;
+}
+
+#circularG_5{
+	right:0;
+	top:23px;
+	animation-delay:0.542s;
+		-o-animation-delay:0.542s;
+		-ms-animation-delay:0.542s;
+		-webkit-animation-delay:0.542s;
+		-moz-animation-delay:0.542s;
+}
+
+#circularG_6{
+	right:6px;
+	bottom:6px;
+	animation-delay:0.628s;
+		-o-animation-delay:0.628s;
+		-ms-animation-delay:0.628s;
+		-webkit-animation-delay:0.628s;
+		-moz-animation-delay:0.628s;
+}
+
+#circularG_7{
+	left:23px;
+	bottom:0;
+	animation-delay:0.704s;
+		-o-animation-delay:0.704s;
+		-ms-animation-delay:0.704s;
+		-webkit-animation-delay:0.704s;
+		-moz-animation-delay:0.704s;
+}
+
+#circularG_8{
+	left:6px;
+	bottom:6px;
+	animation-delay:0.78s;
+		-o-animation-delay:0.78s;
+		-ms-animation-delay:0.78s;
+		-webkit-animation-delay:0.78s;
+		-moz-animation-delay:0.78s;
+}
+
+
+
+@keyframes bounce_circularG{
+	0%{
+		transform:scale(1);
+	}
+
+	100%{
+		transform:scale(.3);
+	}
+}
+
+@-o-keyframes bounce_circularG{
+	0%{
+		-o-transform:scale(1);
+	}
+
+	100%{
+		-o-transform:scale(.3);
+	}
+}
+
+@-ms-keyframes bounce_circularG{
+	0%{
+		-ms-transform:scale(1);
+	}
+
+	100%{
+		-ms-transform:scale(.3);
+	}
+}
+
+@-webkit-keyframes bounce_circularG{
+	0%{
+		-webkit-transform:scale(1);
+	}
+
+	100%{
+		-webkit-transform:scale(.3);
+	}
+}
+
+@-moz-keyframes bounce_circularG{
+	0%{
+		-moz-transform:scale(1);
+	}
+
+	100%{
+		-moz-transform:scale(.3);
+	}
+}
+
+span.field-validation-error {
+    display:none
+}
+
+.barraSuperior {
+    /* position: fixed; */
+    top: 0%;
+    width: 100%;
+    z-index: 10;
+    font-size: 20px;
+    color: #343E48;
+    background-color: #343E48;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    vertical-align: top;
+    box-shadow: 0px 3px 20px #343E48;
+    -webkit-box-shadow: 0px 3px 20px #343E48;
+    -moz-box-shadow: 0px 3px 20px #343E48;
+}
+
+.buscarNombreClt {
+    color: #3BB0C9;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.buscarNombreCltBoton {
+    color: #3BB0C9;
+    font-weight: bold;
+}
+
+.linkCobranza a {
+    color: #C3D500;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.digitoBancomer {
+    color: #FC9200;
+    cursor: pointer;
+}
+
+.separador {
+    font-size: 18px;
+    color: #343E48;
+}
+
+.EncabezadoBusquedasCl {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #343E48;
+}
+
+.TotalCoincidencias {
+    font-size: 14px;
+}
+
+.buscarNombreCltConc {
+    background-color: Azure;
+    font-weight: bold;
+    border: 1px solid #3BB0C9;
+}
+
+.separadorbusqueda {
+    background-color: rgba(0,0,0,0.07);
+    border-width: 0;
+    color: rgba(0,0,0,0.07);
+    height: 1px;
+    display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    border-style: inset;
+}
+
+.btnimgaclientes {
+    width: 42px;
+}
+
+.topPopUp {
+    z-index:10000;
+}
+
+.ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable {
+    z-index:10000;
+}
+
+.form-group, input, select {
+        font-size:12px
+    } 
+
+
+
+
+
+/*CheckBox*/
+
+.chBox {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 17px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.chBox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    border-radius : 5px;
+    background-color: #e4e4e4;
+    border: 1px solid #0803033d;
+}
+
+/* On mouse-over, add a grey background color */
+.chBox:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.chBox input:checked ~ .checkmark {
+    background-color: #3bb0c9;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.chBox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.chBox .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+    
+
+/*RadioButton*/
+
+/* Customize the label (the container) */
+.rdButtton {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.rdButtton input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Create a custom radio button */
+.radiomark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 1px solid #0803033d;
+}
+
+/* On mouse-over, add a grey background color */
+.rdButtton:hover input ~ .radiomark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.rdButtton input:checked ~ .radiomark {
+  background-color: #5caec0;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.rdButtton input:checked ~ .radiomark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.rdButtton .radiomark:after {
+  top: 5px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.timersession
+{
+	/*color: #3BB0C9;*/
+	color: #ffffff;
+	font-size: 14px;
+	margin-right: 8px;
+	margin-left: 8px;
+	vertical-align: text-bottom;
+	vertical-align: bottom;
+	text-wrap: none;
+}
+
+.custom-header {
+    text-align: center;
+    padding: 3px;
+    background: #216270;
+    color: #fff;
+}
+
+.search_bar{
+    position:absolute;
+    left:10%;
+    top:5%;
+    width:100%;
+    background-color:white;
+    color:grey;
+}
+
+.grupo {
+    background-color: #c4d60029;
+}
+
+tr.group{
+    background-color: #c4d60029 !important;
+}
+
+
+
+/*Esto arregla el problema del dragable con popups*/
+/*.ui-dialog { width: auto !important;
+              height: auto !important }*/
+
+
+/* http://projects.lukehaas.me/css-loaders/ by @lukehaas */
+.loading-spinner {
+
+    position: absolute;
+    height: 1em;
+    width: 1em;
+    top: 50%;
+    left: 50%;  
+    margin-top: -50px;
+    background-size: 100%;
+    -webkit-animation: load4 1.3s infinite linear;
+    animation: load4 1.3s infinite linear;
+    font-size: 12px;
+    border-radius: 50%;
+
+    /*position: absolute;
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+       background-size: 100%;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;
+  font-size: 12px;
+
+    font-size: 12px;
+  margin: 6.7em auto;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;*/
+
+}
+@-webkit-keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0em -3em 0em 0.2em #ffffff, 2em -2em 0 0em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 0em #ffffff;
+  }
+  12.5% {
+    box-shadow: 0em -3em 0em 0em #ffffff, 2em -2em 0 0.2em #ffffff, 3em 0em 0 0em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  25% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 0em #ffffff, 3em 0em 0 0.2em #ffffff, 2em 2em 0 0em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  37.5% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 0em #ffffff, 2em 2em 0 0.2em #ffffff, 0em 3em 0 0em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  50% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 0em #ffffff, 0em 3em 0 0.2em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  62.5% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 0em #ffffff, -2em 2em 0 0.2em #ffffff, -3em 0em 0 0em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  75% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 0.2em #ffffff, -2em -2em 0 0em #ffffff;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0em 0em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 0em #ffffff, -2em -2em 0 0.2em #ffffff;
+  }
+}
+@keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0em -3em 0em 0.2em #ffffff, 2em -2em 0 0em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 0em #ffffff;
+  }
+  12.5% {
+    box-shadow: 0em -3em 0em 0em #ffffff, 2em -2em 0 0.2em #ffffff, 3em 0em 0 0em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  25% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 0em #ffffff, 3em 0em 0 0.2em #ffffff, 2em 2em 0 0em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  37.5% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 0em #ffffff, 2em 2em 0 0.2em #ffffff, 0em 3em 0 0em #ffffff, -2em 2em 0 -0.5em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  50% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 0em #ffffff, 0em 3em 0 0.2em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 -0.5em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  62.5% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 0em #ffffff, -2em 2em 0 0.2em #ffffff, -3em 0em 0 0em #ffffff, -2em -2em 0 -0.5em #ffffff;
+  }
+  75% {
+    box-shadow: 0em -3em 0em -0.5em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 0.2em #ffffff, -2em -2em 0 0em #ffffff;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0em 0em #ffffff, 2em -2em 0 -0.5em #ffffff, 3em 0em 0 -0.5em #ffffff, 2em 2em 0 -0.5em #ffffff, 0em 3em 0 -0.5em #ffffff, -2em 2em 0 0em #ffffff, -3em 0em 0 0em #ffffff, -2em -2em 0 0.2em #ffffff;
+  }
+}

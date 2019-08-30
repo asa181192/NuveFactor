@@ -1,0 +1,8 @@
+﻿@Code
+    ViewData("Title") = "_PrermisoDenegado"
+End Code
+
+<h2>Permiso Denegado</h2>
+
+
+<h3>No cuentas con los permisos para esta accion o vista.</h3>

@@ -1,0 +1,23 @@
+﻿$(document).ready(function (e) {
+
+    $('#dvflexTesoreria').click(function () {
+        window.location.href = '../Tesoreria/index';
+    });
+
+    $('#dvflexCuentasBancos').click(function () {
+        window.location.href = '../Tesoreria/cuentas';
+    });
+
+    $('#dvflexmovimientos').click(function () {
+        window.location.href = '../Tesoreria/movimientos';
+    });
+        
+    $('#dvflexReporteDepositos').click(function () {
+        window.location.href = '../Reportes/ReportesDeposito';
+    });
+    
+    $('#dvflexReporteSalidas').click(function () {
+        window.location.href = '../Reportes/ReporteSalidas';
+    });
+
+});

@@ -5,7 +5,7 @@
 End Code
 
 @Section Scripts
-    <script src="/Scripts/CatalogosScripts/Sucursal.js"></script>
+    <script src="~/Scripts/CatalogosScripts/Sucursal.js"></script>
 End Section
 
 <div class="head">

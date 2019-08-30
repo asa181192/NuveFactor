@@ -1,0 +1,117 @@
+﻿Imports System.Data.Entity
+Imports System.Data.Entity.Infrastructure
+Imports System.Data.Entity.Validation
+Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+
+Public Class ProveedorDAL
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+
+	Public Function ConsultaProveedorDAL(sucursal As Int16, ByRef model As List(Of ProveedorEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				model = (From p In context.proveedor Where (p.sucursal = sucursal Or 0 = sucursal) And p.historia = False Select New ProveedorEntidad With {.deudor = p.deudor, .nombre = p.nombre.TrimEnd()}).ToList()
+
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+			Return respuesta
+		End Using
+
+	End Function
+
+	Function ConsultaDetalleProveedorDAL(deudor As Int32, ByRef model As proveedor) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model = (From p In context.proveedor
+						Where p.deudor = deudor).SingleOrDefault()
+
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function AltaProveedor(model As proveedor) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				model.fec_update = Date.Today()
+				model.modifica = False
+				model.historia = False
+				model.promotor = 0
+				model.repeco = 0D
+				model.folio_envio = 0
+				model.internet = False
+				model.void = False
+				model.fec_update = Date.Today()
+				context.proveedor.Add(model)
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarProveedor(model As proveedor) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model.fec_update = Date.Today()
+				context.proveedor.Attach(model)
+				context.Entry(model).State = EntityState.Modified
+				context.Entry(model).Property(Function(x) x.modifica).IsModified = False
+				context.Entry(model).Property(Function(x) x.historia).IsModified = False
+				context.Entry(model).Property(Function(x) x.promotor).IsModified = False
+				context.Entry(model).Property(Function(x) x.repeco).IsModified = False
+				context.Entry(model).Property(Function(x) x.folio_envio).IsModified = False
+				context.Entry(model).Property(Function(x) x.internet).IsModified = False
+				context.Entry(model).Property(Function(x) x.void).IsModified = False
+
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+
+		End Using
+
+		Return respuesta
+	End Function
+
+#End Region
+End Class

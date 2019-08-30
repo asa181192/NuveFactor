@@ -1,0 +1,7 @@
+﻿Public Class reporteSaldos
+	Public Property nombre As String
+	Public Property linea As Decimal
+	Public Property fec_vence As Date?
+	Public Property producto As String
+	Public Property moneda As String
+End Class

@@ -1,0 +1,178 @@
+﻿Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports FactorEntidades
+Imports nuve.CustomValidations
+
+Namespace Models
+
+  Public Class Modeloadeudos
+
+    <Display(Name:="Alta")>
+    <DisplayFormat(DataFormatString:="{0:dd-MM-yyyy}", ApplyFormatInEditMode:=True)>
+    Public Property fec_alta As Date?
+
+    <Display(Name:="Fecha")>
+    <DisplayFormat(DataFormatString:="{0:dd-MM-yyyy}", ApplyFormatInEditMode:=True)>
+    Public Property fecha As Date?
+
+    <Display(Name:="Adeudo")>
+    Public Property Adeudo As String
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Saldo")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    <CompareValuesValidation("SaldoPago")>
+    Public Property saldo As Decimal
+
+    <Column(TypeName:="numeric")>
+      <Display(Name:="Monto")>
+      <DataType(DataType.Currency)>
+      <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property monto As Decimal
+
+    Public Property moneda As Integer
+
+    <Display(Name:="Contrato")>
+    Public Property contrato As Integer
+
+    <Display(Name:="Id Adeudo")>
+    Public Property idadeudo As Integer
+
+    <Display(Name:="Id Pago")>
+    Public Property numrec As Integer
+
+    <Display(Name:="Referencia")>
+    Public Property referencia As Integer
+
+    Public Property docto As Integer
+
+    <Display(Name:="tipo")>
+    <StringLength(3, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property tipo As String
+
+    <Display(Name:="serie")>
+    <StringLength(1, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property serie As String
+
+    <Display(Name:="Divisa")>
+    <StringLength(3, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property monedaStr As String
+
+    <Display(Name:="Nombre")>
+    <StringLength(100, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property Nombre As String
+
+    <StringLength(2)>
+    Public Property movto As String
+
+    <Display(Name:="Concepto")>
+    <StringLength(80)>
+    <Required(ErrorMessage:="El campo Concepto es obligatorio")>
+    Public Property concepto As String
+
+    <Column(TypeName:="numeric")>
+      <Display(Name:="Pago")>
+    <DataType(DataType.Currency)>
+      <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property importe As Decimal
+
+    Public Property SaldoPago As Decimal
+
+  End Class
+
+  Public Class Modeloedocuenta
+
+    <Display(Name:="Fecha")>
+    <DisplayFormat(DataFormatString:="{0:dd-MM-yyyy}", ApplyFormatInEditMode:=True)>
+    Public Property fecha As Date?
+
+    <Display(Name:="Contrato")>
+    Public Property contrato As Integer
+
+    Public Property id As Integer
+
+    <Display(Name:="Concepto")>
+    <StringLength(40)>
+    Public Property concepto As String
+
+    <StringLength(2)>
+    Public Property movto As String
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Cartera")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property cartera As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Ant_debe")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property ant_debe As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Ant_haber")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property ant_haber As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Ant_saldo")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property ant_saldo As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Anticipo")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property anticipo As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Car_debe")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property car_debe As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Car_haber")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property car_haber As Decimal
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Car_saldo")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property car_saldo As Decimal
+
+
+
+    <Display(Name:="Cancelado")>
+    Public Property cancelado As Integer
+
+    <Display(Name:="Proveedor")>
+    Public Property proveedor As Integer
+
+    <Display(Name:="Nombre")>
+    <StringLength(100, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property nombre As String
+
+    <Display(Name:="Descripción")>
+    <StringLength(100, ErrorMessage:="Demasiados Caraceteres")>
+    Public Property descripcion As String
+
+    <Display(Name:="Producto")>
+    Public Property producto As Integer
+
+    <Column(TypeName:="numeric")>
+    <Display(Name:="Línea")>
+    <DataType(DataType.Currency)>
+    <DisplayFormat(DataFormatString:="{0:N}", ApplyFormatInEditMode:=True)>
+    Public Property linea As Decimal
+
+  End Class
+
+
+End Namespace

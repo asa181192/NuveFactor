@@ -1,0 +1,194 @@
+﻿@ModelType nuve.Models.Modelocobranza
+
+@Code
+  ViewData("Title") = "Factoraje - Registro de cobranza"
+End Code
+
+@Section Scripts
+  <script src="~/Scripts/CobranzaScripts/registrocobranza.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+End Section
+
+@Section css
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+End Section
+
+<div class="head">
+  <div class="headForma">
+    <div class="headFormaContenido">
+      <a href="~/Cobranza/Index">
+        <img src="~/Images/menu/menuregresar.png" /></a>
+      <span>Registro de cobranza</span>
+    </div>
+  </div>
+</div>
+
+<div id="tableContainer" class="tableContainer">
+  <div class="panel-heading">
+    <div class="topmargin">
+      <div class="form-inline" style="width: 100%">
+
+        <div class="form-group">
+          @Html.Label("Contrato:")
+          <input id="contrato" value="0" class='form-control' type="text" />
+        </div>
+
+        <div class="form-group" style="position: relative">
+          @Html.Label("Fecha : ", New With {.class = "control-label"})
+          <input id="fecha" class='form-control' type="text" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <button id="btnConsultar" type="button" class="btn bold">Consultar</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="form-inline" style="width: 100%">
+
+        <div class="form-group">
+          <button id="btnagregar" type="button" class="btn bold">Agregar</button>
+        </div>
+
+        <div class="form-group">
+          <button id="btnafectar" type="button" class="btn bold">Afectar cobranza</button>
+        </div>
+
+        <div class="form-group">
+          <button id="btnreverso" type="button" class="btn bold">Reverso cobranza</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="panel-body">
+  <div class="jumbotron">
+    <div class="table-responsive">
+      <table id="tablaprincipal" class="table cell-border compact hover" style="width: 100%">
+
+        <thead>
+
+          <tr>
+
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Contrato: </label>
+                <label id="cont" />
+              </div>
+
+              <div class="form-group">
+                <label id="nom" />
+              </div>
+
+              <div class="form-group">
+                <label id="monedastr" />
+              </div>
+
+
+            </div>
+
+          </tr>
+
+          <tr>
+            <div class="form-inline">
+              <div class="form-group">
+                <label>Producto: </label>
+              </div>
+              <div class="form-group">
+                <label id="descrip" />
+              </div>
+            </div>
+          </tr>
+
+          <tr>
+            <div class="form-inline">
+
+              <div class="form-group">
+                <label>Adeudos: </label>
+              </div>
+              <div class="form-group">
+                <label id="ade" />
+              </div>
+              &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                  
+                  <div class="form-group">
+                    <label>Provisión: </label>
+                  </div>
+              <div class="form-group">
+                <label id="prov" />
+              </div>
+              &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                
+                  <div class="form-group">
+                    <label>Moratorios: </label>
+                  </div>
+              <div class="form-group">
+                <label id="moras" />
+              </div>
+
+            </div>
+          </tr>
+
+
+          <tr>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.safectado)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.docto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.cesion)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.nombredeudor)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.importe)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.descto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.neto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.bonifica)
+            </th>
+
+          </tr>
+        </thead>
+
+        <tfoot>
+          <tr>
+            <th colspan="3"></th>
+
+
+            <th>Totales.-
+            </th>
+
+            <th>
+              <label id="importe" />
+            </th>
+
+            <th>
+              <label id="descto" />
+            </th>
+
+            <th>
+              <label id="neto" />
+            </th>
+
+            <th>
+              <label id="bonifica" />
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+@*</div>*@
+

@@ -1,0 +1,282 @@
+﻿Imports FactorEntidades
+Imports System.Xml.Serialization
+Imports System.Xml
+Imports System.Data.SqlClient
+Imports System.Data.Entity
+
+
+Public Class Procesos
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos Consulta"
+	Public Function ConsultaControlRiesgoDAL(clienteId As Integer, ByRef model As ControlRiesgo_Cliente) As Result
+
+		Dim respuesta = New Result(False)
+		Dim proxy = New Proxy()
+		Using context As New FactorContext()
+			'Lista de Lista permite almacenar multiples consulta al servicio t24 para generar un solo xml 
+			Dim ListaLineasCredito = New List(Of List(Of ServicioT24.RespENQLineasCredito))()
+			Try
+
+				Dim claves = (From p In context.linea
+						Where p.cliente = clienteId And p.clientet24 <> 0 And p.clientet24 IsNot Nothing
+							Select p.clientet24).Distinct().ToList()
+
+				If (claves.Count > 0) Then
+					respuesta = proxy.ConsultaLineasCredito(claves, ListaLineasCredito)
+
+					If respuesta.Ok Then
+						Dim xml = New XElement("ArrayOfRespENQLineasCredito", From A In
+																 ListaLineasCredito From B In A
+																Select New XElement("RespENQLineasCredito",
+																					New XElement("sClave", B.sLineaCredito.Split(".")(0)),
+																					New XElement("sTipo", B.sLineaCredito.Split(".")(1)),
+																					New XElement("sNumero", B.sLineaCredito.Split(".")(2)),
+																					New XElement("sLineaCredito", B.sLineaCredito),
+																					New XElement("sDescripcionLinea", B.sDescripcionLinea),
+																					New XElement("sMoneda", B.sMoneda),
+																					New XElement("sMontoOtorgado", B.sMontoOtorgado),
+																					New XElement("sMontoDispuesto", B.sMontoDispuesto),
+																					New XElement("sMontoDisponer", B.sMontoDisponer),
+																					New XElement("sVencimiento", B.sVencimiento),
+																					New XElement("sUtilizado", B.sUtilizado))
+																				 )
+						Dim parameters = New List(Of SqlParameter)
+						parameters.Add(New SqlParameter("@ServicioT24XML", xml.ToString()))
+						parameters.Add(New SqlParameter("@Opcion", 1))
+						parameters.Add(New SqlParameter("@ClienteID", clienteId))
+
+						model.controlRiesgo = context.Database.SqlQuery(Of ControlRiesgo)("Exec SP_ConsultaControlRiesgo @ServicioT24XML,@ClienteID,@Opcion",
+													   parameters.ToArray()).ToList()
+
+						model.cliente = (From p In context.clientes
+										 Where p.cliente = clienteId
+										 Select New ControlCliente With {
+									.rgpo = p.rgpo,
+																													.riesgo = p.riesgo,
+																													.riesgogpo = p.riesgogpo,
+																													.vobo = p.vobo,
+									.voboreg = p.voboreg
+						}).SingleOrDefault()
+
+					End If
+
+				Else
+					Dim parameters = New List(Of SqlParameter)
+					parameters.Add(New SqlParameter("@ServicioT24XML", ""))
+					parameters.Add(New SqlParameter("@Opcion", 0))
+					parameters.Add(New SqlParameter("@ClienteID", clienteId))
+
+					model.controlRiesgo = context.Database.SqlQuery(Of ControlRiesgo)("Exec SP_ConsultaControlRiesgo @ServicioT24XML,@ClienteID,@Opcion",
+												   parameters.ToArray()).ToList()
+
+					model.cliente = (From p In context.clientes
+										 Where p.cliente = clienteId
+										 Select New ControlCliente With {
+									.rgpo = p.rgpo,
+																													.riesgo = p.riesgo,
+																													.riesgogpo = p.riesgogpo,
+																													.vobo = p.vobo,
+									.voboreg = p.voboreg
+						}).SingleOrDefault()
+					respuesta.Ok = True
+				End If
+
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function consultaLineasDAL(clienteId As Integer, ByRef modelLinea As ControlRiesgo) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				modelLinea.dropdown = New List(Of DropDownEntidad)
+				modelLinea.dropdown = (From x In context.linea
+							 Where x.cliente = clienteId And x.lcredito.TrimEnd().Length < 15 And x.idmultiple = "" And x.cancelado = 0
+							 Select New DropDownEntidad With {
+										.claveStr = x.lcredito.TrimEnd(),
+										.nombre = x.id_rec.TrimEnd() + "-" + x.ldescrip.TrimEnd()
+										}
+									).Distinct().ToList()
+
+				If modelLinea IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+	Function ConsultaGarantiaLiquidaDAL(idRec As String, ByRef entidad As linea) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				entidad = context.linea.Where(Function(p) p.id_rec.TrimEnd() = idRec).SingleOrDefault()
+
+				If entidad IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function ActualizarAsociarLineasDAL(model As ControlRiesgo) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				Dim values = context.linea.Where(Function(x) model.claves.Contains(x.lcredito) And x.cliente = model.cliente).ToList()
+				For Each item As linea In values
+					item.idmultiple = model.idmultiple
+					item.lmultiple = model.lmultiple
+				Next
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+	Public Function ActualizarControlRiesgoDAL(model As clientes) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				Dim cliente = context.clientes.Where(Function(x) x.cliente = model.cliente).SingleOrDefault()
+
+				cliente.vobo = model.vobo
+				cliente.voboreg = model.voboreg
+				cliente.rgpo = model.rgpo
+				cliente.riesgogpo = model.riesgogpo
+				cliente.riesgo = model.riesgo
+
+				context.clientes.Attach(cliente)
+				context.Entry(cliente).State = EntityState.Modified
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+	Public Function DesasociarLineasDAL(clienteId As Integer) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				Dim values = context.linea.Where(Function(x) x.cliente = clienteId).ToList()
+				For Each item As linea In values
+					item.idmultiple = ""
+					item.lmultiple = 0D
+				Next
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+	Public Function ActualizarGarantiaLiquidaDAL(model As linea) As Result
+		Dim respuesta = New Result(False)
+
+		Dim proxy = New Proxy()
+		Dim lista = New List(Of ServicioT24.RespENQSaldoCuenta)
+
+		If proxy.ConsultaSaldoCuenta(model.cuenta.TrimEnd(), lista).Ok Then
+			If lista IsNot Nothing Then
+				Using context As New FactorContext
+					Try
+						Dim entidad = context.linea.Where(Function(x) x.id_rec.TrimEnd() = model.id_rec.TrimEnd()).SingleOrDefault()
+						If entidad IsNot Nothing Then
+							entidad.porcentaje = model.porcentaje
+							entidad.liquida = model.liquida
+							entidad.cuenta = model.cuenta.Trim()
+							context.SaveChanges()
+							respuesta.Ok = True
+						End If
+					Catch e As Exception
+						respuesta.Detalle = e.InnerException.InnerException.Message
+					End Try
+
+				End Using
+			Else
+				respuesta.Detalle = "Cuenta no existe."
+			End If
+		Else
+			respuesta.Detalle = "Error al consultar Servicio T24!!"
+		End If
+
+		Return respuesta
+	End Function
+
+	Public Function CancelarLineaDAL(idRec As String) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				Dim linea = context.linea.Where(Function(x) x.id_rec.TrimEnd() = idRec.Trim()).SingleOrDefault()
+				linea.cancelado = True
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+#End Region
+
+End Class

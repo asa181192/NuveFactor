@@ -1,0 +1,117 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+Imports FactorBAL
+
+Namespace nuve
+    Public Class TesoreriaController
+        Inherits System.Web.Mvc.Controller
+
+
+#Region "Menu"
+        <CustomAuthorize>
+                <HttpGet>
+        Function Index() As ViewResult
+
+            Dim model As New Helpers.Menu
+
+            model.sMenu = "<div class=""BoxFlex"" id="""" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<label>Regresar</label>"
+            model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCuentasBancos"" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<p>Cuentas & Bancos</p>"
+            model.sMenu &= "<img src=""../Images/cuentasBancos.png""/> </a>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            Return View(model)
+        End Function
+
+        Function CuentasBancos() As ViewResult
+
+            Dim model As New Helpers.Menu
+
+            model.sMenu = "<div class=""BoxFlex"" id="""" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<label>Regresar</label>"
+            model.sMenu &= "<a href=""../Tesoreria/Index""> <img src=""../Images/regresar_gris.png""/> </a>"
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            model.sMenu &= "<div class=""BoxFlex"" id=""dvflexBancos"" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<p>Bancos</p>"
+
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCuentas"" >"
+            model.sMenu &= "<div class=""BoxFlexShadow"">"
+            model.sMenu &= "<p>Cuentas</p>"
+
+            model.sMenu &= "</div>"
+            model.sMenu &= "</div>"
+
+            Return View(model)
+
+        End Function
+
+#End Region
+
+#Region "Views"
+
+        Function cuentas() As ViewResult
+
+            Return View()
+
+        End Function
+
+
+#End Region
+
+#Region "Get"
+
+        Public Function ObtenerCuentasBanco(cancelado As Boolean) As ActionResult
+
+            Dim jresult
+            Dim resultado
+            Dim consulta = New TesoreriaBAL()
+
+            Dim listaCuentas = New List(Of cuentas)
+
+            resultado = consulta.ConsultaCuentasBAL(cancelado, listaCuentas)
+
+            If resultado.Ok And resultado IsNot Nothing Then
+                jresult = Json(New With {Key .Results = listaCuentas}, JsonRequestBehavior.AllowGet)
+            Else
+                resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+                jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+            End If
+
+            Return jresult
+
+        End Function
+
+
+        Public Function ObtenerDetalleCuenta(ctaid As Integer) As ActionResult
+
+
+            Return Nothing
+
+        End Function
+
+
+#End Region
+
+
+
+
+
+    End Class
+
+End Namespace

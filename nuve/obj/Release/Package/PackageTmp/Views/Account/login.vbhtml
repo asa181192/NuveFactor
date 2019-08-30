@@ -9,50 +9,48 @@ End Code
 <html>
 
   <head runat="server">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Conforme en la Nuve</title>
+    <title>Factor</title>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")    
-    @Scripts.Render("~/bundles/modernizr")    
+    @Scripts.Render("~/bundles/modernizr")  
+    @Scripts.Render("~/bundles/jqueryLoadingLogin")  
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/css")
-    <script type="text/javascript">
-      window.history.forward();
-      window.location.hash = 'no-back-button';
-      window.location.hash = 'Again-No-back-button';
-      window.onhashchange = function () { window.location.hash = 'no-back-button'; };
-    </script>
+    @Styles.Render("~/Content/jqueryLoadingLogin")
+    
   </head>
 
-  <body class="bodyback" >
-
-    <div class="loginWrapper">
+  <body id="test" class="bodyback" >
+  
+        <div class="loginWrapper">
     
-      <div class="container v-center">
+      <div  class="container v-center">
         <div class="row">
           <div class="col-xs-12">
             <div style="text-align: center">
-              <img src="/Images/vepormas.png" alt="BX+" style="margin: 5px auto;" class="hidden-xs" />
-              <img src="/Images/vepormas.png" alt="BX+" style="margin: 5px auto; margin-top: 30px" class="visible-xs" />
+              <img src="~/Images/vepormas.png" alt="BX+" style="margin: 5px auto;" class="hidden-xs" />
+              <img src="~/Images/vepormas.png" alt="BX+" style="margin: 5px auto; margin-top: 30px" class="visible-xs" />
             </div>
           </div>
         </div>
         @code
           Html.RenderPartial("_Alerts")
         End Code
-        <div class="loginBox middle-xs">
+
+
+        <div  class="loginBox middle-xs">
           <div class="row">
             <div class="col-xs-12">
-                <div id="contenedorLoader" class="contenedorLoader">
-                   <div class="loaderSpinner" ></div>
-                </div>
+               
                 <div style="text-align: center">
-                  @*<img src="/Images/conformeenlanuve.png" />*@
-                 
+                  @*<img src="/Images/conformeenlanuve.png" />*@                 
                 </div>
                 <div style="margin-top: 10px; padding: 0px 0px 0px 0px;">
                   @Using Html.BeginForm(New With {.ReturnUrl = ViewData("ReturnUrl"), .Class = "form-signin"})
@@ -115,7 +113,7 @@ End Code
             Acerca de los certificados SSL
 				  </a>
           <br />
-          <span style="color: #ffffff;">Control de oficinas foráneas en la nube</span>
+          <span style="color: #ffffff;">Sistema Integral de Factoraje</span>
         </div>				
       </div>
 
@@ -126,5 +124,29 @@ End Code
 	    </div>
 
     </div>
+
   </body>
 </html>
+
+  <script type="text/javascript">
+      window.history.forward();
+      window.location.hash = 'no-back-button';
+      window.location.hash = 'Again-No-back-button';
+      window.onhashchange = function () { window.location.hash = 'no-back-button'; };
+
+      $(document).submit(function (e) {
+       
+          $('body').loading({
+              message: 'Cargando...',
+              theme: 'dark',
+              onStart: function (loading) {
+                  loading.overlay.slideDown(1200);
+              }
+          });
+
+          //$(".loading-overlay-content").addClass('loading-spinner') // add custom Spinner
+      });
+
+   
+
+  </script>

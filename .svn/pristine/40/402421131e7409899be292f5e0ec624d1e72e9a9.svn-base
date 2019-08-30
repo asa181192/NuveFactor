@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.gfvepormas.com.mx" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.gfvepormas.com.mx" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.gfvepormas.com.mx">
+      <s:element name="ENQLineasCredito">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sCliente" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ENQLineasCreditoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ENQLineasCreditoResult" type="tns:ArrayOfRespENQLineasCredito" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRespENQLineasCredito">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RespENQLineasCredito" nillable="true" type="tns:RespENQLineasCredito" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RespENQLineasCredito">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sLineaCredito" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDescripcionLinea" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMoneda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMontoOtorgado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMontoDispuesto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMontoDisponer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sVencimiento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sUtilizado" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ENQSaldoCuenta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCuenta" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ENQSaldoCuentaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ENQSaldoCuentaResult" type="tns:ArrayOfRespENQSaldoCuenta" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRespENQSaldoCuenta">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RespENQSaldoCuenta" nillable="true" type="tns:RespENQSaldoCuenta" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RespENQSaldoCuenta">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sNumCuenta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sLimite" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sTipoCuenta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMoneda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sSaldoLibroMayor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sSaldoCompensado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sSaldoTrabajo" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TXNTraspaso">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCuentaCargo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sImporteCargo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sConcepto" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCuentaAbono" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TXNTraspasoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TXNTraspasoResult" type="tns:RespTXNTraspaso" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespTXNTraspaso">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sEstatusTraspaso" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sFTGenerado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDescError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ENQDatosCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCliente" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ENQDatosClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ENQDatosClienteResult" type="tns:ArrayOfRespENQDatosCliente" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRespENQDatosCliente">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RespENQDatosCliente" nillable="true" type="tns:RespENQDatosCliente" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RespENQDatosCliente">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sClassification" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sName2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sFormerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sNombre3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sShortName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sName1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sNomEmpresa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sBirthIncorpDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sRfcCte" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sSector" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sTipoRelacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sCnbvGrpEcon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sActividadEcono" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sStreet" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirNumInt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirNumExt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirColonia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sNomColonia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirDelMuni" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sNomDelMuni" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirCdEdo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sNomCdEdo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDirCodPos" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sAccountOfficer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sEmail" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ENQCuentasCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sCliente" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sCuenta" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ENQCuentasClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ENQCuentasClienteResult" type="tns:ArrayOfRespENQCuentasCliente" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRespENQCuentasCliente">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RespENQCuentasCliente" nillable="true" type="tns:RespENQCuentasCliente" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RespENQCuentasCliente">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sNumCuenta" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="TXNSPEI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCuentaCargo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sImporteCargo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sNumCuentaCLABE" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sConceptoFT" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sNombreBeneficiario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sRFCBeneficiario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sRefNumerica" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sRefCobraza" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TXNSPEIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TXNSPEIResult" type="tns:RespTXNSPEI" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespTXNSPEI">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sEstatusTraspaso" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sFTGenerado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDescError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ENQLineaCredito">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sIDLinea" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ENQLineaCreditoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ENQLineaCreditoResult" type="tns:ArrayOfRespENQLineaCredito" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfRespENQLineaCredito">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="RespENQLineaCredito" nillable="true" type="tns:RespENQLineaCredito" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RespENQLineaCredito">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sIdentificador" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sProducto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sDisposicion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sFechaAlta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sFechaVencimiento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sMoneda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sAdeudosPendientes" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sSaldoInsoluto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sAdeudoTotal" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="sCapitalPendiente" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ArrayOfRespENQLineasCredito" nillable="true" type="tns:ArrayOfRespENQLineasCredito" />
+      <s:element name="ArrayOfRespENQSaldoCuenta" nillable="true" type="tns:ArrayOfRespENQSaldoCuenta" />
+      <s:element name="RespTXNTraspaso" nillable="true" type="tns:RespTXNTraspaso" />
+      <s:element name="ArrayOfRespENQDatosCliente" nillable="true" type="tns:ArrayOfRespENQDatosCliente" />
+      <s:element name="ArrayOfRespENQCuentasCliente" nillable="true" type="tns:ArrayOfRespENQCuentasCliente" />
+      <s:element name="RespTXNSPEI" nillable="true" type="tns:RespTXNSPEI" />
+      <s:element name="ArrayOfRespENQLineaCredito" nillable="true" type="tns:ArrayOfRespENQLineaCredito" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ENQLineasCreditoSoapIn">
+    <wsdl:part name="parameters" element="tns:ENQLineasCredito" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineasCreditoSoapOut">
+    <wsdl:part name="parameters" element="tns:ENQLineasCreditoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaSoapIn">
+    <wsdl:part name="parameters" element="tns:ENQSaldoCuenta" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaSoapOut">
+    <wsdl:part name="parameters" element="tns:ENQSaldoCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoSoapIn">
+    <wsdl:part name="parameters" element="tns:TXNTraspaso" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoSoapOut">
+    <wsdl:part name="parameters" element="tns:TXNTraspasoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:ENQDatosCliente" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:ENQDatosClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:ENQCuentasCliente" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:ENQCuentasClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEISoapIn">
+    <wsdl:part name="parameters" element="tns:TXNSPEI" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEISoapOut">
+    <wsdl:part name="parameters" element="tns:TXNSPEIResponse" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoSoapIn">
+    <wsdl:part name="parameters" element="tns:ENQLineaCredito" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoSoapOut">
+    <wsdl:part name="parameters" element="tns:ENQLineaCreditoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineasCreditoHttpGetIn">
+    <wsdl:part name="sCliente" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineasCreditoHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQLineasCredito" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaHttpGetIn">
+    <wsdl:part name="sNumCuenta" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQSaldoCuenta" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoHttpGetIn">
+    <wsdl:part name="sNumCuentaCargo" type="s:string" />
+    <wsdl:part name="sImporteCargo" type="s:string" />
+    <wsdl:part name="sConcepto" type="s:string" />
+    <wsdl:part name="sNumCuentaAbono" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoHttpGetOut">
+    <wsdl:part name="Body" element="tns:RespTXNTraspaso" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteHttpGetIn">
+    <wsdl:part name="sNumCliente" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQDatosCliente" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteHttpGetIn">
+    <wsdl:part name="sCliente" type="s:string" />
+    <wsdl:part name="sCuenta" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQCuentasCliente" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEIHttpGetIn">
+    <wsdl:part name="sNumCuentaCargo" type="s:string" />
+    <wsdl:part name="sImporteCargo" type="s:string" />
+    <wsdl:part name="sNumCuentaCLABE" type="s:string" />
+    <wsdl:part name="sConceptoFT" type="s:string" />
+    <wsdl:part name="sNombreBeneficiario" type="s:string" />
+    <wsdl:part name="sRFCBeneficiario" type="s:string" />
+    <wsdl:part name="sRefNumerica" type="s:string" />
+    <wsdl:part name="sRefCobraza" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEIHttpGetOut">
+    <wsdl:part name="Body" element="tns:RespTXNSPEI" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoHttpGetIn">
+    <wsdl:part name="sIDLinea" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQLineaCredito" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineasCreditoHttpPostIn">
+    <wsdl:part name="sCliente" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineasCreditoHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQLineasCredito" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaHttpPostIn">
+    <wsdl:part name="sNumCuenta" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQSaldoCuentaHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQSaldoCuenta" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoHttpPostIn">
+    <wsdl:part name="sNumCuentaCargo" type="s:string" />
+    <wsdl:part name="sImporteCargo" type="s:string" />
+    <wsdl:part name="sConcepto" type="s:string" />
+    <wsdl:part name="sNumCuentaAbono" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TXNTraspasoHttpPostOut">
+    <wsdl:part name="Body" element="tns:RespTXNTraspaso" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteHttpPostIn">
+    <wsdl:part name="sNumCliente" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQDatosClienteHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQDatosCliente" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteHttpPostIn">
+    <wsdl:part name="sCliente" type="s:string" />
+    <wsdl:part name="sCuenta" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQCuentasClienteHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQCuentasCliente" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEIHttpPostIn">
+    <wsdl:part name="sNumCuentaCargo" type="s:string" />
+    <wsdl:part name="sImporteCargo" type="s:string" />
+    <wsdl:part name="sNumCuentaCLABE" type="s:string" />
+    <wsdl:part name="sConceptoFT" type="s:string" />
+    <wsdl:part name="sNombreBeneficiario" type="s:string" />
+    <wsdl:part name="sRFCBeneficiario" type="s:string" />
+    <wsdl:part name="sRefNumerica" type="s:string" />
+    <wsdl:part name="sRefCobraza" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TXNSPEIHttpPostOut">
+    <wsdl:part name="Body" element="tns:RespTXNSPEI" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoHttpPostIn">
+    <wsdl:part name="sIDLinea" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ENQLineaCreditoHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfRespENQLineaCredito" />
+  </wsdl:message>
+  <wsdl:portType name="FactorajeSoap">
+    <wsdl:operation name="ENQLineasCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lineas de Credito por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineasCreditoSoapIn" />
+      <wsdl:output message="tns:ENQLineasCreditoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Saldo de la Cuenta.</wsdl:documentation>
+      <wsdl:input message="tns:ENQSaldoCuentaSoapIn" />
+      <wsdl:output message="tns:ENQSaldoCuentaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Traspaso entre Cuentas.</wsdl:documentation>
+      <wsdl:input message="tns:TXNTraspasoSoapIn" />
+      <wsdl:output message="tns:TXNTraspasoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Datos del Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQDatosClienteSoapIn" />
+      <wsdl:output message="tns:ENQDatosClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cuentas por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQCuentasClienteSoapIn" />
+      <wsdl:output message="tns:ENQCuentasClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">SPEI</wsdl:documentation>
+      <wsdl:input message="tns:TXNSPEISoapIn" />
+      <wsdl:output message="tns:TXNSPEISoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta Saldo de la Linea</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineaCreditoSoapIn" />
+      <wsdl:output message="tns:ENQLineaCreditoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="FactorajeHttpGet">
+    <wsdl:operation name="ENQLineasCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lineas de Credito por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineasCreditoHttpGetIn" />
+      <wsdl:output message="tns:ENQLineasCreditoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Saldo de la Cuenta.</wsdl:documentation>
+      <wsdl:input message="tns:ENQSaldoCuentaHttpGetIn" />
+      <wsdl:output message="tns:ENQSaldoCuentaHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Traspaso entre Cuentas.</wsdl:documentation>
+      <wsdl:input message="tns:TXNTraspasoHttpGetIn" />
+      <wsdl:output message="tns:TXNTraspasoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Datos del Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQDatosClienteHttpGetIn" />
+      <wsdl:output message="tns:ENQDatosClienteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cuentas por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQCuentasClienteHttpGetIn" />
+      <wsdl:output message="tns:ENQCuentasClienteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">SPEI</wsdl:documentation>
+      <wsdl:input message="tns:TXNSPEIHttpGetIn" />
+      <wsdl:output message="tns:TXNSPEIHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta Saldo de la Linea</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineaCreditoHttpGetIn" />
+      <wsdl:output message="tns:ENQLineaCreditoHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="FactorajeHttpPost">
+    <wsdl:operation name="ENQLineasCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lineas de Credito por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineasCreditoHttpPostIn" />
+      <wsdl:output message="tns:ENQLineasCreditoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Saldo de la Cuenta.</wsdl:documentation>
+      <wsdl:input message="tns:ENQSaldoCuentaHttpPostIn" />
+      <wsdl:output message="tns:ENQSaldoCuentaHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Traspaso entre Cuentas.</wsdl:documentation>
+      <wsdl:input message="tns:TXNTraspasoHttpPostIn" />
+      <wsdl:output message="tns:TXNTraspasoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Datos del Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQDatosClienteHttpPostIn" />
+      <wsdl:output message="tns:ENQDatosClienteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cuentas por Cliente.</wsdl:documentation>
+      <wsdl:input message="tns:ENQCuentasClienteHttpPostIn" />
+      <wsdl:output message="tns:ENQCuentasClienteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">SPEI</wsdl:documentation>
+      <wsdl:input message="tns:TXNSPEIHttpPostIn" />
+      <wsdl:output message="tns:TXNSPEIHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consulta Saldo de la Linea</wsdl:documentation>
+      <wsdl:input message="tns:ENQLineaCreditoHttpPostIn" />
+      <wsdl:output message="tns:ENQLineaCreditoHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FactorajeSoap" type="tns:FactorajeSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ENQLineasCredito">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/ENQLineasCredito" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/ENQSaldoCuenta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/TXNTraspaso" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/ENQDatosCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/ENQCuentasCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/TXNSPEI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <soap:operation soapAction="http://www.gfvepormas.com.mx/ENQLineaCredito" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FactorajeSoap12" type="tns:FactorajeSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ENQLineasCredito">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/ENQLineasCredito" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/ENQSaldoCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/TXNTraspaso" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/ENQDatosCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/ENQCuentasCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/TXNSPEI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <soap12:operation soapAction="http://www.gfvepormas.com.mx/ENQLineaCredito" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FactorajeHttpGet" type="tns:FactorajeHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ENQLineasCredito">
+      <http:operation location="/ENQLineasCredito" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <http:operation location="/ENQSaldoCuenta" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <http:operation location="/TXNTraspaso" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <http:operation location="/ENQDatosCliente" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <http:operation location="/ENQCuentasCliente" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <http:operation location="/TXNSPEI" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <http:operation location="/ENQLineaCredito" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FactorajeHttpPost" type="tns:FactorajeHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ENQLineasCredito">
+      <http:operation location="/ENQLineasCredito" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQSaldoCuenta">
+      <http:operation location="/ENQSaldoCuenta" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNTraspaso">
+      <http:operation location="/TXNTraspaso" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQDatosCliente">
+      <http:operation location="/ENQDatosCliente" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQCuentasCliente">
+      <http:operation location="/ENQCuentasCliente" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TXNSPEI">
+      <http:operation location="/TXNSPEI" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ENQLineaCredito">
+      <http:operation location="/ENQLineaCredito" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Factoraje">
+    <wsdl:port name="FactorajeSoap" binding="tns:FactorajeSoap">
+      <soap:address location="http://192.168.121.72/wsT24_Factoraje/Factoraje.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FactorajeSoap12" binding="tns:FactorajeSoap12">
+      <soap12:address location="http://192.168.121.72/wsT24_Factoraje/Factoraje.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FactorajeHttpGet" binding="tns:FactorajeHttpGet">
+      <http:address location="http://192.168.121.72/wsT24_Factoraje/Factoraje.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FactorajeHttpPost" binding="tns:FactorajeHttpPost">
+      <http:address location="http://192.168.121.72/wsT24_Factoraje/Factoraje.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

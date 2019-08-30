@@ -1,0 +1,669 @@
+﻿
+Imports System.ComponentModel.DataAnnotations
+Imports System.ComponentModel.DataAnnotations.Schema
+Imports FactorEntidades
+
+Namespace Models
+
+	Public Class ModeloPar
+
+		<Display(Name:="Fecha")>
+		<DataType(DataType.Date)>
+		<DisplayFormat(DataFormatString:="{0:dd-MM-yyyy}", ApplyFormatInEditMode:=True)> _
+		Public Overloads Property fecha() As Date?
+
+		<Required(ErrorMessage:="EL campo Paridad es obligatorio.")>
+		<Display(Name:="Peso-Dolar")>
+		<RegularExpression("\d+(\.\d{0,4})?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Property paridad1() As Decimal
+
+		<Required(ErrorMessage:="EL campo Peso-UDIS es obligatorio.")>
+		<Display(Name:="Peso-UDIS")>
+		<RegularExpression("\d+(\.\d{0,6})?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 6 decimales")>
+		Public Property udis() As Decimal
+
+		Public Property add() As Boolean 'Propiedad control para insertar o actualizar
+
+	End Class
+
+	Public Class ModeloProveedor
+		Inherits proveedor
+
+		Public Sub CargaControles()
+			SucursalDropDown = New controles().CargaSucursales()
+			RegimenDropDown = New controles().CargaRegimen()
+		End Sub
+
+
+		<Display(Name:="Firmado")>
+		Public Overloads Property firmado() As Boolean
+
+		<Display(Name:="Sucursal")>
+		Public Overloads Property sucursal() As Integer?
+
+		<Display(Name:="Fecha de alta")>
+		Public Overloads Property fec_alta As Date?
+
+		<Display(Name:="Formado")>
+		Public Overloads Property elaborado() As Boolean
+
+		<Display(Name:="Rectificado")>
+		Public Overloads Property rectificado() As Boolean
+
+		<Display(Name:="Internet")>
+		Public Overloads Property internet() As Boolean
+
+		<Display(Name:="Fira")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico")>
+		Public Overloads Property fira_idcon As Decimal?
+
+		Public SucursalDropDown As List(Of SelectListItem)
+
+		Public RegimenDropDown As List(Of SelectListItem)
+
+		<Display(Name:="Municipio")>
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		Public Overloads Property municipio() As String
+
+		<Display(Name:="Nombre")>
+		<StringLength(100, ErrorMessage:="Demasiados Caraceteres")>
+		Public Overloads Property nombre() As String
+
+		<Display(Name:="Domicilio")>
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		Public Overloads Property domicilio As String
+
+		<Display(Name:="Colonia")>
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		Public Overloads Property colonia As String
+
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Estado")>
+		Public Overloads Property estado As String
+
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Telefono")>
+		Public Overloads Property telefono As String
+
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Responsable")>
+		Public Overloads Property responsable As String
+
+		<StringLength(3, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Plaza")>
+		Public Overloads Property plaza As String
+
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Giro")>
+		Public Overloads Property giro As String
+
+		<StringLength(15, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="RFC")>
+		Public Overloads Property rfc As String
+
+		<StringLength(20, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Curp")>
+		Public Overloads Property curp As String
+
+		<StringLength(10, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Password")>
+		Public Overloads Property password As String
+
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="Calle")>
+		Public Overloads Property calle As String
+
+		<StringLength(15, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="No. Ext")>
+		Public Overloads Property noext As String
+
+		<StringLength(15, ErrorMessage:="Demasiados Caraceteres")>
+		<Display(Name:="No. Int")>
+		Public Overloads Property noint As String
+
+	End Class
+
+	Public Class ModeloComprador
+		Inherits comprador
+
+		Public Sub CargaControles()
+			SucursalDropDown = New controles().CargaSucursales()
+			RegimenDropDown = New controles().CargaRegimen()
+		End Sub
+
+		Public SucursalDropDown As List(Of SelectListItem)
+
+		Public RegimenDropDown As List(Of SelectListItem)
+	End Class
+
+	Public Class ModeloFinanciero
+
+		<Display(Name:="Fecha")>
+		<DisplayFormat(DataFormatString:="{0:dd-MM-yyyy}", ApplyFormatInEditMode:=True)> _
+		Public Overloads Property fecha() As Date?
+
+		<Display(Name:="Cetes-28")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property cetes28 As Decimal?
+
+		<Display(Name:="Cetes-91")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property cetes91 As Decimal?
+
+		<Display(Name:="CPP")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property cpp As Decimal?
+
+		<Display(Name:="TIIP")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property tiip As Decimal?
+
+		<Display(Name:="TIIE")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property tiie As Decimal?
+
+		<Display(Name:="TIIE91")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property tiie91 As Decimal?
+
+		<Display(Name:="C.Fondeo")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property fondeo As Decimal?
+
+		<Display(Name:="Libor")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property libor As Decimal?
+
+		<Display(Name:="Libor-3m")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property libor3m As Decimal?
+
+		<Display(Name:="C.fondeo.Usd")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property fondeousd As Decimal?
+
+		<Display(Name:="Libor-6m")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property libor6m As Decimal?
+
+		<Display(Name:="Libor-12m")>
+		<RegularExpression("[0-9]+(\.[0-9][0-9][0-9][0-9]?)?", ErrorMessage:="El Valor debe ser numerico o no tener mas de 4 decimales")>
+		Public Overloads Property libor12m As Decimal?
+
+		Public Overloads Property add() As Boolean 'Propiedad control para insertar o actualizar
+
+	End Class
+
+	Public Class ModeloSucursal
+		<Display(Name:="No.")>
+		Public Property sucursal1 As Integer
+
+		<Display(Name:="Siglas")>
+		<StringLength(3)>
+		Public Property abrev_suc As String
+
+		<Display(Name:="Sucursal")>
+		<StringLength(20)>
+		Public Property nombre As String
+
+		<StringLength(50)>
+		<Display(Name:="Domicilio")>
+		Public Property domicilio As String
+
+		<Display(Name:="Colonia")>
+		<StringLength(50)>
+		Public Property colonia As String
+
+		<Display(Name:="Municipio")>
+		<StringLength(50)>
+		Public Property municipio As String
+
+		<Display(Name:="Estado")>
+		<StringLength(50)>
+		Public Property estado As String
+
+		<Display(Name:="Codigo Postal")>
+		Public Property cp As String
+
+		<Display(Name:="Tel. Local")>
+		Public Property cvelocal As Integer?
+
+		<Display(Name:="Telefono")>
+		<StringLength(40)>
+		Public Property telefono As String
+
+		<Display(Name:="Colonia")>
+		<StringLength(100)>
+		Public Property apoderado1 As String
+
+		<StringLength(100)>
+		Public Property apoderado2 As String
+
+		<StringLength(100)>
+		Public Property testigo1 As String
+
+		<StringLength(100)>
+		Public Property testigo2 As String
+
+		Public Property u_contrato As Integer?
+
+		Public Property u_cliente As Integer?
+
+		Public Property u_deudor As Integer?
+
+		Public Property u_provee As Integer?
+
+		<StringLength(40)>
+		Public Property h_in As String
+
+		<StringLength(40)>
+		Public Property h_out As String
+
+		<StringLength(40)>
+		Public Property h_loaded As String
+
+		<StringLength(40)>
+		Public Property h_sent As String
+
+		<Column(TypeName:="numeric")>
+		Public Property iva As Decimal?
+
+		Public Property regional As Integer?
+
+		Public Property void As Boolean
+
+	End Class
+
+	Public Class ModeloCodigoGarantia
+		Inherits codigogarantia
+
+		<Display(Name:="Clave")>
+		Public Property codigoid As Integer
+
+		<Display(Name:="Nombre")>
+		<StringLength(50, ErrorMessage:="Demasiados Caraceteres")>
+		Public Property nombre As String
+
+		<Display(Name:="Código BX+")>
+		Public Property cod_alterno As Integer
+
+	End Class
+
+	Public Class ModeloTipoGarantia
+		Inherits tipogarantia
+
+		Public Sub Cargacontroles()
+			CodigoGarantiaDropDown = New controles().CargaCodigoGarantia()
+		End Sub
+
+		Public CodigoGarantiaDropDown As List(Of SelectListItem)
+
+		<Display(Name:="Clave")>
+		Public Property tipoid As Integer
+
+		<Display(Name:="Código Garantía")>
+		Public Property codigoid As Integer?
+
+		<Display(Name:="Nombre")>
+		<StringLength(50)>
+		Public Property nombre As String
+
+		<Display(Name:="Tipo BX+")>
+		<RegularExpression("([0-9]+)", ErrorMessage:="El Valor debe ser numerico")>
+		Public Property tip_alterno As Integer?
+
+		<Display(Name:="Concepto")>
+		<StringLength(70)>
+		Public Property concepto As String
+
+		<Display(Name:="Cuenta de cargo")>
+		<StringLength(15, ErrorMessage:="Demasiados Caraceteres")>
+		<RegularExpression("([0-9]+)", ErrorMessage:="El Valor debe ser numerico")>
+		Public Property conta_cargo As String
+
+		<Display(Name:="Cuenta de Abono")>
+		<StringLength(15)>
+		<RegularExpression("([0-9]+)", ErrorMessage:="El Valor debe ser numerico")>
+		Public Property conta_abono As String
+
+	End Class
+
+	Public Class ModeloClientes
+
+		Public Sub CargaControles()
+			SucursalDropDown = New controles().CargaSucursales()
+			PromotorDropDown = New controles().CargaPromotores(False)
+			PromProdDropDown = New controles().CargaPromotores(True)
+			GrupoEmpresarialDropDown = New controles().CargaGrupos()
+			CiudadDropDown = New controles().CargaCiudades()
+			EstadoDropDown = New controles().CargaEstados()
+			SectorFinancieroDropDown = New controles().CargaSectorFinanciero()
+			SectorEconomicoDropDown = New controles().CargaSectorEconomico()
+			GiroDropDown = New controles().CargaGiro()
+
+			RelacionadoDropDown = New controles().CargaRelacion()
+			RelevanteDropDown = New controles().CargaRelevante()
+			RegimenDropDown = New controles().CargaRegimen()
+			ClasificaDropDown = New controles().CargaClasifica()
+			CalClienteDropDown = New controles().CargaCalCliente()
+
+		End Sub
+
+		Public SucursalDropDown As List(Of SelectListItem)
+		Public PromotorDropDown As List(Of SelectListItem)
+		Public PromProdDropDown As List(Of SelectListItem)
+		Public GrupoEmpresarialDropDown As List(Of SelectListItem)
+		Public CiudadDropDown As List(Of SelectListItem)
+		Public EstadoDropDown As List(Of SelectListItem)
+		Public SectorFinancieroDropDown As List(Of SelectListItem)
+		Public SectorEconomicoDropDown As List(Of SelectListItem)
+		Public GiroDropDown As List(Of SelectListItem)
+
+		Public RelacionadoDropDown As List(Of SelectListItem)
+		Public RelevanteDropDown As List(Of SelectListItem)
+		Public RegimenDropDown As List(Of SelectListItem)
+		Public ClasificaDropDown As List(Of SelectListItem)
+		Public CalClienteDropDown As List(Of SelectListItem)
+
+		<Display(Name:="Sucursal")>
+		Public Property sucursal As Integer?
+
+		Public Property cliente As Integer
+
+		Public Property pfisica As Boolean?
+
+		<Display(Name:="Actividad Empresarial")>
+		Public Property actempres As Boolean
+
+		<Display(Name:="Nombre")>
+		<StringLength(100)>
+		Public Property nombre As String
+
+		<Display(Name:="Primer Nombre")>
+		<Column(TypeName:="text")>
+		Public Property n As String
+
+		<Display(Name:="Segundo Nombre")>
+		<Column(TypeName:="text")>
+		Public Property s As String
+
+		<Display(Name:="Apellido Paterno")>
+		<Column(TypeName:="text")>
+		Public Property p As String
+
+		<Display(Name:="Apellido Materno")>
+		<Column(TypeName:="text")>
+		Public Property m As String
+
+		<Display(Name:="RFC")>
+		<StringLength(15)>
+		Public Property rfc As String
+
+		<Display(Name:="CURP")>
+		<StringLength(20)>
+		Public Property curp As String
+
+		<Display(Name:="Domicilio")>
+		<StringLength(50)>
+		Public Property domicilio As String
+
+		<Display(Name:="Colonia")>
+		<StringLength(50)>
+		Public Property colonia As String
+
+		<Display(Name:="Municipio")>
+		<StringLength(50)>
+		Public Property municipio As String
+
+		<Display(Name:="Estado")>
+		<StringLength(50)>
+		Public Property estado As String
+
+		<Display(Name:="Estado")>
+		Public Property cveedo As Integer?
+
+		<Display(Name:="C.P.")>
+		Public Property cp As Integer?
+
+		<Display(Name:="Telefono")>
+		<StringLength(50)>
+		Public Property telefono As String
+
+		<Display(Name:="Promotor")>
+		Public Property promotor As Integer?
+
+		<Display(Name:="Sector Financiero")>
+		Public Property sectorfina As Integer?
+
+		<Display(Name:="Ciudad")>
+		Public Property cvecd As Integer?
+
+		<Display(Name:="Giro")>
+		Public Property cvegiro As Integer?
+
+		<Display(Name:="Fecha de Alta")>
+		Public Property fec_alta As Date?
+
+		<Display(Name:="Notario No.")>
+		Public Property ac_numnot As Integer?
+
+		<Display(Name:="Nombre")>
+		<StringLength(40)>
+		Public Property ac_nombre As String
+
+		<Display(Name:="Escritura")>
+		Public Property ac_escrit As Integer?
+
+		<Display(Name:="Fecha")>
+		Public Property ac_fecha As Date?
+
+		<Display(Name:="Localidad")>
+		<StringLength(40)>
+		Public Property ac_localid As String
+
+		<Display(Name:="Número")>
+		<StringLength(10)>
+		Public Property ac_numero As String
+
+		<Display(Name:="Folio")>
+		<StringLength(10)>
+		Public Property ac_folio As String
+
+		<Display(Name:="Libro")>
+		<StringLength(10)>
+		Public Property ac_libro As String
+
+		<Display(Name:="Auxiliar")>
+		<StringLength(10)>
+		Public Property ac_auxilia As String
+
+		<Display(Name:="Volumen")>
+		<StringLength(10)>
+		Public Property ac_volumen As String
+
+		<Display(Name:="Fecha de registro")>
+		Public Property ac_fechare As Date?
+
+		<Display(Name:="Localidad")>
+		<StringLength(40)>
+		Public Property ac_actaloc As String
+
+		<Display(Name:="Pertenece a algún grupo empresarial")>
+		Public Property grupoemp As Boolean
+
+		Public Property clave As Integer?
+
+		<Display(Name:="F. Enlance")>
+		<StringLength(50)>
+		Public Property fenlace As String
+
+		<Display(Name:="Puesto")>
+		<StringLength(20)>
+		Public Property puesto As String
+
+		<Display(Name:="Sector Económico")>
+		Public Property seconomico As Integer?
+
+		<Display(Name:="Password")>
+		<StringLength(10)>
+		Public Property password As String
+
+		<Display(Name:="Utiliza SIF Express")>
+		Public Property sif As Boolean
+
+		<Display(Name:="Email")>
+		<Column(TypeName:="text")>
+		Public Property email As String
+
+		<Display(Name:="Numero Sirac")>
+		<Column(TypeName:="numeric")>
+		Public Property sirac As Decimal?
+
+		<Display(Name:="Régimen IVA")>
+		Public Property regiva As Integer?
+
+		<Column(TypeName:="text")>
+		Public Property path_exped As String
+
+		<Display(Name:="Actividad")>
+		<StringLength(50)>
+		Public Property actividad As String
+
+		<Display(Name:="Clasifica")>
+		Public Property clasifica As Integer?
+
+		<Display(Name:="Persona Póliticamente Expuesta")>
+		Public Property politica As Boolean?
+
+		<Display(Name:="Empleados")>
+		Public Property empleados As Integer?
+
+		Public Property dataexchan As Boolean?
+
+		<StringLength(50)>
+		Public Property inbox As String
+
+		<StringLength(50)>
+		Public Property outbox As String
+
+		<StringLength(50)>
+		Public Property loaded As String
+
+		<StringLength(15)>
+		Public Property filenaming As String
+
+		Public Property autoriza As Boolean?
+
+		<Display(Name:="EPO")>
+		<Column(TypeName:="numeric")>
+		Public Property epo As Decimal?
+
+		<Display(Name:="Calificación de Deudor")>
+		<Column(TypeName:="numeric")>
+		Public Property calcliente As Decimal?
+
+		<Display(Name:="Grupo Económico")>
+		Public Property gpoecono As Integer?
+
+		<Display(Name:="Director de Producto")>
+		Public Property promprod As Integer?
+
+		<StringLength(50)>
+		Public Property calle As String
+
+		<Display(Name:="Número Externo")>
+		<StringLength(15)>
+		Public Property noext As String
+
+		<Display(Name:="Número Interno")>
+		<StringLength(15)>
+		Public Property noint As String
+
+		Public Property fec_update As Date?
+
+		<Display(Name:="Factura Electrónica - Método de Envío")>
+		<Column(TypeName:="numeric")>
+		Public Property enviafact As Decimal?
+
+		<Display(Name:="Limite de Riesgo")>
+		<Column(TypeName:="numeric")>
+		Public Property riesgo As Decimal?
+
+		Public Property rgpo As Boolean?
+
+		<Column(TypeName:="numeric")>
+		Public Property riesgogpo As Decimal?
+
+		Public Property voboreg As Boolean?
+
+		Public Property vobo As Boolean?
+
+		<Display(Name:="Repeco")>
+		Public Property repeco As Boolean
+
+		<Display(Name:="Cliente T24")>
+		Public Property clientet24 As Decimal?
+
+		<Display(Name:="Nombre")>
+		<StringLength(100)>
+		Public Property nombret24 As String
+
+		<Display(Name:="Relevante")>
+		Public Property idrelevant As Integer?
+
+		<Display(Name:="Relacionado")>
+		Public Property idrelacion As Integer?
+
+		<Display(Name:="Riesgo Industria")>
+		Public Property rgo_indust As Integer?
+
+		<Display(Name:="Riesgo Financiero")>
+		Public Property rgo_finan As Integer?
+
+		<Display(Name:="Exp. de Pago")>
+		Public Property exp_pago As Integer?
+
+
+		<StringLength(8)>
+		Public Property consolida As String
+
+		Public Property acreditado As Integer?
+
+		<Display(Name:="FIRA")>
+		<Column(TypeName:="numeric")>
+		Public Property fira_idacr As Decimal?
+
+		<StringLength(12)>
+		Public Property idlocalidad As String
+
+		<StringLength(3)>
+		Public Property pjuridica As String
+
+		<Column(TypeName:="numeric")>
+		Public Property ingresos As Decimal?
+
+		<StringLength(36)>
+		Public Property idtransact As String
+
+	
+
+	End Class
+
+	Public Class ModeloPromotor
+		Inherits promotor
+
+		Public Sub CargaControles()
+			SucursalDropDown = New controles().CargaSucursales()
+		End Sub
+
+		Public SucursalDropDown As List(Of SelectListItem)
+
+	End Class
+
+	Public Class ModeloControlRiesgo
+		Inherits ControlRiesgo
+		
+
+	End Class
+
+End Namespace

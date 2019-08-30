@@ -1,0 +1,121 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+
+Public Class CobranzaBAL
+
+#Region "Adeudos"
+  Function ConsultaAdeudosBAL(ByRef model As List(Of adeudosEntidad)) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaAdeudos(model)
+  End Function
+
+  Function ConsultaAdeudosDetalleBAL(idadeudo As Integer, ByRef model As adeudos) As Result
+
+    Dim cobranza = New CobranzaDAL()
+    Return cobranza.ConsultaAdeudosDetalleDAL(idadeudo, model)
+
+  End Function
+
+  Function ActualizarAdeudoBAL(ByRef model As adeudosEntidad) As Result
+    Dim proc = New CobranzaDAL()
+    Return proc.ActualizarAdeudoDAL(model)
+  End Function
+
+
+
+#End Region
+
+
+#Region "Pagosadeudos"
+
+  Function ConsultaPagosadeudosBAL(ByRef model As List(Of adeudosEntidad), dfecha As Date) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaPagosadeudos(model, dfecha)
+  End Function
+
+#End Region
+
+
+#Region "edocuenta"
+
+  Function ConsultaedocuentaBAL(ByRef model As List(Of EdocuentaEntidad), dfecha As String, dfecha2 As String, contrato As String) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaedocuenta(model, dfecha, dfecha2, contrato)
+  End Function
+
+#End Region
+
+#Region "Registro de cobranza"
+
+  Function ConsultaregistrocobranzaBAL(ByRef model As List(Of CobranzaEntidad), dfecha As Date, contrato As String) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.Consultaregistrocobranza(model, dfecha, contrato)
+  End Function
+
+
+  Function ObtenerdocumentosxpagarBAL(ByRef model As List(Of CobranzaEntidad), dfecha As Date, contrato As Integer) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.Obtenerdocumentosxpagar(model, dfecha, contrato)
+  End Function
+
+  Function Obtenerpgeaforo(contrato As Integer, ByRef pgeaforo As Decimal) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.Obtenerpgeaforo(contrato, pgeaforo)
+  End Function
+
+  Function GuardarCobranzaBAL(doctos As List(Of CobranzaEntidad)) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.GuardarCobranzaDAL(doctos)
+  End Function
+
+#End Region
+
+#Region "Aforos"
+  Function ConsultaAforosLiquidadosBAL(fecha As Date, ByRef model As List(Of AforosLiquidadosEntidad)) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.ConsultaAforosLiquidadosDAL(fecha, model)
+  End Function
+
+  Function ConsultaAforosPorLiquidarBAL(ByRef model As List(Of AforosPorLiquidar)) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.ConsultaAforosPorLiquidarDAL(model)
+  End Function
+
+  Function InicializarAforoBAL(contrato As Integer, id As Integer, identidad As Integer) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.InicializarAforoDAL(contrato, id, identidad)
+  End Function
+
+  Function ConsultaCuentaLiquidaAforoBAL(identidad As Integer, id As Integer, moneda As Integer, ByRef lista As List(Of DropDownEntidad)) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.ConsultaCuentaLiquidaAforoDAL(identidad, id, moneda, lista)
+  End Function
+
+  Function liquidaAforoBAL(entidad As AforosPorLiquidar) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.liquidaAforoDAL(entidad)
+  End Function
+
+  Function CancelarAforoBAL(numrec As Integer) As Result
+    Dim Cobranza = New CobranzaDAL()
+    Return Cobranza.CancelarAforoDAL(numrec)
+  End Function
+
+#End Region
+End Class
+

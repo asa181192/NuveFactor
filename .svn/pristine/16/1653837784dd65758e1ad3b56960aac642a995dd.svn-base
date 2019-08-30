@@ -1,0 +1,108 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+Public Class ParidadDAL
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+	Public Function ConsultaParidadDAL(fechaMes As String, fechaAnio As String, ByRef model As List(Of ParidadEntidad)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				Dim values = (From p In context.paridad
+						Where p.fecha.Value.Year = fechaAnio AndAlso p.fecha.Value.Month = fechaMes
+						Select p).ToList()
+
+				For Each item As paridad In values
+					Dim p = New ParidadEntidad
+
+					p.fecha = item.fecha.Value.ToShortDateString()
+					p.paridad = item.paridad1
+					p.udis = item.udis
+
+					model.Add(p)
+				Next
+
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaParidadDetalleDAL(fecha As String, ByRef model As paridad) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				If fecha Is Nothing Then
+					model.fecha = context.paridad.OrderByDescending(Function(e) e.fecha).Select(Function(e) e.fecha).FirstOrDefault()
+					model.fecha = model.fecha.Value.AddDays(1)
+				Else
+					model = (From p In context.paridad
+									Where p.fecha = fecha).SingleOrDefault()
+					If model IsNot Nothing Then
+						respuesta.Ok = True
+					End If
+				End If
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function ActualizarParidad(userid As String, model As paridad) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+				Dim modelfn = context.paridad.Find(model.fecha)
+
+				If modelfn Is Nothing Then
+					context.paridad.Add(model)
+					context.SaveChanges()
+					respuesta.Mensaje = "Registro Guardado"
+					Bitacora.Monitor(userid, "Agregado nuevo registro de Paridad para fecha : " + model.fecha)
+					respuesta.Ok = True
+				Else
+					' se actualiza registro
+					modelfn.paridad1 = model.paridad1
+					modelfn.udis = model.udis
+					context.SaveChanges()
+					respuesta.Mensaje = "Registro Actualizado"
+					Bitacora.Monitor(userid, "Actualizado registro de Paridad para fecha : " + model.fecha)
+					respuesta.Ok = True
+				End If
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+#End Region
+
+End Class

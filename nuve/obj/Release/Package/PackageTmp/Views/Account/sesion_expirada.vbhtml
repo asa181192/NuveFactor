@@ -11,7 +11,7 @@ End Code
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Signin Template for Bootstrap</title>
+    <title>Sesion Expirada</title>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")    
     @Scripts.Render("~/bundles/modernizr")    
@@ -31,19 +31,16 @@ End Code
         <div class="row">
           <div class="col-xs-12">
             <div style="text-align: center">
-              <img src="/Images/vepormas.png" alt="BX+" style="margin: 5px auto;" class="hidden-xs" />
-              <img src="/Images/vepormas.png" alt="BX+" style="margin: 5px auto; margin-top: 30px" class="visible-xs" />
+              <img src="../Images/vepormas.png" alt="BX+" style="margin: 5px auto;" class="hidden-xs" />
+              <img src="../Images/vepormas.png" alt="BX+" style="margin: 5px auto; margin-top: 30px" class="visible-xs" />
             </div>
           </div>
         </div>
         <div class="loginBox">
           <div class="row">
             <div class="col-xs-12">
-              <div style="text-align: center">
-                <img src="/Images/conformeenlanuve.png" />
-              </div>
               <div style="margin-top: 5px; padding: 0px 0px 0px 0px;">
-                <h4>Sesi&oacute;n expirada</h4>
+                <h4 style="text-align:center">Sesi&oacute;n expirada</h4>
                 <br />
                 La sesión ha expirado por inactividad. Favor de ingresar nuevamente.
                 <br />

@@ -1,0 +1,281 @@
+﻿//Inicializacion de variables
+var tabla;
+var title;
+var nombre;
+var btnLiquida = $("#BtnLiquida")
+var LiquidaLiga = $("#BtnLiquida").attr('href')
+var data =
+{
+    inicializarTabla: function () {
+        tabla = $('#table')
+            .DataTable({
+                ajax: {
+                    "url": "../Cobranza/ObtenerAforosPorLiquidar/", // url del controlador a consultar 
+                    "Type": "GET",
+                    "data": function (d) {}, // parametros a enviar al controlador 
+                    "dataSrc": function (json) {
+                        if (typeof (json.Mensaje) != 'undefined') {
+                            mensajemodal(json.Mensaje, 'warning');
+                            return {};
+                        } else {
+                            return json.Results;
+                        }
+                    }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
+                },
+                paging: false, // permite la paginacion en la tabla .               
+                ordering: false, // genera ordenamiento de columnas 
+                order: [[0, 'desc']], // ordena la primer columna
+                responsive: true, // realiza la tabla responsiva en moviles
+                destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
+                aoColumns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
+           {
+               data: "contrato", "width": "50px"
+           },
+           {
+               data: "nombre", "width": "550px"
+           },
+           {
+               data: "beneficiario", "width": "550px"
+           },
+           {
+               data: "pago", render: $.fn.dataTable.render.number(',', '.', 2, ''),"width": "50px"
+           },
+           {
+               data:function (data, type, dataToSet) {
+                   return '<a class="popup" href="../Cobranza/liquidarAforo?beneficiario=' + encodeURIComponent(data.beneficiario.trim()) + '&pago=' + data.pago + '&identidad=' + data.identidad + '&id=' + data.id + '&moneda=' + data.moneda + '&contrato='+data.contrato+' "><button type="button"class="btn glyphicon glyphicon-ok"></button></a>';
+               }, "width": "50px"
+           },
+           {
+               data:function (data, type, dataToSet) {
+                   return '<a class="inicializa" href="../Cobranza/InicializarAforo?contrato=' + data.contrato + '&id=' + data.id + '&identidad=' + data.identidad + '" type="submit"><button type="button"class="btn glyphicon glyphicon-wrench"></button></a>';
+               }, "width": "50px"
+           }
+                ],
+                "columnDefs": [
+                    { "className": "dt-center", "targets": [0,3,4,5] } // permite centrar botones de edicion 
+                ]
+            });
+
+
+    }, //Funcion que inicializa la tabla 
+    openPopUp: function (pageUrl) {
+        var $pageContent = $('<div>');
+
+        $pageContent.load(pageUrl, function () {
+
+            $pageContent.dialog({
+                width: '500', // overcomes width:'auto' and maxWidth bug
+                height: 'auto',
+                modal: true,
+                show: 'fade',
+                title: "Liquidar Aforo",
+                hide: 'fade',
+                resizable: false,
+                create: function (event, ui) { //permite inicializar parametros o campos dentro de el popup creado
+
+                    //permite reiniciar el validado de informacion al despelgar una ventana modal
+                    var form = $("#popupForm").closest("form");
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+
+                    // Validacion de tool tip 
+                    $pageContent.tooltip({
+                        items: ".input-validation-error",
+                        content: function () {
+                            return $("[data-valmsg-for='" + $(this).attr('id') + "']").text();
+                        }
+                    });
+                    data.inicializarObjetos();
+                    data.eventos();
+                    data.validacionCampos();
+                }
+                ,
+                close: function () {
+                    $pageContent.dialog('destroy').remove();
+                }
+            });
+
+
+        });
+
+        $pageContent.on('submit',
+           '#popupForm',
+           function (e) {
+               var url = $('#popupForm')[0].action;
+               $.ajax({
+                   type: "POST",
+                   url: url,
+                   data: $('#popupForm').serialize(),
+                   beforeSend: function () {
+                       $.Loading(true);
+                   },
+                   success: function (data) {
+                       if (data.Result) {
+                           mensajemodal(data.Text, 'success', data.titulo);
+                           if (tabla !== undefined) {
+                               tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                           }
+                       } else {
+                           mensajemodal(data.Text, 'warning', data.titulo);
+                       }
+                       if (data.Tipo == 1 || data.Tipo == 2) {
+                           $pageContent.dialog('close');
+                       }
+                   },
+                   error: function () {
+                       mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+
+                   },
+                   complete: function () {
+                       $.Loading(false);
+                   }
+               });
+
+               e.preventDefault();
+           });
+    },
+    fluidDialog: function () {
+        var $visible = $(".ui-dialog:visible");
+        // each open dialog
+        $visible.each(function () {
+            var $this = $(this);
+            var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+            // if fluid option == true
+            if (dialog.options.fluid) {
+                var wWidth = $(window).width();
+                // check window width against dialog width
+                if (wWidth < (parseInt(dialog.options.maxWidth) + 50)) {
+                    // keep dialog from filling entire screen
+                    $this.css("max-width", "90%");
+                } else {
+                    // fix maxWidth bug
+                    $this.css("max-width", dialog.options.maxWidth + "px");
+                }
+                //reposition dialog
+                dialog.option("position", dialog.options.position);
+            }
+        });
+
+    },
+    validacionCampos: function () {
+
+
+        jQuery.validator.addMethod(
+            'date',
+            function (value, element, params) {
+                if (this.optional(element)) {
+                    return true;
+                };
+                var result = false;
+                try {
+                    $.datepicker.parseDate("dd/mm/yy", value);
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                return result;
+            },
+            ''
+        );
+    },// validacion de campos 
+    inicializarObjetos: function () {
+        btnLiquida.addClass("disabled")
+    },
+    eventos: function () {
+
+        tabla.on('click', 'a.inicializa', function (e) {
+            $('#dialog-confirm').text("Se inicializara el aforo , ¿ Desea continuar? ")
+            var url = $(this).attr("href")
+            $('#dialog-confirm').dialog({
+                resizable: true,
+                height: "auto",
+                title: "Inicializar Aforo",
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Aceptar": function () {
+                        data.ajax(url, "POST", null)
+                        $(this).dialog('close')
+                    },
+                    "Cancelar": function () {
+                        $(this).dialog('close')
+                    }
+                }
+            })
+            e.preventDefault()
+        });
+
+
+        //$("#table").on('click', 'a.inicializa',
+        //    function (e) {
+
+        //        //e.preventDefault();
+        //        //if ($(this).attr('type') == 'submit') {
+        //        //    data.ajax($(this).attr('href'), 'POST', {});
+
+
+
+        //        }
+        //});
+    },
+    ajax: function (url,tipo,data) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        beforeSend: function () {
+            $.Loading(true);
+        },
+        success: function (data) {
+            if (data.Result) {
+                mensajemodal(data.Text, 'success');
+                if (data.Tipo == 2) {
+                    tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                }                   
+            } else {
+                mensajemodal(data.Text, 'warning');
+            }
+
+        },
+        error: function () {
+            mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+        },
+        complete: function () {
+            $.Loading(false);
+        }
+
+    });
+}
+}
+
+$(document).ready(function (e) {
+    //Esto nos permite Abrir modal dentro de modal . 
+    data.inicializarObjetos();
+    data.inicializarTabla();
+    data.eventos();
+    //tabla.on('click', 'tbody tr', function () {
+    //    if ($(this).hasClass('selected')) {
+    //        $(this).removeClass('selected');
+    //        btnLiquida.addClass("disabled")
+    //    }
+    //    else {
+    //        tabla.$('tr.selected').removeClass('selected');
+    //        $(this).addClass('selected');
+    //        btnLiquida.removeClass('disabled');
+    //        btnLiquida.removeAttr("href")
+    //        btnLiquida.attr("href", LiquidaLiga + "?contrato=" + tabla.row('.selected').data()['contrato'])
+    //        }
+    //});
+
+    $("#tableContainer").on('click', 'a.popup',
+     function (e) {
+         e.preventDefault();
+         title = $(this).attr("add") // set the title for popup
+         data.openPopUp($(this).attr('href'));
+     });
+
+});

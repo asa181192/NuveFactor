@@ -1,0 +1,20 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+Public Class AutorizaBAL
+
+#Region "Consultas"
+
+
+  Function ObtenermovtosBAL(fecha As Date, ByRef model As List(Of AutorizaEntidad)) As Result
+
+    Dim consulta = New FactorDAL.AutorizaDAL()
+
+    Return consulta.ObtenermovtosDAL(fecha, model)
+  End Function
+
+
+
+#End Region
+
+End Class

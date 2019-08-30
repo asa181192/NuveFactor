@@ -1,0 +1,1133 @@
+﻿Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.IO
+Imports System.Globalization
+Imports System.Data.SqlClient
+Imports System.Transactions
+Imports System.Reflection
+Imports NPOI.HSSF.UserModel
+Imports NPOI.SS.UserModel
+Imports FactorDAL.mail
+
+
+Public Class FacturacionDAL
+
+#Region "Consultas"
+
+  Public Function ConsultaFacturasDAL(ByRef model As List(Of FacturacionEntidad), serie As String, fecha As Date) As Result
+    Dim resp = New Result(False)
+
+    Dim fechaInicial As Date = fecha
+    Dim fechaFin As Date
+
+    fechaInicial = fechaInicial.AddDays(-fechaInicial.Day + 1) 'Primer día de mes
+    fechaFin = fechaInicial.AddDays(-fechaInicial.Day + 1).AddMonths(1).AddDays(-1) 'Último día del mes
+
+    Using context As New FactorContext
+
+      Try
+        Dim values = (From a In context.fiscalpf
+                 Join b In context.clientes On a.id Equals b.cliente
+                 Where a.serie = serie And a.identidad = 1 And (DbFunctions.TruncateTime(a.fecha) >= fechaInicial And DbFunctions.TruncateTime(a.fecha) <= fechaFin)
+                 Select New FacturacionEntidad With {.fecha = a.fecha, .idfiscalpf = a.idfiscalpf, .sat = a.sat,
+                                                     .folio = a.folio, .sisfol = a.sisfol, .contrato = a.contrato, .nombre = b.nombre,
+                                                     .importe = a.importe, .cancelado = a.cancelado, .manual = a.manual, .serie = a.serie,
+                                                     .moneda = a.moneda, .impresiones = a.impresiones, .distrib = a.distrib, .emision = a.emision, .sustituir = a.sustituir}).Union(
+                 From a In context.fiscalpf
+                 Join b In context.proveedor On a.id Equals b.deudor
+                 Where a.serie = serie And a.identidad = 2 And (DbFunctions.TruncateTime(a.fecha) >= fechaInicial And DbFunctions.TruncateTime(a.fecha) <= fechaFin)
+                 Select New FacturacionEntidad With {.fecha = a.fecha, .idfiscalpf = a.idfiscalpf, .sat = a.sat,
+                                                     .folio = a.folio, .sisfol = a.sisfol, .contrato = a.contrato, .nombre = b.nombre,
+                                                     .importe = a.importe, .cancelado = a.cancelado, .manual = a.manual, .serie = a.serie,
+                                                     .moneda = a.moneda, .impresiones = a.impresiones, .distrib = a.distrib, .emision = a.emision, .sustituir = a.sustituir}).Union(
+                 From a In context.fiscalpf
+                 Join b In context.comprador On a.id Equals b.deudor
+                 Where a.serie = serie And a.identidad = 3 And (DbFunctions.TruncateTime(a.fecha) >= fechaInicial And DbFunctions.TruncateTime(a.fecha) <= fechaFin)
+                 Select New FacturacionEntidad With {.fecha = a.fecha, .idfiscalpf = a.idfiscalpf, .sat = a.sat,
+                                                     .folio = a.folio, .sisfol = a.sisfol, .contrato = a.contrato, .nombre = b.nombre,
+                                                     .importe = a.importe, .cancelado = a.cancelado, .manual = a.manual, .serie = a.serie,
+                                                     .moneda = a.moneda, .impresiones = a.impresiones, .distrib = a.distrib, .emision = a.emision, .sustituir = a.sustituir}).ToList()
+
+        For Each x As FacturacionEntidad In values
+
+          Dim a As New FacturacionEntidad
+
+          a.fecha = x.fecha
+          a.idfiscalpf = x.idfiscalpf
+          a.ssat = IIf(x.sat > 0, "BF", "")
+          a.sat = x.sat
+          a.folio = x.folio
+          a.sisfol = x.sisfol
+          a.contrato = x.contrato
+          a.nombre = x.nombre.Trim()
+          a.importe = x.importe
+          a.cancel = IIf(x.cancelado, "Cancelado", "Vigente")
+          a.generated = IIf(x.manual, "M", "A")
+          a.divisa = IIf(x.moneda = 1, "MXN", "DLLS")
+          a.impresiones = x.impresiones
+          a.distrib = x.distrib
+          a.emision = x.emision
+          a.serie = x.serie
+          a.sustituir = x.sustituir
+
+          model.Add(a)
+
+        Next
+
+        resp.Ok = True
+      Catch ex As Exception
+        resp.Mensaje = "Error al consultar el historial de notificaciones"
+        resp.Detalle = ex.InnerException.ToString()
+      End Try
+    End Using
+    Return resp
+  End Function
+
+  Public Function ConsultaDetalleDAL(ByRef list As List(Of fiscalpv), sisfol As Integer, serie As String) As Result
+    Dim resultado = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+
+        list = (From a In context.fiscalpv
+            Where a.serie = serie And a.sisfol = sisfol
+            Select a).ToList()
+
+        resultado.Ok = True
+
+      Catch ex As Exception
+        resultado.Mensaje = "No se pudó consultar la información, verfique nuevamente."
+      End Try
+
+    End Using
+
+    Return resultado
+  End Function
+
+  Public Function GetConceptos(serie As String, ByRef model As List(Of cfiscales)) As Result
+    Dim resp = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        model = (From a In context.cfiscales
+                 Where a.serie = serie).ToList()
+
+        resp.Ok = True
+      Catch ex As Exception
+
+      End Try
+
+    End Using
+
+    Return resp
+
+  End Function
+
+  Public Function GetContratoDAL(contrato As Integer, ByRef model As FacturacionEntidad) As Result
+    Dim result = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+
+        model = (From a In context.contratos
+                 Join b In context.clientes On a.cliente Equals b.cliente
+                 Where a.contrato = contrato
+                 Select New FacturacionEntidad With {.contrato = a.contrato, .cliente = a.cliente, .nombre = b.nombre}).SingleOrDefault()
+
+        result.Ok = True
+      Catch ex As Exception
+        result.Mensaje = "Error al consultar contrato"
+      End Try
+
+    End Using
+
+    Return result
+  End Function
+
+  Function GetIdDAL(deudor As Integer, id As Integer, ByRef name As String) As Result
+    Dim resultado = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        Select Case id
+          Case Is = 1
+
+            name = (From a In context.clientes
+                      Where a.cliente = deudor
+                      Select a.nombre).SingleOrDefault()
+
+          Case Is = 2
+            name = (From a In context.proveedor
+                    Where a.deudor = deudor
+                    Select a.nombre).SingleOrDefault()
+
+          Case Is = 3
+            name = (From a In context.comprador
+                    Where a.deudor = deudor
+                    Select a.nombre).SingleOrDefault()
+
+        End Select
+
+        resultado.Ok = True
+        resultado.Mensaje = "0"
+      Catch ex As Exception
+        resultado.Mensaje = "Error al consultar nombre del "
+      End Try
+
+    End Using
+
+    Return resultado
+  End Function
+
+  Function CargaConceptosDAL(ByRef list As List(Of cfiscales), tipo As String) As Result
+    Dim result As New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        list = (From a In context.cfiscales
+                Where a.serie = tipo).ToList()
+
+        result.Ok = True
+      Catch ex As Exception
+        result.Mensaje = "No se pudieron obtener los conceptos."
+
+      End Try
+
+    End Using
+
+    Return result
+  End Function
+
+  Function GetPorcentajeDAL(contrato As Integer, ByRef porcentaje As Decimal) As Result
+    Dim resultado = New Result(False)
+
+    Using context As New FactorContext
+
+      Try
+        porcentaje = (From a In context.contratos
+                  Join b In context.sucursal On a.sucursal Equals b.sucursal1
+                  Where a.contrato = contrato
+                  Select b.iva).SingleOrDefault()
+
+        resultado.Ok = True
+      Catch ex As Exception
+        resultado.Mensaje = ex.Message
+      End Try
+
+
+    End Using
+
+    Return resultado
+  End Function
+
+  Function ValidDoctosDAL(sisfol As Integer, serie As String, ByRef model As FacturacionEntidad) As Result
+    Dim result = New Result(False)
+    Dim pagosAdeudos = New pagosadeudos
+    Dim deudor = New FacturacionEntidad
+    Dim aF As Boolean = False
+    Dim aA As Boolean = False
+    Dim fol As Integer = 0
+
+    Using context As New FactorContext
+
+      Try
+
+        pagosAdeudos = (From a In context.pagosadeudos
+                        Where a.serie = serie And a.sisfol = sisfol And a.movto = "CR" And a.cancelado = False
+                        Select a).SingleOrDefault()
+
+        If pagosAdeudos IsNot Nothing Then
+          result.Mensaje = "Al documento se le aplicó una nota de crédito anteriormente."
+        Else
+
+          Dim adeudo = New FacturacionEntidad
+          Dim factura = New FacturacionEntidad
+
+          adeudo = (From a In context.adeudos
+                    Where a.serie = serie And a.sisfol = sisfol
+                    Select New FacturacionEntidad With {.identidad = a.identidad, .contrato = a.contrato,
+                                                        .id = a.id, .saldo = a.monto, .folio = a.docto,
+                                                        .moneda = a.moneda}).SingleOrDefault()
+
+          Dim id As Integer = 0
+          Dim identidad As Integer = 0
+          Dim contrato As Integer = 0
+          Dim saldo As Decimal = 0
+
+          If adeudo IsNot Nothing Then
+            id = adeudo.id
+            identidad = adeudo.identidad
+            contrato = adeudo.contrato
+            saldo = adeudo.saldo
+            aA = True
+            fol = adeudo.folio
+
+          Else
+
+            factura = (From a In context.fiscalpf
+                       Where a.serie = serie And a.sisfol = sisfol
+                       Select New FacturacionEntidad With {.identidad = a.identidad, .contrato = a.contrato,
+                                                           .id = a.id, .saldo = a.importe, .folio = a.folio,
+                                                           .moneda = a.moneda}).SingleOrDefault()
+
+            If factura IsNot Nothing Then
+
+              id = factura.id
+              identidad = factura.identidad
+              contrato = factura.contrato
+              saldo = factura.saldo
+              aF = True
+              fol = factura.folio
+
+            End If
+
+          End If
+
+          Select Case identidad
+            Case Is = 1
+              deudor = (From a In context.clientes
+                        Where a.cliente = id
+                        Select New FacturacionEntidad With {.nombre = a.nombre, .sucursal = a.sucursal}).SingleOrDefault()
+
+            Case Is = 2
+              deudor = (From a In context.proveedor
+                        Where a.deudor = id
+                        Select New FacturacionEntidad With {.nombre = a.nombre, .sucursal = a.sucursal}).SingleOrDefault()
+
+            Case Is = 3
+              deudor = (From a In context.comprador
+                        Where a.deudor = id
+                        Select New FacturacionEntidad With {.nombre = a.nombre, .sucursal = a.sucursal}).SingleOrDefault()
+
+          End Select
+
+          If factura IsNot Nothing Or adeudo IsNot Nothing Then
+
+            model = (From a In context.contratos
+                     Join b In context.clientes On a.cliente Equals b.cliente
+                     Where a.contrato = contrato
+                     Select New FacturacionEntidad With {.nombre = b.nombre, .contrato = a.contrato, .moneda = a.moneda, .cliente = a.cliente, .sucursal = a.sucursal, .saldo = saldo}).SingleOrDefault()
+
+            model.aplicarAdeudo = aA
+            model.aplicarFactura = aF
+            model.folio = fol
+
+            result.Mensaje = "0"
+
+          Else
+            result.Mensaje = "No tiene contrato"
+          End If
+
+        End If
+
+        result.Ok = True
+
+      Catch ex As Exception
+        result.Mensaje = ex.Message
+      End Try
+
+    End Using
+
+    Return result
+  End Function
+
+  Function GetFacturaFileDAL(factura As String, ByRef archivo As Byte(), tipo As Integer) As Result
+
+    Dim response = New Result(False)
+    Dim proxy = New Proxy()
+
+    Try
+      Select Case tipo
+        Case Is = 1
+          Try
+            response = proxy.GetPdfResult(factura, archivo)
+            response.Ok = True
+          Catch ex As Exception
+            response.Mensaje = ex.Message
+          End Try
+
+        Case Is = 2
+          Try
+            response = proxy.GetXmlResult(factura, archivo)
+            response.Ok = True
+          Catch ex As Exception
+            response.Mensaje = ex.Message
+          End Try
+
+      End Select
+
+      If archivo Is Nothing Then
+        response.Mensaje = "No existe comprobante fiscal para este documento.(DAL)"
+        response.Ok = True
+      End If
+
+    Catch ex As Exception
+      response.Mensaje = ex.Message
+    End Try
+
+    Return response
+  End Function
+
+  Function ConsultaComplementoDAL(tipo As Integer, fecha As Date, ByRef lista As List(Of FacturacionEntidad)) As Result
+    Dim resultado = New Result(False)
+
+    Using context As New FactorContext
+      Try
+        If tipo = 1 Then
+          lista = (From A In context.pagosadeudos
+              Join B In context.contratos
+              On A.contrato Equals B.contrato
+              Join C In context.clientes
+              On C.cliente Equals B.cliente
+              Where A.sat > 0 And A.fecha.Value.Month = fecha.Month And A.fecha.Value.Year = fecha.Year
+              Select New FacturacionEntidad With {
+                  .fecha = A.fecha,
+                  .id = A.id,
+                  .identidad = A.identidad,
+                  .numrec = A.numrec,
+                  .serie = "CBF",
+                  .sat = A.sat,
+                  .envio = A.envio,
+                  .contrato = A.contrato,
+                  .nombre = C.nombre,
+                  .importe = A.importe,
+                  .divisa = B.moneda
+                }).ToList()
+        Else
+          lista = (From A In context.cfdicartera
+            Join B In context.contratos
+            On A.contrato Equals B.contrato
+            Join C In context.clientes
+            On C.cliente Equals B.cliente
+            Where A.sat > 0 And A.fecha.Value.Month = fecha.Month And A.fecha.Value.Year = fecha.Year
+            Select New FacturacionEntidad With {
+                .fecha = A.fecha,
+                .id = A.id,
+                .serie = "CCF",
+                .numrec = A.Idrec,
+                .identidad = A.identidad,
+                .envio = A.envio,
+                .sat = A.sat,
+                .contrato = A.contrato,
+                .nombre = C.nombre,
+                .importe = A.pago,
+                .divisa = B.moneda
+              }).ToList()
+        End If
+
+        If lista IsNot Nothing Then
+
+          For Each item As FacturacionEntidad In lista
+            If item.identidad = 1 Then
+              item.email = context.clientes.Where(Function(x) x.cliente = item.id).Select(Function(x) x.email).FirstOrDefault()
+            ElseIf item.identidad = 2 Then
+              item.email = context.proveedor.Where(Function(x) x.deudor = item.id).Select(Function(x) x.email).FirstOrDefault()
+            Else
+              item.email = context.comprador.Where(Function(x) x.deudor = item.id).Select(Function(x) x.email).FirstOrDefault()
+            End If
+          Next
+
+
+
+          resultado.Ok = True
+        End If
+      Catch ex As Exception
+        resultado.Mensaje = ex.Message
+      End Try
+
+    End Using
+
+    Return resultado
+
+  End Function
+
+  Function enviarFacturaDAL(factura As String, identidad As Integer, id As Integer, numrec As Integer, tipo As Integer) As Result
+    Dim response = New Result(False)
+    Dim mail As String = Nothing
+    Dim proxy = New Proxy()
+    Dim archivoPdf As Byte() = Nothing
+    Dim archivoXml As Byte() = Nothing
+    Dim email = New sendMail()
+
+    response = proxy.GetPdfResult(factura, archivoPdf)
+    response = proxy.GetXmlResult(factura, archivoXml)
+
+    Using context As New FactorContext
+      Try
+        If identidad = 1 Then
+          mail = context.clientes.Where(Function(x) x.cliente = id).Select(Function(x) x.email).FirstOrDefault()
+        ElseIf identidad = 2 Then
+          mail = context.proveedor.Where(Function(x) x.deudor = id).Select(Function(x) x.email).FirstOrDefault()
+        Else
+          mail = context.comprador.Where(Function(x) x.deudor = id).Select(Function(x) x.email).FirstOrDefault()
+        End If
+
+
+        If archivoPdf IsNot Nothing And archivoXml IsNot Nothing And mail IsNot Nothing Then
+
+          Dim listTo As String()
+          Dim cc As String = ""
+          Dim subject As String = "Factura"
+          Dim body As String = ""
+
+          listTo = "181192asa@gmail.com".Split(";")
+          'mail.Split(";")
+
+          Dim attach = New Dictionary(Of String, Byte())
+
+          attach.Add("factura.pdf", archivoPdf)
+          attach.Add("factura.xml", archivoXml)
+
+          body = "<p>Buen Día.<br>"
+          body = body & "Se anexan la factura correspondiente<br><br>"
+          body = body & "___________________________________________________________________________________________ <br></p>"
+          body = body & "<p>Atentamente<br>"
+          body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+
+          If tipo = 1 Then
+            context.pagosadeudos.Where(Function(A) A.numrec = numrec).SingleOrDefault().envio = True
+          Else
+            context.cfdicartera.Where(Function(A) A.Idrec = numrec).SingleOrDefault().envio = True
+          End If
+
+          If email.enviarMail(listTo, subject, body, Net.Mail.MailPriority.Normal, Nothing, Nothing, Nothing, attach).Ok Then
+            context.SaveChanges()
+            response.Ok = True
+          End If
+
+        End If
+
+      Catch ex As Exception
+        response.Mensaje = ex.Message
+      End Try
+    End Using
+
+
+    Return response
+  End Function
+
+#End Region
+
+#Region "Transacciones"
+
+  Public Function CancelarFacturaDAL(serie As String, sisfol As Integer, ByRef process As String) As Result
+    Dim response = New Result(False)
+    Dim adeudos = New adeudos
+    Dim pagos = New pagosadeudos
+    Dim lldelete As Boolean = True
+    Dim fiscalpf As fiscalpf
+    Dim fiscalpv As List(Of fiscalpv)
+    Dim proxy = New Proxy()
+    Dim monto As Decimal = 0
+    Dim saldo As Decimal = 0
+
+    Using scope As New TransactionScope
+
+      Using context As New FactorContext
+
+        adeudos = (From a In context.adeudos
+             Where a.serie = serie And a.sisfol = sisfol
+             Select a).SingleOrDefault()
+
+        Try
+
+          If adeudos IsNot Nothing Then
+            monto = adeudos.monto
+            saldo = adeudos.saldo
+
+          End If
+
+
+          If monto > saldo Then
+            adeudos.saldo = 0
+            response.Mensaje = "Factura tiene pagos realizados, no puede ser cancelada"
+            process = "0"
+            lldelete = False
+
+          Else
+            pagos = (From a In context.pagosadeudos
+                     Where a.serie = serie And a.sisfol = sisfol).SingleOrDefault()
+
+
+            If pagos IsNot Nothing Then
+
+              Dim a = New pagosadeudos
+
+              a.id = pagos.id
+              a.contrato = pagos.contrato
+              a.fecha = Date.Now.ToShortDateString()
+              a.tipo = pagos.tipo
+              a.serie = pagos.serie
+              a.sisfol = pagos.sisfol
+              a.docto = pagos.docto
+              a.movto = "CA"
+              a.importe = pagos.importe
+              a.referencia = pagos.referencia
+              a.concepto = "Cancelación de documento."
+              a.identidad = pagos.identidad
+              a.idctabanco = pagos.idctabanco
+              a.cuenta = pagos.cuenta
+              a.cheque = pagos.cheque
+              a.cancelado = pagos.cancelado
+              a.void = pagos.void
+
+              context.pagosadeudos.Add(a)
+              context.SaveChanges()
+
+            End If
+
+            fiscalpf = (From cc In context.fiscalpf
+                        Where cc.sisfol = sisfol And cc.serie = serie).SingleOrDefault()
+
+            fiscalpf.cancelado = True
+            fiscalpf.fcancelado = Date.Now.ToShortDateString()
+
+            fiscalpv = (From xx In context.fiscalpv
+                    Where xx.sisfol = sisfol And xx.serie = serie).ToList()
+
+            For Each ab In fiscalpv
+              ab.cancelado = True
+
+            Next
+
+            proxy.CancelaCFDI("BVM951002LX0", "BF", fiscalpf.sat)
+            context.SaveChanges()
+            scope.Complete()
+            response.Ok = True
+            process = "1"
+            response.Mensaje = "Se canceló correctamente la factura."
+
+          End If
+
+        Catch ex As Exception
+
+        End Try
+      End Using
+
+    End Using
+
+    Return response
+  End Function
+
+  Function GuardarFacturaDAL(model As FacturacionEntidad) As Result
+    Dim resultado = New Result(False)
+    Dim ivaseguro As Decimal
+
+    If model.seguro > 0 Then
+      ivaseguro = model.iva
+    Else
+      ivaseguro = 0
+    End If
+
+    If model.iva > 0 Then
+      model.iva = model.iva
+    End If
+
+    Using context As New FactorContext
+
+      Dim parameters = New List(Of SqlParameter)
+      parameters.Add(New SqlParameter("@Contrato", model.contrato))
+      parameters.Add(New SqlParameter("@identidad", model.identidad))
+      parameters.Add(New SqlParameter("@id", model.id))
+      parameters.Add(New SqlParameter("@monto", model.base))
+      parameters.Add(New SqlParameter("@concepto", model.txtConcepto.Trim()))
+      parameters.Add(New SqlParameter("@tipo", model.tipo))
+      parameters.Add(New SqlParameter("@iva", model.iva))
+      parameters.Add(New SqlParameter("@serie", model.serie))
+      parameters.Add(New SqlParameter("@Genadeudo", 1))
+      parameters.Add(New SqlParameter("@seguro", model.seguro))
+      parameters.Add(New SqlParameter("@ivaseguro", ivaseguro))
+      Try
+
+        context.Database.ExecuteSqlCommand("Exec [dbo].[SP_Facturamanual ] " +
+                                                         "@Contrato, " +
+                                                         "@identidad, " +
+                                                         "@id, " +
+                                                         "@monto, " +
+                                                         "@concepto, " +
+                                                         "@tipo, " +
+                                                         "@iva, " +
+                                                         "@serie, " +
+                                                         "@Genadeudo, " +
+                                                         "@seguro, " +
+                                                         "@ivaseguro", parameters.ToArray())
+
+        resultado.Ok = True
+      Catch ex As Exception
+        resultado.Mensaje = ex.Message
+      End Try
+
+    End Using
+
+    Return resultado
+
+  End Function
+
+  Function GuardarNotaCreditoDAL(model As FacturacionEntidad, ByRef process As Boolean) As Result
+    Dim result = New Result(False)
+    Dim adeudos = New adeudos
+
+
+    If model.importe <= model.saldo Then
+
+      Using scope As New TransactionScope
+
+        Using context As New FactorContext
+
+          Try
+
+            If model.aplicarAdeudo Then
+
+              adeudos = (From a In context.adeudos
+                         Where a.serie = model.serie And a.sisfol = model.sisfol
+                         Select a).SingleOrDefault()
+
+              Dim saldo As Decimal = adeudos.saldo - model.importe
+
+              adeudos.saldo = saldo
+
+              context.SaveChanges()
+
+            End If
+
+            Dim pagos = New PagosAdeudosEntidad
+
+            If model.aplicarAdeudo Then
+
+              pagos = (From a In context.adeudos
+                       Where a.serie = model.serie2 And a.sisfol = model.sisfol
+                       Select New PagosAdeudosEntidad With {.id = a.id, .contrato = a.contrato, .identidad = a.identidad, .tipo = a.tipo}).SingleOrDefault()
+            Else
+              pagos = (From a In context.fiscalpf
+                       Where a.serie = model.serie2 And a.sisfol = model.sisfol
+                       Select New PagosAdeudosEntidad With {.id = a.id, .contrato = a.contrato, .identidad = a.identidad}).SingleOrDefault()
+
+            End If
+
+
+            GuardarFacturaDAL(model)
+
+            Dim pAdeudos = New pagosadeudos
+
+            pAdeudos.tipo = IIf(model.aplicarFactura, "IF", pagos.tipo)
+            pAdeudos.serie = model.serie
+            pAdeudos.sisfol = model.sisfol
+            pAdeudos.docto = model.folio
+            pAdeudos.id = model.id
+            pAdeudos.contrato = model.contrato
+            pAdeudos.fecha = Date.Now().Date
+            pAdeudos.movto = "CR"
+            pAdeudos.importe = model.importe
+            pAdeudos.identidad = pagos.identidad
+            pAdeudos.referencia = model.sisfol
+            pAdeudos.idctabanco = 0
+            pAdeudos.cheque = 0
+            pAdeudos.concepto = "Notas de crédito"
+
+            context.pagosadeudos.Add(pAdeudos)
+            context.SaveChanges()
+            result.Ok = True
+            result.Mensaje = "La nota de crédito se guardó correctamente."
+            process = True
+            scope.Complete()
+          Catch ex As Exception
+            result.Mensaje = ex.Message
+          End Try
+
+        End Using
+
+      End Using
+
+    Else
+      result.Mensaje = "Importe excede saldo del documento."
+      process = False
+      result.Ok = True
+    End If
+
+    Return result
+  End Function
+
+  Function GuardarRemisionesDAL(ByRef model As FacturacionEntidad, ByRef process As Boolean) As Result
+    Dim result = New Result(False)
+
+    Using scope As New TransactionScope
+
+      Try
+
+        result = GuardarFacturaDAL(model)
+        result.Mensaje = "La remisión se guardó correctamente."
+        scope.Complete()
+      Catch ex As Exception
+        result.Mensaje = ex.Message
+      End Try
+
+    End Using
+
+    Return result
+  End Function
+
+  Public Function SustituirFolioSatDAL(sat As Integer, ByRef process As String) As Result
+    Dim resultado = New Result(False)
+    Dim proxy = New Proxy()
+
+    Using scope As New TransactionScope
+
+      Using context As New FactorContext
+
+        Try
+          Dim parameters = New List(Of SqlParameter)
+          proxy.CancelaCFDI("BVM951002LX0", "BF", sat)
+          parameters.Add(New SqlParameter("@Foliosat", sat))
+
+          context.Database.ExecuteSqlCommand("EXEC [dbo].[SP_Sustituir_foliosat ]" + "@Foliosat", parameters.ToArray())
+          resultado.Ok = True
+          resultado.Mensaje = "La sustitución de documento se realizó correctamente."
+          process = "1"
+          scope.Complete()
+        Catch ex As Exception
+          resultado.Mensaje = ex.Message
+        End Try
+
+
+      End Using
+
+    End Using
+
+    Return resultado
+  End Function
+
+  Public Function GenerarDAL(parametro As String, ByRef process As String) As Result
+    Dim resultado = New Result(False)
+    Dim fecha As Date
+
+    fecha = Date.Parse(parametro)
+
+
+    Dim foliosNoAsignados = New List(Of fiscalpf)()
+
+
+
+    Using context As New FactorContext
+
+      foliosNoAsignados = (From a In context.fiscalpf
+                           Where DbFunctions.TruncateTime(a.fecha) = fecha And a.sat = 0 And Not {"D"}.Contains(a.serie)).ToList()
+
+      If foliosNoAsignados.Count > 0 Then
+        resultado.Mensaje = "Existen facturas sin folio asignado"
+        Return resultado
+      Else
+
+        Dim consulta = New UtilitiesDAL()
+        Dim stringAti As String = ""
+        Dim filename As String = ""
+        Dim filenamexls As String = ""
+        Dim LcAlias = New List(Of fiscalpf)
+        Dim url As String = ""
+        Dim urlLog As String = ""
+        Dim writer As StreamWriter
+
+
+        consulta.ConsultaParametros("INDEFACTURA", url)
+        consulta.ConsultaParametros("INDEFACTURALog", urlLog)
+
+        LcAlias = (From a In context.fiscalpf
+                   Where DbFunctions.TruncateTime(a.fecha) = fecha And a.sat > 0
+                   Select a
+                   Order By a.sat).ToList()
+
+
+        If LcAlias.Count() > 0 Then
+
+          For Each x As fiscalpf In LcAlias
+
+            x.envio = True
+            stringAti += x.ati
+
+          Next
+
+          stringAti = stringAti.Replace("//", vbCrLf)
+          stringAti = stringAti.Replace("/fin/INICIO", "/fin" & vbCrLf & "/INICIO")
+
+          filename = url + "33_IND_FSAT01" + Month(fecha).ToString() + Day(fecha).ToString + Year(fecha).ToString() + ".txt"
+          filenamexls = urlLog + "33_IND_FSAT01" + Month(fecha).ToString() + Day(fecha).ToString + Year(fecha).ToString() + ".xls"
+
+          'filename = "C:\" + "33_IND_FSAT01" + Month(fecha).ToString() + Day(fecha).ToString + Year(fecha).ToString() + ".txt"
+          'filenamexls = "C:\" + "33_IND_FSAT01" + Month(fecha).ToString() + Day(fecha).ToString + Year(fecha).ToString() + ".xls"
+
+          If File.Exists(filename) Then
+            Try
+              File.Delete(filename)
+            Catch ex As Exception
+              resultado.Mensaje = "Error txt / Delete"
+            End Try
+
+          End If
+
+          If File.Exists(filenamexls) Then
+            Try
+              File.Delete(filenamexls)
+            Catch ex As Exception
+              resultado.Mensaje = "Error xls / Delete"
+            End Try
+
+          End If
+
+          Try
+
+            Try
+              writer = File.AppendText(filename)
+              writer.Write(stringAti)
+              writer.Flush()
+              writer.Close()
+            Catch ex As Exception
+              resultado.Mensaje = "Error txt / escritura"
+            End Try
+
+
+
+
+            Dim lclog = New List(Of sp_logfacturas)
+            Dim parameters = New List(Of SqlParameter)
+            parameters.Add(New SqlParameter("@fecha", fecha))
+
+            context.SaveChanges()
+
+            lclog = context.Database.SqlQuery(Of sp_logfacturas)("EXEC [dbo].[SP_Logfacturas] @fecha", parameters.ToArray()).ToList()
+
+            If lclog.Count > 0 Then
+
+              Dim ent = New sp_logfacturas
+              Dim campos() As PropertyInfo = Nothing
+              Dim listaHeaders As New List(Of String)
+              Dim _tipo As Type = Nothing
+
+              _tipo = ent.GetType()
+              campos = _tipo.GetProperties()
+
+              For Each campo As PropertyInfo In campos
+                Dim nombre As String = ""
+                nombre = campo.Name
+                listaHeaders.Add(nombre)
+              Next
+
+
+              Dim libro = New HSSFWorkbook()
+              Dim hoja = libro.CreateSheet("HojaX")
+              Dim header = hoja.CreateRow(0)
+              Dim flag As Integer = 0
+
+              For i As Integer = 0 To listaHeaders.Count - 1
+                Dim celda = header.CreateCell(i)
+                celda.SetCellValue(campos(i).Name)
+              Next
+
+              For i As Integer = 0 To lclog.Count - 1
+                Dim rowIndex = i + 1
+                Dim row = hoja.CreateRow(rowIndex)
+
+                For j As Integer = 0 To campos.Length - 1
+                  Dim cell = row.CreateCell(j)
+                  Dim o = lclog(i)
+                  Try
+                    Dim valor As String = ""
+                    If o.[GetType]().GetProperty(campos(j).Name).GetValue(o, Nothing) Is Nothing Then
+                      valor = ""
+                    Else
+                      valor = o.[GetType]().GetProperty(campos(j).Name).GetValue(o, Nothing).ToString()
+                    End If
+
+                    cell.SetCellValue(valor)
+                  Catch ex As Exception
+                    resultado.Mensaje = ex.Message
+                  End Try
+                Next
+              Next
+
+              Dim stream = New MemoryStream()
+              libro.Write(stream)
+              Dim FilePath As String = filenamexls
+              Dim archivo As FileStream = New FileStream(FilePath, FileMode.CreateNew, FileAccess.Write)
+              Try
+                stream.WriteTo(archivo)
+                archivo.Close()
+                stream.Close()
+
+              Catch ex As Exception
+                resultado.Mensaje = "Error en escritura xls"
+              End Try
+
+
+
+
+
+
+              Dim correo = New mail.sendMail()
+              Dim toParam As String = ""
+              Dim subject As String = "Log - Factura electrónica, "
+              Dim dtinfo As DateTimeFormatInfo = New CultureInfo("es-ES", False).DateTimeFormat
+              Dim mes As String = dtinfo.GetMonthName(Date.Now.Month)
+              Dim attach As String()
+
+              Dim body As String
+
+              subject += Date.Now.Day().ToString() & " " & mes & " " & Date.Now.Year().ToString()
+              consulta.ConsultaParametros("LSTFISCALDATOS", toParam)
+              attach = filenamexls.Split(";")
+
+
+              body = "<p>Buen Día.<br>"
+              body = body & "Log - Factura electrónica  <br>"
+              body = body & "Fecha de Operación: " & Date.Now.Day().ToString() & " " & mes & " " & Date.Now.Year().ToString() & "<br>"
+              body = body & "___________________________________________________________________________________________ <br></p>"
+              body = body & "<p>Se recomienda editar el archivo en Ms Excel <br>"
+              body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+
+
+              correo.enviarMail(toParam.Split(";"), subject, body, Net.Mail.MailPriority.Normal, Nothing, Nothing, attach)
+
+
+              resultado.Ok = True
+              resultado.Mensaje = "Log generado correctamente."
+              process = "1"
+            End If
+
+          Catch ex As Exception
+            resultado.Mensaje = ex.Message
+          End Try
+
+
+
+        Else
+          resultado.Ok = True
+          resultado.Mensaje = "No se encontro información"
+
+        End If
+      End If
+
+    End Using
+
+    Return resultado
+  End Function
+
+#End Region
+
+  Function EnvioMasivoDal(fecha As Date, tipo As Integer) As Result
+    Dim lista
+    Dim response = New Result(False)
+    Dim archivoPdf As Byte() = Nothing
+    Dim archivoXml As Byte() = Nothing
+    Dim proxy = New Proxy()
+    Dim mail As String = Nothing
+    Dim email = New sendMail()
+
+    Using context As New FactorContext
+      Try
+        If tipo = 1 Then
+          lista = (From A In context.pagosadeudos
+              Join B In context.contratos
+              On A.contrato Equals B.contrato
+              Join C In context.clientes
+              On C.cliente Equals B.cliente
+              Where A.sat > 0 And A.fecha.Value.Month = fecha.Month And A.fecha.Value.Year = fecha.Year And A.envio = 0
+              Select New FacturacionEntidad With {
+                  .fecha = A.fecha,
+                  .id = A.id,
+                  .identidad = A.identidad,
+                  .numrec = A.numrec,
+                  .serie = "CBF",
+                  .sat = A.sat,
+                  .contrato = A.contrato,
+                  .nombre = C.nombre,
+                  .importe = A.importe,
+          .divisa = B.moneda
+                }).ToList()
+        Else
+          lista = (From A In context.cfdicartera
+            Join B In context.contratos
+            On A.contrato Equals B.contrato
+            Join C In context.clientes
+            On C.cliente Equals B.cliente
+            Where A.sat > 0 And A.fecha.Value.Month = fecha.Month And A.fecha.Value.Year = fecha.Year And A.envio = 0
+            Select New FacturacionEntidad With {
+                .fecha = A.fecha,
+                .id = A.id,
+                .serie = "CCF",
+                .numrec = A.Idrec,
+                .identidad = A.identidad,
+                .sat = A.sat,
+                .contrato = A.contrato,
+                .nombre = C.nombre,
+                .importe = A.pago,
+          .divisa = B.moneda
+              }).ToList()
+        End If
+
+        For Each item As FacturacionEntidad In lista
+          response = proxy.GetPdfResult("BVM951002LX0_" + item.serie + "_" + Convert.ToString(item.sat), archivoPdf)
+          response = proxy.GetXmlResult("BVM951002LX0_" + item.serie + "_" + Convert.ToString(item.sat), archivoXml)
+
+          If item.identidad = 1 Then
+            mail = context.clientes.Where(Function(x) x.cliente = item.id).Select(Function(x) x.email).FirstOrDefault()
+          ElseIf item.identidad = 2 Then
+            mail = context.proveedor.Where(Function(x) x.deudor = item.id).Select(Function(x) x.email).FirstOrDefault()
+          Else
+            mail = context.comprador.Where(Function(x) x.deudor = item.id).Select(Function(x) x.email).FirstOrDefault()
+          End If
+
+          If archivoPdf IsNot Nothing And archivoXml IsNot Nothing And mail IsNot Nothing Then
+
+            Dim listTo As String()
+            Dim cc As String = ""
+            Dim subject As String = "Factura"
+            Dim body As String = ""
+
+            listTo = mail.Split(";")
+
+            Dim attach = New Dictionary(Of String, Byte())
+
+            attach.Add("factura.pdf", archivoPdf)
+            attach.Add("factura.xml", archivoXml)
+
+            body = "<p>Buen Día.<br>"
+            body = body & "Se anexan la factura correspondiente<br><br>"
+            body = body & "___________________________________________________________________________________________ <br></p>"
+            body = body & "<p>Atentamente<br>"
+            body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+
+
+
+            If email.enviarMail(listTo, subject, body, Net.Mail.MailPriority.Normal, Nothing, Nothing, Nothing, attach).Ok Then
+              If tipo = 1 Then
+                context.pagosadeudos.Where(Function(A) A.numrec = item.numrec).SingleOrDefault().envio = True
+              Else
+                context.cfdicartera.Where(Function(A) A.Idrec = item.numrec).SingleOrDefault().envio = True
+              End If
+              context.SaveChanges()
+
+            End If
+
+          End If
+
+        Next
+
+      Catch ex As Exception
+        response.Mensaje = ex.Message
+      End Try
+
+    End Using
+    Return response
+  End Function
+
+
+
+
+
+
+
+
+End Class

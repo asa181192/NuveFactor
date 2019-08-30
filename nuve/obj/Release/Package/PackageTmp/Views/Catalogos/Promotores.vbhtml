@@ -6,7 +6,7 @@ End Code
 
 
 @Section Scripts 
-      <script src="/Scripts/CatalogosScripts/Promotor.js"></script>
+      <script src="~/Scripts/CatalogosScripts/Promotor.js"></script>
 End Section 
 
 <div class="head">

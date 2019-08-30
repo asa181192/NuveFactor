@@ -1,0 +1,77 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+
+Public Class CobranzaBAL
+
+#Region "Adeudos"
+  Function ConsultaAdeudosBAL(ByRef model As List(Of adeudosEntidad)) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaAdeudos(model)
+  End Function
+
+  Function ConsultaAdeudosDetalleBAL(idadeudo As Integer, ByRef model As adeudos) As Result
+
+    Dim cobranza = New CobranzaDAL()
+    Return cobranza.ConsultaAdeudosDetalleDAL(idadeudo, model)
+
+  End Function
+
+  Function ActualizarAdeudoBAL(ByRef model As adeudosEntidad) As Result
+    Dim proc = New CobranzaDAL()
+    Return proc.ActualizarAdeudoDAL(model)
+  End Function
+
+
+
+#End Region
+
+
+#Region "Pagosadeudos"
+
+  Function ConsultaPagosadeudosBAL(ByRef model As List(Of adeudosEntidad), dfecha As Date) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaPagosadeudos(model, dfecha)
+  End Function
+
+#End Region
+
+
+#Region "edocuenta"
+
+  Function ConsultaedocuentaBAL(ByRef model As List(Of EdocuentaEntidad), dfecha As String, dfecha2 As String, contrato As String) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaedocuenta(model, dfecha, dfecha2, contrato)
+  End Function
+
+#End Region
+
+#Region "Registro de cobranza"
+
+  Function ConsultaregistrocobranzaBAL(ByRef model As List(Of CobranzaEntidad), dfecha As String, contrato As String) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.Consultaregistrocobranza(model, dfecha, contrato)
+  End Function
+
+
+  Function ObtenerdocumentosxpagarBAL(ByRef model As List(Of CobranzaEntidad), dfecha As Date, contrato As String) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.Obtenerdocumentosxpagar(model, dfecha, contrato)
+  End Function
+
+
+
+#End Region
+
+End Class
+

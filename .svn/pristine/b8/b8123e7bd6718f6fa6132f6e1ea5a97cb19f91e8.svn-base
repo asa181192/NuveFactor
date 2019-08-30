@@ -1,0 +1,47 @@
+﻿Imports FactorEntidades
+Imports FactorBAL
+Imports Microsoft.Reporting.WebForms
+
+
+'<CustomAuthorize(Permisos.Acciones.NOTIFICACIONES)>
+Public Class AutorizaController
+  Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+  <HttpGet>
+  Public Function Autoriza() As ViewResult
+    Return View()
+  End Function
+
+#End Region
+
+#Region "Get"
+
+  <HttpGet>
+  Public Function obtenermovtos(fecha As String) As ActionResult
+    Dim jresult = New JsonResult()
+    Dim response
+    Dim consulta = New AutorizaBAL()
+
+    Dim autorizaList = New List(Of AutorizaEntidad)
+
+    response = consulta.ObtenermovtosBAL(fecha, autorizaList)
+    If response.Ok And response IsNot Nothing Then
+      jresult = Json(New With {Key .Results = autorizaList}, JsonRequestBehavior.AllowGet)
+    Else
+      response.Mensaje = "Ocurrió un Error al consultar la información.(Controller)"
+      jresult = Json(New With {Key .Mensaje = response.Mensaje + " " + response.Detalle}, JsonRequestBehavior.AllowGet)
+    End If
+
+    Return jresult
+  End Function
+
+
+#End Region
+
+#Region "Post"
+
+  
+#End Region
+
+End Class

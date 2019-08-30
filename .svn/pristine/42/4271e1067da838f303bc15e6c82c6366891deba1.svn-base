@@ -1,0 +1,15 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+
+Public Class CobranzaBAL
+
+  Function ConsultaAdeudosBAL(ByRef model As List(Of adeudosEntidad)) As Result
+
+    Dim Cobranza = New FactorDAL.CobranzaDAL()
+
+    Return Cobranza.consultaAdeudos(model)
+  End Function
+
+End Class
+

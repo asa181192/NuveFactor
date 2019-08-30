@@ -1,0 +1,75 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+
+
+Public Class CobranzaDAL
+
+#Region "Metodos de Consulta"
+
+  Public Function consultaAdeudos(ByRef model As List(Of adeudosEntidad)) As Result
+
+    Dim Respuesta = New Result(False)
+    Dim context As New FactorContext
+    '
+    Try
+      Dim values = (From a In context.adeudos
+                    Join b In context.clientes
+                    On a.id Equals b.cliente
+                    Where a.saldo > 0 AndAlso a.identidad = 1
+                    Select New adeudosEntidad() With {.Adeudo = a.tipo + "-" + a.docto.ToString, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = IIf(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.adeudos
+                      Join b In context.proveedor
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 2
+                      Select New adeudosEntidad() With {.Adeudo = a.tipo + "-" + a.docto.ToString, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = IIf(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).Union(From a In context.adeudos
+                      Join b In context.comprador
+                      On a.id Equals b.deudor
+                      Where a.saldo > 0 AndAlso a.identidad = 2
+                      Select New adeudosEntidad() With {.Adeudo = a.tipo + "-" + a.docto.ToString, .docto = a.docto, .tipo = a.tipo, .serie = a.serie,
+                      .contrato = a.contrato, .Nombre = b.nombre, .fec_alta = a.fec_alta, .monto = a.monto, .saldo = a.saldo, .moneda = a.moneda,
+                      .monedaStr = IIf(a.moneda = 1, "MXN", "USD"), .idadeudo = a.idadeudo}).ToList()
+
+      For Each item As adeudosEntidad In values
+
+        Dim a = New adeudosEntidad
+
+
+        a.Adeudo = item.Adeudo
+        a.docto = item.docto
+        a.tipo = item.tipo
+        a.serie = item.serie
+        a.contrato = item.contrato
+        a.Nombre = item.Nombre
+        a.fec_alta = item.fec_alta
+        a.monto = item.monto
+        a.saldo = item.saldo
+        a.moneda = item.moneda
+        a.monedaStr = item.monedaStr
+        a.idadeudo = item.idadeudo
+
+        model.Add(a)
+      Next
+
+      Respuesta.Ok = True
+
+    Catch ex As Exception
+      Respuesta.Detalle = ex.Message
+
+    End Try
+
+    Return Respuesta
+
+  End Function
+
+
+#End Region
+
+End Class
+
+
+'consultaAdeudos

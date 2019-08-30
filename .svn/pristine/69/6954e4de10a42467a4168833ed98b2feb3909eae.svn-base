@@ -1,0 +1,11 @@
+﻿Public Class AforosPorLiquidar
+	Public Property contrato As Integer	'(int, null)
+	Public Property nombre As String '(char(100), null)
+	Public Property beneficiario As String	'(char(100), null)
+	Public Property id As Integer '(int, null)
+	Public Property identidad As Integer '(int, null)
+	Public Property pago As Decimal	'(decimal(5,2), null)
+	Public Property moneda As Integer '(int, null)
+	Public Property monedaStr As String	'(char(100), null)
+	Public Property numrec As Integer
+End Class

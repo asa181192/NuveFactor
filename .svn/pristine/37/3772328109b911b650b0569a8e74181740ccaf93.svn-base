@@ -1,0 +1,20 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+Public Class DropDownBAL
+
+    Function obtenerBancosBAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+        Dim consulta = New DropDownDAL()
+        Return consulta.consultaBancosDAL(model)
+
+    End Function
+
+    Function obtenerCuentasBAL(ByRef model As List(Of DropDownEntidad)) As Result
+
+        Dim consulta = New DropDownDAL()
+        Return consulta.consultaCuentasDAL(model)
+
+    End Function
+
+End Class

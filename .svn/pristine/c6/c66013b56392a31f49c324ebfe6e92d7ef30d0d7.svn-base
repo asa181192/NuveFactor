@@ -1,0 +1,10 @@
+﻿Imports FactorEntidades
+
+Public Class RepositorioValidacion
+
+	Public Function ValidarRFC(rfc As String, tabla As String, param1 As String, param2 As String, clave As Integer, ByRef existe As Boolean) As Result
+		Dim consulta = New FactorBAL.Utility()
+		Return consulta.ConsultaRFC(rfc, tabla, param1, param2, clave, existe)
+	End Function
+
+End Class

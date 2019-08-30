@@ -1,0 +1,150 @@
+﻿Imports FactorEntidades
+Imports System.Data.SqlClient
+
+Public Class AnexoDAL
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+
+	Public Function ConsultaAnexoDAL(Contrato As Integer, Producto As Integer, ByRef lista As List(Of AnexoConsulta)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+
+				Dim parameters = New List(Of SqlParameter)
+				parameters.Add(New SqlParameter("@Contrato", Contrato))
+				parameters.Add(New SqlParameter("@Producto", Producto))
+				lista = context.Database.SqlQuery(Of AnexoConsulta)("Exec [dbo].[SP_ConsultaAnexo] " +
+																		 " @Contrato ," +
+																		 " @Producto ", parameters.ToArray()).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaDetalleAnexoDAL(deudor As Int32, producto As Integer, ByRef model As AnexoConsulta, contrato As Integer) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				If producto = 1 Then
+					model = (From A In context.anexo
+							 Join B In context.comprador
+							 On A.deudor Equals B.deudor
+									Where A.deudor = deudor And A.contrato = contrato
+									Select New AnexoConsulta With {
+												.deudor = A.deudor,
+												.anexoid = A.anexoid,
+												.sobretasa = A.sobretasa,
+												.catcte = A.catcte,
+												.nombre = B.nombre,
+												.limite = A.limite,
+												.activo = A.activo
+													}
+													).SingleOrDefault()
+
+				Else
+					model = (From A In context.anexo
+							 Join B In context.proveedor
+							 On A.deudor Equals B.deudor
+							 Join C In context.contratos
+							 On A.contrato Equals C.contrato
+									Where A.deudor = deudor And A.contrato = contrato
+									Select New AnexoConsulta With {
+												.deudor = A.deudor,
+												.anexoid = A.anexoid,
+												.sobretasa = A.sobretasa,
+												.catcte = A.catcte,
+												.nombre = B.nombre,
+												.limite = A.limite,
+												.activo = A.activo,
+												.tasadif = C.tasadif
+													}
+													).SingleOrDefault()
+
+				End If
+
+
+				If model IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function AltaAnexoDAL(model As anexo) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				model.mancobranza = 0
+				model.notifica = 0
+				model.imprimir = 0
+				model.void = 0
+				model.modifica = 0
+				context.anexo.Add(model)
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarAnexoDAL(model As anexo) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				Dim anexo = context.anexo.Where(Function(x) x.contrato = model.contrato And x.deudor = model.deudor).SingleOrDefault()
+
+				If anexo IsNot Nothing Then
+					anexo.activo = model.activo
+					anexo.catcte = model.catcte
+					anexo.sobretasa = model.sobretasa
+					anexo.limite = model.limite
+				End If
+
+				context.SaveChanges()
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+
+		End Using
+
+		Return respuesta
+	End Function
+
+
+#End Region
+End Class

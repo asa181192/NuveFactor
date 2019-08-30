@@ -1,0 +1,95 @@
+﻿@ModelType nuve.Models.Modelocobranza
+
+@Code
+  ViewData("Title") = "Factoraje - Registro de cobranza"
+End Code
+
+@Section Scripts
+  <script src="~/Scripts/CobranzaScripts/registrocobranza.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+End Section
+
+<div class="head">
+  <div class="headForma">
+    <div class="headFormaContenido">
+      <a href="~/Cobranza/Index">
+        <img src="~/Images/menu/menuregresar.png" /></a>
+      <span>Registro de cobranza</span>
+    </div>
+  </div>
+</div>
+
+<div id="tableContainer" class="tableContainer">
+  <div class="panel-heading">
+    <div class="topmargin">
+      <div class="form-inline" style="width: 100%">
+
+
+      </div>
+
+      <div class="form-inline" style="width: 100%">
+
+      </div>
+    
+    </div>
+
+  </div>
+</div>
+
+<div class="panel-body">
+  <div class="jumbotron">
+    <div class="table-responsive">
+      <table id="tabladoctos" class="table cell-border compact hover" style="width: 100%">
+
+        <thead>
+
+           <tr>
+            <th>
+              Aplicar
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.iddocto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.docto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.cesion)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.fec_vence)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.saldo)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.deudor)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.importe)
+            </th>
+             <th>
+              @Html.DisplayNameFor(Function(model) model.descto)
+            </th>
+             <th>
+              @Html.DisplayNameFor(Function(model) model.neto)
+            </th>
+            <th>
+              @Html.DisplayNameFor(Function(model) model.bonifica)
+            </th>
+
+          </tr>
+        </thead>
+
+        <tfoot>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+

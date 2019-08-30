@@ -23,7 +23,7 @@ End Code
 <div class="EncabezadoBusquedasCl">
 <label>Clientes</label>
 <span class="TotalCoincidencias">@Model.ListaClientes.Count Coincidencia(s)</span>
-  <a href="~/Catalogos/GuardarCliente?clienteid=0">
+  <a href="../Catalogos/GuardarCliente?clienteid=0">
      <img class="btnimgaclientes" src="~/Images/nuevo_verde.png"/>
  </a>
 </div>
@@ -50,7 +50,7 @@ ElseIf Model.ListaClientes.Count > 10 then
                             #@value
                             (<b>@item.cliente</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarCliente?clienteid=@(item.cliente)" >
+                        <a href="../Catalogos/GuardarCliente?clienteid=@(item.cliente)" >
                            <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>
@@ -61,7 +61,7 @@ ElseIf Model.ListaClientes.Count > 10 then
                     <div class="linkCobranza">
                         <a>Apoderados</a>
                         <span class="separador">·</span>
-                        <a href="/Catalogos/ControlRiesgo?clienteid=@(item.cliente)" >Control de riesgo</a>
+                        <a href="../Catalogos/ControlRiesgo?clienteid=@(item.cliente)&nombre=@(item.nombre)" >Control de riesgo</a>
                         <span class="separador">·</span>
                         <a>Contratos</a>
                         <span class="separador">·</span>
@@ -82,7 +82,7 @@ Else
                             #@value
                             (<b>@item.cliente</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarCliente?clienteid=@(item.cliente)" >
+                        <a href="../Catalogos/GuardarCliente?clienteid=@(item.cliente)" >
                            <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>
@@ -93,7 +93,7 @@ Else
                     <div class="linkCobranza">
                         <a>Apoderados</a>
                         <span class="separador">·</span>
-                        <a href="/Catalogos/ControlRiesgo?clienteid=@(item.cliente)" >Control de riesgo</a>
+                        <a href="../Catalogos/ControlRiesgo?clienteid=@(item.cliente)&nombre=@(item.nombre)" >Control de riesgo</a>
                         <span class="separador">·</span>
                         <a>Contratos</a>
                         <span class="separador">·</span>
@@ -109,7 +109,7 @@ End Code
 <div class="EncabezadoBusquedasCl">
 <label>Proveedores</label>
 <span class="TotalCoincidencias">@Model.ListaProveedor.Count Coincidencia(s)</span>
-  <a href="/Catalogos/GuardarProveedor?deudor=0" >
+  <a href="../Catalogos/GuardarProveedor?deudor=0" >
      <img class="btnimgaclientes" src="~/Images/nuevo_verde.png"/>
  </a>
 </div>
@@ -135,7 +135,7 @@ ElseIf Model.ListaProveedor.Count > 10 then
                             #@value
                             (<b>@item.deudor</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarProveedor?deudor=@(item.deudor)" >
+                        <a href="../Catalogos/GuardarProveedor?deudor=@(item.deudor)" >
                             <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>
@@ -158,7 +158,7 @@ Else
                             #@value
                             (<b>@item.deudor</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarProveedor?deudor=@(item.deudor)" >
+                        <a href="../Catalogos/GuardarProveedor?deudor=@(item.deudor)" >
                             <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>
@@ -176,7 +176,7 @@ End Code
 <div class="EncabezadoBusquedasCl">
 <label>Compradores</label>
 <span class="TotalCoincidencias">@Model.ListaComprador.Count Coincidencia(s)</span>
-  <a href="/Catalogos/GuardarComprador?deudor=0">
+  <a href="../Catalogos/GuardarComprador?deudor=0">
      <img class="btnimgaclientes" src="~/Images/nuevo_verde.png"/>
  </a>
 </div>
@@ -202,7 +202,7 @@ Elseif Model.ListaComprador.Count > 10 then
                                     #@value
                                     (<b>@item.deudor</b>)
                                  </span> 
-                                <a href="/Catalogos/GuardarComprador?deudor=@(item.deudor)" >
+                                <a href="../Catalogos/GuardarComprador?deudor=@(item.deudor)" >
                                     <span class="buscarNombreClt">@item.nombre</span>
                                 </a>
                                 <span>R.F.C : </span>
@@ -225,7 +225,7 @@ Else
                                     #@value
                                     (<b>@item.deudor</b>)
                                  </span> 
-                                <a href="/Catalogos/GuardarComprador?deudor=@(item.deudor)" >
+                                <a href="../Catalogos/GuardarComprador?deudor=@(item.deudor)" >
                                     <span class="buscarNombreClt">@item.nombre</span>
                                 </a>
                                 <span>R.F.C : </span>
@@ -243,7 +243,7 @@ End Code
 <div class="EncabezadoBusquedasCl">
 <label>Promotores</label>
 <span class="TotalCoincidencias">@Model.ListaPromotor.Count Coincidencia(s)</span>
-  <a href="/Catalogos/GuardarPromotor?clave=0">
+  <a href="../Catalogos/GuardarPromotor?clave=0">
      <img class="btnimgaclientes" src="~/Images/nuevo_verde.png"/>
  </a>
 </div>
@@ -269,7 +269,7 @@ End Code
                             #@value
                             (<b>@item.promotor</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarPromotor?clave=@(item.promotor)" >
+                        <a href="../Catalogos/GuardarPromotor?clave=@(item.promotor)" >
                             <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>
@@ -292,7 +292,7 @@ End Code
                             #@value
                             (<b>@item.promotor</b>)
                          </span> 
-                        <a href="/Catalogos/GuardarPromotor?clave=@(item.promotor)" >
+                        <a href="../Catalogos/GuardarPromotor?clave=@(item.promotor)" >
                             <span class="buscarNombreClt">@item.nombre</span>
                         </a>
                         <span>R.F.C : </span>

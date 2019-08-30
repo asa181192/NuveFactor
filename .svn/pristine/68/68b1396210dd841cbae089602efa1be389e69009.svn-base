@@ -1,0 +1,42 @@
+﻿Imports FactorDAL
+Imports FactorEntidades
+
+Public Class TesoreriaBAL
+
+    Function consultaBanco(idbanco As Integer, ByRef model As DropDownEntidad) As Result
+
+        Dim banco = New CuentasDAL
+        Return banco.consultaBanco(idbanco, model)
+
+    End Function
+
+    'Listado
+    Function ConsultaCuentasBAL(cancelado As Boolean, ByRef model As List(Of cuentasEntidad)) As Result
+
+        Dim cuentas = New FactorDAL.CuentasDAL()
+
+        Return cuentas.consultaCuentasBanco(cancelado, model)
+    End Function
+
+    Function ConsultaCuentaDetalle(idctaBanco As Integer, ByRef model As cuentasEntidad) As Result
+
+        Dim cuentas = New CuentasDAL()
+        Return cuentas.ConsultaCuentaDetalle(idctaBanco, model)
+
+    End Function
+
+    Function altaCuentaBancoBAL(model As cuentas) As Result
+
+        Dim alta = New CuentasDAL()
+        Return alta.altaCuentaBanco(model)
+
+    End Function
+
+    Function actualizarBancoBAL(model As cuentas) As Result
+
+        Dim actualiza = New CuentasDAL()
+        Return actualiza.actualizarCuentaBanco(model)
+
+    End Function
+
+End Class

@@ -43,23 +43,38 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Entidades">
-      <HintPath>\\10.212.78.39\usuarios\arrendadora\francisco.carrillo\proyecto\Entidades\Entidades\bin\Debug\Entidades.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="TinyMapper, Version=2.0.0.40, Culture=neutral, processorArchitecture=MSIL">
@@ -79,11 +94,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnexoDAL.vb" />
+    <Compile Include="ApoderadoDAL.vb" />
+    <Compile Include="AseguradorasDAL.vb" />
+    <Compile Include="AutorizaDAL.vb" />
+    <Compile Include="CesionesDAL.vb" />
     <Compile Include="ClienteDAL.vb" />
+    <Compile Include="CobranzaDAL.vb" />
     <Compile Include="CodigoGarantiaDAL.vb" />
     <Compile Include="CompradorDAL.vb" />
+    <Compile Include="ConsolidacionesDAL.vb" />
+    <Compile Include="ContratosDAL.vb" />
+    <Compile Include="CuentasDAL.vb" />
     <Compile Include="DropDownDAL.vb" />
+    <Compile Include="FacturacionDAL.vb" />
     <Compile Include="IndicadoresDAL.vb" />
+    <Compile Include="Bitacora.vb" />
+    <Compile Include="MovimientosDAL.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -99,12 +126,38 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="NotificacionesDAL.vb" />
+    <Compile Include="OperacionesDAL.vb" />
+    <Compile Include="ParametrosDAL.vb" />
     <Compile Include="ParidadDAL.vb" />
+    <Compile Include="Procesos.vb" />
     <Compile Include="PromotorDAL.vb" />
     <Compile Include="ProveedorDAL.vb" />
+    <Compile Include="Proxy\Proxy.vb" />
+    <Compile Include="RegistroCuentasBancariasDAL.vb" />
+    <Compile Include="ReportesDAL.vb" />
+    <Compile Include="sendMail.vb" />
+    <Compile Include="Service References\ServicioCancelacionCFDI\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServicioT24\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ServicioWsFactura\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="SucursalDAL.vb" />
     <Compile Include="TipoGarantiaDAL.vb" />
     <Compile Include="UsuarioDAL.vb" />
+    <Compile Include="UsuariosWebDAL.vb" />
+    <Compile Include="UtilitiesDAL.vb" />
+    <Compile Include="ValidacionesDAL.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -115,7 +168,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -126,6 +181,39 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Service References\ServicioCancelacionCFDI\CancelacionService.wsdl" />
+    <None Include="Service References\ServicioCancelacionCFDI\FactorDAL.ServicioCancelacionCFDI.OutputOfCancelar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\Factoraje.wsdl" />
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespENQCuentasCliente.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespENQDatosCliente.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespENQLineaCredito.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespENQLineasCredito.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespENQSaldoCuenta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespTXNSPEI.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioT24\FactorDAL.ServicioT24.RespTXNTraspaso.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioWsFactura\FactorDAL.ServicioWsFactura.getPdfResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioWsFactura\FactorDAL.ServicioWsFactura.getXmlResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServicioWsFactura\GetCypressService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -135,6 +223,59 @@
       <Project>{8a0eb53a-65f8-4aa6-9187-ad9d8c9ae173}</Project>
       <Name>FactorENT</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServicioCancelacionCFDI\" />
+    <WCFMetadataStorage Include="Service References\ServicioT24\" />
+    <WCFMetadataStorage Include="Service References\ServicioWsFactura\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioWsFactura\GetCypressService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioWsFactura\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioWsFactura\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioWsFactura\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioT24\Factoraje.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioT24\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioT24\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioT24\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioCancelacionCFDI\CancelacionService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioCancelacionCFDI\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioCancelacionCFDI\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServicioCancelacionCFDI\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

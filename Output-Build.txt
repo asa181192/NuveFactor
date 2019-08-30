@@ -1,0 +1,3 @@
+﻿------ Build started: Project: FactorDAL, Configuration: Debug Any CPU ------
+  FactorDAL -> C:\Users\alfredo.santiago\Documents\nuve\FactorDAL\bin\Debug\FactorDAL.dll
+------ Build started: Project: FactorBAL, Configuration: Debug Any CPU ------

@@ -1,0 +1,129 @@
+﻿@ModelType nuve.login
+
+@Code  
+  Layout = Nothing
+End Code
+
+<!DOCTYPE html>
+
+<html>
+
+  <head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Factor</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")    
+    @Scripts.Render("~/bundles/modernizr")    
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/css")
+    <script type="text/javascript">
+      window.history.forward();
+      window.location.hash = 'no-back-button';
+      window.location.hash = 'Again-No-back-button';
+      window.onhashchange = function () { window.location.hash = 'no-back-button'; };
+    </script>
+  </head>
+
+  <body class="bodyback" >
+
+    <div class="loginWrapper">
+    
+      <div class="container v-center">
+        <div class="row">
+          <div class="col-xs-12">
+            <div style="text-align: center">
+              <img src="~/Images/vepormas.png" alt="BX+" style="margin: 5px auto;" class="hidden-xs" />
+              <img src="~/Images/vepormas.png" alt="BX+" style="margin: 5px auto; margin-top: 30px" class="visible-xs" />
+            </div>
+          </div>
+        </div>
+        @code
+          Html.RenderPartial("_Alerts")
+        End Code
+        <div class="loginBox middle-xs">
+          <div class="row">
+            <div class="col-xs-12">
+                <div id="contenedorLoader" class="contenedorLoader">
+                   <div class="loaderSpinner" ></div>
+                </div>
+                <div style="text-align: center">
+                  @*<img src="/Images/conformeenlanuve.png" />*@                 
+                </div>
+                <div style="margin-top: 10px; padding: 0px 0px 0px 0px;">
+                  @Using Html.BeginForm(New With {.ReturnUrl = ViewData("ReturnUrl"), .Class = "form-signin"})
+                    @Html.AntiForgeryToken()
+                    @<div class="form-group row form-group-sm">
+                      @Html.LabelFor(Function(m) m.user, New With {.class = "col-sm-3 col-form-label"})
+                      <div class="col-sm-8">
+                        @Html.TextBoxFor(Function(m) m.user, New With {.Class = "form-control", .placeholder = "Usuario"})
+                      </div>
+                     </div>
+                    @<div class="form-group row form-group-sm">
+                      @Html.LabelFor(Function(m) m.password, New With {.class = "col-sm-3 col-form-label"})
+                      <div class="col-sm-8">
+                        @Html.PasswordFor(Function(m) m.password, New With {.Class = "form-control", .placeholder = "Contraseña"})
+                      </div>
+                     </div>
+                    @<div class="form-group row">
+                      <div class="col-sm-3 col-form-label">                        
+                      </div>
+                      <div class="col-sm-8">
+                        <input type="submit" value="Ingresar" class="btn btn-black btn-sm" style="width: 100px"/>
+                      </div>
+                     </div>
+                    @<div class="form-group">
+                      <h6>
+                        <small>
+                          @Html.ValidationSummary(True)
+                        </small>                          
+                      </h6>                        
+                     </div>
+                    @<div class="form-group">
+                      <div class="col-sm-offset-4 col-sm-12">
+                        <div class="links">
+                          <h6>
+                            <a href="@Url.Action("contrasena_olvidada", "Account")" class="small">¿Ha olvidado su contraseña?<br />¿Es la primera vez que ingresa?</a>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>                    
+                  End Using                  
+                </div>              
+            </div>          
+          </div>
+        </div>    
+        
+        <br />
+            
+        <div style="margin: 10px auto 0px auto; text-align: center; color: #ffffff;">
+			    <strong style="color: #3BB0C9">Advertencia</strong><br />
+			    Este sistema es para el uso exclusivo de usuarios autorizados. Los usuarios pueden ser monitoreados.<br />
+			    Al utilizar este sistema consienten expresamente a este monitoreo, y se les advierte que si el monitoreo revela 
+			    posibles actividades criminales, el personal de seguridad puede proveer la evidencia de dicho monitoreo a los 
+			    oficiales que apliquen la ley.
+        </div>
+		
+        <div style="margin: 0px auto 0px auto; text-align: center; margin-top: 20px;">			  				        
+          <script type="text/javascript" src="https://seal.verisign.com/getseal?host_name=www.arrvepormas.com.mx&amp;size=L&amp;use_flash=YES&amp;use_transparent=YES&amp;lang=es"></script>
+				  <br />          
+          <a href="http://www.verisign.es/products-services/security-services/ssl/ssl-information-center/" target="_blank" style="color: #3BB0C9; text-decoration: none; font: bold 10px verdana,sans-serif; letter-spacing: .5px;">
+            Acerca de los certificados SSL
+				  </a>
+          <br />
+          <span style="color: #ffffff;">Control de oficinas foráneas en la nube</span>
+        </div>				
+      </div>
+
+      <div id="notSupportedBrowser" style="display: none; width: 100%; margin-top: 100px; text-align: center; font-size: 12px; font-weight: bold;">
+		    La versión del navegador que está utilizando es inferior a la 8.0 y no está soportada por BX+ Banca
+		    en Línea.<br />
+        Para consulta comuníquese sin costo 01 800 823 5534 en donde con gusto le atenderemos.
+	    </div>
+
+    </div>
+  </body>
+</html>

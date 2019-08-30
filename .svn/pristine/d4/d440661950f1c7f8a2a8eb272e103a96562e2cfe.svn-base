@@ -1,0 +1,116 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+
+Namespace nuve
+
+  Public Class CobranzaController
+    Inherits System.Web.Mvc.Controller
+
+
+#Region "Menu"
+    <CustomAuthorize>
+              <HttpGet>
+    Function Index() As ViewResult
+
+      Dim model As New Helpers.Menu
+
+      model.sMenu = "<div class=""BoxFlex"" id="""" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<label>Regresar</label>"
+      model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexadeudos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Adeudos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexpagos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Pagos adeudos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexestado"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Estado de cuenta</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexregistro"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Registro de cobranza</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexaforos"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Aforos</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+      model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcinformes"" >"
+      model.sMenu &= "<div class=""BoxFlexShadow"">"
+      model.sMenu &= "<p>Informes</p>"
+      'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+      model.sMenu &= "</div>"
+      model.sMenu &= "</div>"
+
+
+      Return View(model)
+    End Function
+
+#End Region
+
+
+#Region "Get"
+
+#Region "Adeudos"
+
+    'Obtiene el total de registros
+    <HttpGet>
+    Public Function obtenerListaAdeudos() As ActionResult
+
+      Dim jresult
+      Dim resultado
+      Dim consulta = New FactorBAL.CobranzaBAL()
+
+			Dim listaAdeudos = New List(Of adeudosEntidad)
+			resultado = consulta.ConsultaAdeudosBAL(listaAdeudos)
+
+      If resultado.Ok And resultado IsNot Nothing Then
+        jresult = Json(New With {Key .Results = listaAdeudos}, JsonRequestBehavior.AllowGet)
+      Else
+        resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+        jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+      End If
+
+      Return jresult
+
+    End Function
+
+#End Region
+
+
+#End Region
+
+
+
+    ''
+    '' GET: /Cobranza
+
+    'Function Index() As ActionResult
+    '  Return View()
+    'End Function
+
+  End Class
+
+End Namespace

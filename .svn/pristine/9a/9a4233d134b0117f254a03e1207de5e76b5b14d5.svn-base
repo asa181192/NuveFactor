@@ -1,0 +1,165 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.OperacionesModels
+Imports nuve.Models
+
+Namespace nuve
+	<CustomAuthorize(Permisos.Acciones.OPERACIONES)>
+	Public Class OperacionesController
+		Inherits System.Web.Mvc.Controller
+
+#Region "Views"
+#Region "Contratos"
+		<HttpGet>
+		Public Function Contratos(ClienteId As Integer, Nombre As String) As ActionResult
+			Dim model = New Contrato_Cliente
+			model.Cliente.nombre = Nombre
+			model.Contrato.cliente = ClienteId
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Menu"
+		<HttpGet>
+		Function Index() As ViewResult
+
+			Dim model As New Helpers.Menu
+
+			model.sMenu = "<div class=""BoxFlex"" id="""" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<label>Regresar</label>"
+			model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcontratos"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Contratos</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexnotifica"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Notificaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexfacturas"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Facturación</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			model.sMenu &= "<div class=""BoxFlex"" id=""dvflexcobranza"" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<p>Cobranza</p>"
+			'model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexconsolida"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Consolidaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCierre"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Cierre mensual</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexautoriza"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Autorizaciones</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+			'model.sMenu &= "<div class=""BoxFlex"" id=""dvflexinformes"" >"
+			'model.sMenu &= "<div class=""BoxFlexShadow"">"
+			'model.sMenu &= "<p>Informes</p>"
+			''model.sMenu &= "<img src=""../Images/Contratos.png""/> </a>"
+			'model.sMenu &= "</div>"
+			'model.sMenu &= "</div>"
+
+
+			Return View(model)
+		End Function
+
+#End Region
+#End Region
+
+#Region "Get"
+		<HttpGet>
+		Public Function ObtenerContratos(ClienteID As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.OperacionesBAL()
+
+			Dim lista = New List(Of OperacionContrato)
+
+			resultado = consulta.ConsultaContratosBAL(ClienteID, lista)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				'jresult = Json(New With {Key .Results = lista}, JsonRequestBehavior.AllowGet)
+
+				jresult = New CustomJsonResult With {
+				  .Data = New With {Key .Results = lista},
+				  .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				}
+
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarContrato(ContratoId As Int32) As ActionResult
+
+			Dim model = New ModeloContrato()
+			Dim consulta = New FactorBAL.OperacionesBAL()
+			Dim contrato = New contratos
+			Dim resultado = consulta.ConsultaDetalleContratoBAL(ContratoId, contrato)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of contratos, ModeloContrato)()	 'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloContrato)(contrato)
+
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					Return PartialView(model)
+				End If
+			End If
+
+		End Function
+
+#End Region
+
+#Region "Post"
+
+
+#End Region
+
+	End Class
+End Namespace

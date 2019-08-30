@@ -1,0 +1,253 @@
+﻿Imports FactorEntidades
+Imports System.Data.Entity
+
+Public Class UsuariosWebDAL
+
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de Consulta"
+
+	Public Function ConsultaUsuariosWebDAL(ByRef lista As List(Of UsuarioWebEntidad), id As Integer, identidad As Integer) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+			Try
+
+				lista = context.usersregs.Where(Function(x) x.id = id And x.identidad = identidad).Select(Function(x) New UsuarioWebEntidad With {
+																											  .activo = x.activo,
+																											  .username = x.username,
+																											  .nombre = x.nombre,
+																											  .fec_alta = x.fec_alta,
+																											  .folio = x.folio}).ToList()
+				If lista IsNot Nothing Then
+					respuesta.Ok = True
+
+				End If
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+  End Function
+
+  Public Function PrintUsuariosWebDAL(id As Integer, identidad As Integer, ByRef lista As List(Of UsuarioWebEntidad)) As Result
+
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+      Try
+
+        If identidad = 1 Then
+
+          lista = (From A In context.usersregs
+            Join B In context.clientes
+            On A.id Equals B.cliente
+          Where A.id = id And A.identidad = identidad
+            Select New UsuarioWebEntidad With {
+              .id = A.id,
+              .identidad = A.identidad,
+              .identidadname = B.nombre,
+               .fec_alta = A.fec_alta,
+              .username = A.username,
+              .nombre = A.nombre,
+              .email = A.email,
+              .perfil = A.perfil
+              }).ToList()
+
+        End If
+
+        If identidad = 2 Then
+
+          lista = (From A In context.usersregs
+        Join B In context.proveedor
+        On A.id Equals B.deudor
+      Where A.id = id And A.identidad = identidad
+        Select New UsuarioWebEntidad With {
+          .id = A.id,
+          .identidad = A.identidad,
+          .identidadname = B.nombre,
+        .fec_alta = A.fec_alta,
+          .username = A.username,
+          .nombre = A.nombre,
+          .email = A.email,
+          .perfil = A.perfil
+          }).ToList()
+
+
+        End If
+
+
+
+        If lista IsNot Nothing Then
+          respuesta.Ok = True
+
+        End If
+
+
+      Catch e As Exception
+        respuesta.Detalle = e.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+
+  End Function
+
+	Public Function ConsultaDetalleUsuarioWebDAL(folio As Integer, ByRef userweb As usersregs) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				If folio = 0 Then
+					userweb = context.usersregs.Where(Function(x) x.fec_alta Is Nothing).OrderBy(Function(x) x.folio).FirstOrDefault()
+				Else
+					userweb = context.usersregs.Where(Function(x) x.folio = folio).SingleOrDefault()
+				End If
+
+
+				If userweb IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+	Public Function ConsultaDetalleBitacoraDAL(ByRef lista As List(Of BitacoraEntidad), username As String, fechainicio As Date, fechafin As Date) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+			Try
+
+				lista = (From A In context.webmonitor
+						Join B In context.usersregs
+						On A.folio Equals B.folio
+						Where B.username = username And (A.fecha >= fechainicio And A.fecha <= fechafin) And A.movto <> 1
+						Select New BitacoraEntidad With {
+							.fecha = A.fecha,
+							.action = A.action
+							}).ToList()
+
+				If lista IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+
+
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+#End Region
+
+#Region "Metodos transaccionales"
+
+	Public Function ActualizarUsuarioWebDAL(model As usersregs) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				Dim userWeb = context.usersregs.Where(Function(x) x.folio = model.folio).SingleOrDefault()
+				If userWeb IsNot Nothing Then
+
+					If model.identidad = 1 Then
+						If model.tipo = 1 Then
+							userWeb.perfil = 12
+						Else
+							userWeb.perfil = 11
+						End If
+					Else
+						userWeb.perfil = 13
+					End If
+
+					userWeb.fec_alta = Date.Today()
+					userWeb.id = model.id
+					userWeb.identidad = model.identidad
+					userWeb.nombre = model.nombre
+					userWeb.email = model.email
+					userWeb.tipo = model.tipo
+					userWeb.notas = model.notas
+					userWeb.activo = 1
+					userWeb.asignada = 1
+          userWeb.intentos = 0
+          userWeb.passphrase = ""
+          userWeb.tipo = 0
+          userWeb.imageId = 0
+          userWeb.void = True
+          context.SaveChanges()
+          respuesta.Ok = True
+        End If
+      Catch e As Exception
+        respuesta.Detalle = e.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+  Public Function GenerarPasswordDAL(folio As Integer, ca As String, pw As Integer) As Result
+    Dim respuesta = New Result(False)
+    Using context As New FactorContext
+
+      Try
+        Dim userweb = context.usersregs.Where(Function(x) x.folio = folio).SingleOrDefault()
+
+        If userweb IsNot Nothing Then
+
+          Dim consulta = New mail.sendMail()
+
+          Dim listTo As String()
+          Dim cc As String = ""
+          Dim subject As String = "Código temporal"
+          Dim body As String = ""
+
+          listTo = userweb.email.Split(";")   'Dim listNotifica = New List(Of notifica_e)
+          userweb.ca = ca
+          userweb.pw = pw
+          userweb.activo = True
+          userweb.void = True
+          userweb.intentos = 0
+          userweb.expires = Date.Now().AddDays(-1)
+          'userweb.expires.Value.AddDays(-1)
+
+          body = "<p>Buen Día.<br>"
+          body = body & "Código temporal : " + userweb.ca.ToString() + "<br>"
+          body = body & "___________________________________________________________________________________________ <br></p>"
+          body = body & "<p>Atentamente<br>"
+          body = body & "Banco Ve por Más, S.A. - Factoraje</p>"
+
+          consulta.enviarMail(listTo, subject, body, Net.Mail.MailPriority.Normal, Nothing, Nothing, Nothing)
+          context.SaveChanges()
+          respuesta.Ok = True
+
+        End If
+      Catch e As Exception
+        respuesta.Detalle = e.Message
+      End Try
+
+    End Using
+
+    Return respuesta
+  End Function
+
+#End Region
+End Class

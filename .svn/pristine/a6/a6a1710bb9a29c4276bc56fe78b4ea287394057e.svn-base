@@ -1,0 +1,276 @@
+﻿Imports System.Data.Entity.Infrastructure
+Imports System.Data.SqlClient
+Imports FactorEntidades
+Imports System.Data.Entity
+Imports System.Transactions
+
+
+Public Class ReportesDAL
+
+    Public Function vencimientoFondeoNafin(moneda As Integer, tipo As String, inicio As Date, fin As Date, ByRef model As sp_vencimientosnafin) As Result
+        Dim response = New Result(False)
+        Dim parameter = New List(Of SqlParameter)
+
+    Using context As New FactorContext
+
+      Try
+        parameter.Add(New SqlParameter("@moneda", moneda))
+        parameter.Add(New SqlParameter("@tipo", tipo))
+        parameter.Add(New SqlParameter("@inicio", inicio))
+        parameter.Add(New SqlParameter("@fin", fin))
+
+        model.list = context.Database.SqlQuery(Of sp_vencimientosnafin)("Exec [dbo].[sp_vencimientosnafin]" + "@moneda," + "@tipo," + "@inicio," + "@fin", parameter.ToArray()).ToList()
+
+        response.Ok = True
+      Catch ex As Exception
+        response.Detalle = ex.InnerException.InnerException.Message
+        response.Id_Out = 1
+      End Try
+
+    End Using
+
+    Return response
+  End Function
+
+  Public Function ConsultaDepositosDAL(fecha As String, idctabanco As Integer, ByRef model As List(Of ReporteDepositos)) As Result
+    Dim response = New Result(False)
+    Dim fecha1 As Date
+
+    fecha1 = Date.Parse(fecha)
+
+    Using context As New FactorContext
+
+      Try
+        Dim values = (From a In context.depositos
+                      Join b In context.cuentas On a.idctabanco Equals b.idctabanco
+             Where a.fecha = fecha1 And a.idctabanco = idctabanco
+             Select New ReporteDepositos With {.folio = a.folio, .contrato = a.contrato, .concepto = a.concepto, .entrada = a.entrada,
+                                               .capital = a.capital, .general = a.entrada - a.capital, .fecha = a.fecha, .moneda = b.moneda}).ToList()
+
+        For Each item As ReporteDepositos In values
+
+          Dim a As New ReporteDepositos
+
+          a.folio = item.folio
+          a.contrato = item.contrato
+          a.concepto = item.concepto
+          a.entrada = item.entrada
+          a.capital = item.capital
+          a.general = item.general
+          a.fecha = item.fecha
+
+          If item.moneda = 1 Then
+            a.divisa = "MXN"
+          Else
+            a.divisa = "DLLS"
+          End If
+
+          model.Add(a)
+
+        Next
+
+        response.Ok = True
+
+      Catch ex As Exception
+        response.Detalle = ex.Message
+      End Try
+
+    End Using
+
+    Return response
+  End Function
+
+  Public Function ConsultaSalidasDAL(fecha1 As String, idctabanco As Integer, ByRef model As List(Of ReporteDepositos)) As Result
+    Dim response = New Result(False)
+    Dim fecha As Date
+
+    fecha = Date.Parse(fecha1)
+
+    Using context As New FactorContext
+
+      Try
+
+        Dim values = (From a In context.movcuentas
+                      Join b In context.cuentas On a.idctabanco Equals b.idctabanco
+                      Where a.fecha = fecha And a.idctabanco = idctabanco And a.salida > 0
+                      Select New ReporteDepositos With {.moneda = b.moneda, .folio = a.folio, .contrato = a.contrato, .concepto = a.concepto, .salida = a.salida}).ToList()
+
+        For Each item As ReporteDepositos In values
+
+          Dim a = New ReporteDepositos
+
+          If item.moneda = 1 Then
+            a.divisa = "MXN"
+          Else
+            a.divisa = "DLLS"
+          End If
+
+          a.folio = item.folio
+          a.contrato = item.contrato
+          a.concepto = item.concepto
+          a.salida = item.salida
+
+          model.Add(a)
+
+        Next
+
+        response.Ok = True
+      Catch ex As Exception
+        response.Detalle = ex.Message
+      End Try
+    End Using
+
+    Return response
+  End Function
+
+  Public Function ConsultaReportesDAL(ByRef model As List(Of ReporteEntidad)) As Result
+
+    Dim response = New Result(False)
+    Using context As New FactorContext
+
+      Try
+
+        Dim values = (From a In context.reporte
+                      Order By a.modulo
+                      Select New ReporteEntidad With {.idreporte = a.Idreporte, .modulo = a.modulo, .descripcion = a.descripcion, .url = a.url}).ToList()
+
+        For Each item As ReporteEntidad In values
+
+          Dim a = New ReporteEntidad
+
+          a.idreporte = item.idreporte
+          a.modulo = item.modulo
+          a.descripcion = item.descripcion
+          a.url = item.url
+          model.Add(a)
+
+        Next
+
+        response.Ok = True
+      Catch ex As Exception
+        response.Detalle = ex.Message
+      End Try
+    End Using
+
+    Return response
+  End Function
+
+  Public Function ReportecobranzaDAL(fecha As String, contrato As Integer, ByRef model As List(Of CobranzaEntidad)) As Result
+
+
+    Dim response = New Result(False)
+
+    Dim dt = Convert.ToDateTime(fecha)
+    Dim fecha1 = String.Format("{0:yyyy-MM-dd}", dt)
+
+    ' Dim fecha1 As Date
+
+    '  fecha1 = DateTime.Parse(fecha1str)
+
+    'fecha1 = Date.Parse(fecha, "yyyyMMdd")
+    Using context As New FactorContext
+      Try
+
+        Dim parameters = New List(Of SqlParameter)
+        parameters.Add(New SqlParameter("@contrato", contrato))
+        parameters.Add(New SqlParameter("@fecha", fecha1))
+
+        Dim previo = context.Database.SqlQuery(Of CobranzaEntidad)("Exec SP_InformaCobros @fecha,@Contrato",
+                           parameters.ToArray()).ToList()
+
+        For Each item In previo
+
+
+          Dim a = New CobranzaEntidad
+
+          a.contrato = item.contrato
+          a.fecha = item.fecha
+          a.cesion = item.cesion
+          a.docto = item.docto
+          a.importe = item.importe
+          a.descto = item.descto
+          a.neto = item.neto
+          a.bonifica = item.bonifica
+          a.cobranza = item.cobranza
+          a.safectado = item.safectado
+          a.scv = item.scv
+          a.Nombre = item.Nombre
+          a.nombredeudor = item.nombredeudor
+          a.deudor = item.deudor
+          a.porc_anti = Math.Round(item.porc_anti / 100, 2)
+          a.descrip = item.descrip
+          a.monedastr = item.monedastr
+
+          model.Add(a)
+
+        Next
+
+        response.Ok = True
+      Catch ex As Exception
+        response.Detalle = ex.Message
+      End Try
+    End Using
+
+    Return response
+  End Function
+
+  Public Function ReporteaforoDAL(fecha As String, contrato As Integer, ByRef model As List(Of CobranzaEntidad)) As Result
+
+
+    Dim response = New Result(False)
+
+    Dim dt = Convert.ToDateTime(fecha)
+    Dim fecha1 = String.Format("{0:yyyy-MM-dd}", dt)
+
+    ' Dim fecha1 As Date
+
+    '  fecha1 = DateTime.Parse(fecha1str)
+
+    'fecha1 = Date.Parse(fecha, "yyyyMMdd")
+    Using context As New FactorContext
+      Try
+
+        Dim parameters = New List(Of SqlParameter)
+        parameters.Add(New SqlParameter("@contrato", contrato))
+        parameters.Add(New SqlParameter("@fecha", fecha1))
+
+        Dim previo = context.Database.SqlQuery(Of CobranzaEntidad)("Exec SP_Reporteaforo @fecha,@Contrato",
+                           parameters.ToArray()).ToList()
+
+        For Each item In previo
+          Dim a = New CobranzaEntidad
+
+          a.contrato = item.contrato
+          a.fecha = item.fecha
+          a.cobrado = item.cobrado
+          a.aforo = item.aforo
+          a.descto = item.descto
+          a.bonifica = item.bonifica
+          a.pago = item.pago
+          a.cobranza = item.cobranza
+          a.Nombre = item.Nombre
+          a.nombredeudor = item.nombredeudor
+          a.deudor = item.deudor
+          a.descrip = item.descrip
+          a.monedastr = item.monedastr
+
+          model.Add(a)
+
+        Next
+
+        If previo.Count = 0 Then
+          response.Ok = False
+        Else
+          response.Ok = True
+        End If
+
+      Catch ex As Exception
+        response.Detalle = ex.Message
+      End Try
+    End Using
+
+    Return response
+  End Function
+
+
+End Class

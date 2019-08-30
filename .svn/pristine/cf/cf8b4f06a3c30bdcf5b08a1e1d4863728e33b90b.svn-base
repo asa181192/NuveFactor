@@ -1,0 +1,239 @@
+﻿Imports FactorEntidades
+Imports System.Data.SqlClient
+
+Public Class ContratosDAL
+#Region "Constructor"
+
+#End Region
+
+#Region "Metodos de consulta"
+
+	Public Function ConsultaContratosDAL(ClienteId As Integer, ByRef model As List(Of OperacionContrato)) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+			Try
+
+				model = (From A In context.contratos
+						 Join C In context.producto
+						 On A.producto Equals C.id
+						 Where A.cliente = ClienteId And A.historia = False
+							Select New OperacionContrato With {
+							.Contratos = New ContratosEntidad With {
+											 .altalinea = A.altalinea,
+											 .contrato = A.contrato,
+											 .linea = A.linea,
+											 .moneda = A.moneda,
+											 .producto = A.producto,
+											 .vencelinea = A.vencelinea,
+											 .cliente = ClienteId,
+											 .bloqueado = A.bloqueado
+										},
+				.Producto = New ProductoEntidad With {
+								.id = C.id,
+				.nombre = C.producto1
+							}
+						}).ToList()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Function ConsultaDetalleContratoDAL(clienteid As Integer, ContratoId As Int32, ByRef model As ContratoCliente) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+				model.contrato = (From A In context.contratos
+						Where A.contrato = ContratoId).SingleOrDefault()
+				model.clientes = (From B In context.clientes
+								 Where B.cliente = clienteid).SingleOrDefault()
+				If model.contrato IsNot Nothing Then
+					respuesta.Ok = True
+				End If
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+				respuesta.Id_Out = 1
+			End Try
+
+		End Using
+		Return respuesta
+	End Function
+
+	Public Function ConsultaClienteContratoDAL(ClienteId As Integer, ByRef model As OperacionContrato) As Result
+
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+			Try
+				model = (From A In context.clientes
+						 Where A.cliente = ClienteId
+						 Select New OperacionContrato With {
+						.Clientes = New ClienteEntidad With {
+										.cliente = A.cliente,
+										.nombre = A.nombre,
+										.pfisica = A.pfisica,
+										.actempres = A.actempres,
+										.promotor = A.promotor,
+										.fenlace = A.fenlace,
+										.telefono = A.telefono,
+										.puesto = A.puesto,
+										.fec_alta = A.fec_alta
+									}
+						}).SingleOrDefault()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+		End Using
+		Return respuesta
+	End Function
+
+#End Region
+
+#Region "Metodos Transaccionales"
+
+	Public Function AltaContratoDAL(model As contratos) As Result
+
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+
+				model.registro_cnto = Date.Today()
+				model.griesgo = 0
+				model.cnorma = 0
+				model.codigo = context.promotor.Where(Function(x) x.promotor1 = model.promotor).Select(Function(x) x.codigo).SingleOrDefault()
+				model.cesiones = 0
+				model.cobranzas = 0
+				model.documentos = 0
+				model.historia = False
+				model.promesa = 0
+				model.utilizado = 0D
+				model.fira = False
+				model.pgeseguro = 0D
+				model.regla = 0
+				model.tipo_tasa = 0
+				model.tasa_opera = 0D
+				model.tasa_mora = 0D
+				model.tasa_calc = 0D
+				model.void = False
+				model.reservado = False
+				model.digitov = 0D
+				model.garantnafin = False
+				model.fec_update = Date.Today()
+				model.histprod = 0
+				model.gliquida = False
+				model.dexigible = 0
+				model.idipoliza = 0
+
+				context.contratos.Add(model)
+				context.SaveChanges()
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+
+	End Function
+
+	Public Function ActualizarContratoDAL(model As contratos) As Result
+		Dim respuesta = New Result(False)
+		Using context As New FactorContext
+
+			Try
+
+				Dim contrato = context.contratos.Where(Function(x) x.contrato = model.contrato).SingleOrDefault()
+
+				If contrato IsNot Nothing Then
+					contrato.sucursal = model.sucursal
+					contrato.codigo = context.promotor.Where(Function(x) x.promotor1 = model.promotor).Select(Function(x) x.codigo).SingleOrDefault()
+					contrato.promotor = model.promotor
+					contrato.infolinea = model.infolinea
+					contrato.bloqueado = model.bloqueado
+					contrato.edoiva = model.edoiva
+					contrato.altalinea = model.altalinea
+					contrato.vencelinea = model.vencelinea
+					contrato.fec_alta = model.fec_alta
+					contrato.fec_vence = model.fec_vence
+					contrato.linea = model.linea
+					contrato.porc_anti = model.porc_anti
+					contrato.tasa_ord = model.tasa_ord
+					contrato.tasa_ext = model.tasa_ext
+					contrato.com_cont = model.com_cont
+					contrato.hon_admon = model.hon_admon
+					contrato.com_prom = model.com_prom
+					contrato.tipoindica = model.tipoindica
+					contrato.plazoopera = model.plazoopera
+					contrato.dispercom = model.dispercom
+					contrato.vigencia = model.vigencia
+					contrato.dispersion = model.dispersion
+					contrato.interes = model.interes
+					contrato.cargo = model.cargo
+					contrato.honorario = model.honorario
+					contrato.honocargo = model.honocargo
+					contrato.tipoesq = model.tipoesq
+					contrato.admoncart = model.admoncart
+					contrato.ctoobrapub = model.ctoobrapub
+					contrato.mancobranza = model.mancobranza
+					contrato.cve_garant = model.cve_garant
+					contrato.endoso = model.endoso
+					contrato.cobertura = model.cobertura
+					contrato.idmapfre = model.idmapfre
+					contrato.plazo = model.plazo
+					contrato.seguro = model.seguro
+					contrato.notas = model.notas
+					context.SaveChanges()
+				End If
+				respuesta.Ok = True
+
+			Catch e As Exception
+				respuesta.Detalle = e.InnerException.InnerException.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+	Public Function CancelarContratoDAL(contrato As Integer) As Result
+		Dim respuesta = New Result(False)
+
+		Using context As New FactorContext
+
+			Try
+				Dim parameters = New List(Of SqlParameter)
+				parameters.Add(New SqlParameter("@Contrato", contrato))
+				Dim value = context.Database.SqlQuery(Of String)("Exec [dbo].[SP_Bajacontrato] " +
+																 " @Contrato", parameters.ToArray()).SingleOrDefault()
+
+				If value = "" Then
+					respuesta.Mensaje = String.Concat("Contrato :", contrato.ToString(), " cancelado existosamente")
+				Else
+					respuesta.Mensaje = value
+				End If
+
+				respuesta.Ok = True
+			Catch e As Exception
+				respuesta.Detalle = e.Message
+			End Try
+
+		End Using
+
+		Return respuesta
+	End Function
+
+
+#End Region
+End Class

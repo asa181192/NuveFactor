@@ -1,14 +1,17 @@
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorBAL.dll.config
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorBAL.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorBAL.pdb
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorBAL.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorDAL.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorEntidades.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\EntityFramework.dll
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\NPOI.dll
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorDAL.pdb
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorDAL.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorEntidades.pdb
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\FactorEntidades.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\EntityFramework.xml
+C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\bin\Debug\NPOI.xml
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Debug\FactorBAL.vbprojResolveAssemblyReference.cache
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Debug\FactorBAL.Resources.resources
 C:\Users\alfredo.santiago\Documents\nuve\FactorBAL\obj\Debug\FactorBAL.vbproj.GenerateResource.Cache

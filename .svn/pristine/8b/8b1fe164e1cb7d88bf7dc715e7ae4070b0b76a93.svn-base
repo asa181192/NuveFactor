@@ -1,0 +1,1393 @@
+﻿Imports FactorEntidades
+Imports Nelibur.ObjectMapper
+Imports nuve.Models
+Imports Microsoft.Reporting.WebForms
+Imports System.Reflection
+
+Namespace nuve
+	<CustomAuthorize(Permisos.Acciones.CATALOGOS)>
+	Public Class CatalogosController
+		Inherits Controller
+
+#Region "Views"	'*****VIEW*****
+
+#Region "Sucursales"
+		<HttpGet>
+		Function Sucursales() As ViewResult
+			Dim model = New ModeloSucursal()
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Paridad Cambiaria"
+
+		<HttpGet>
+		Function paridadCambiaria() As ViewResult
+			Dim model = New ModeloPar()
+			Return View(model)
+		End Function
+
+#End Region
+
+#Region "Proveedores"
+		<HttpGet>
+		Function Proveedores() As ViewResult
+
+			Dim model = New ModeloProveedor()
+			model.CargaControles()
+
+			Return View(model)
+		End Function
+
+#End Region
+
+#Region "Compradores"
+		<HttpGet>
+		Function Compradores() As ViewResult
+			Dim model = New ModeloComprador()
+			model.CargaControles()
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Estados Financieros"
+
+		<HttpGet>
+		Function Financieros() As ViewResult
+			Dim model = New ModeloFinanciero()
+			Return View(model)
+		End Function
+
+#End Region
+
+#Region "Clientes"
+		<HttpGet>
+		Function Clientes() As ViewResult
+			Dim model = New ModeloClientes()
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Promotor"
+		<HttpGet>
+		Function Promotores() As ViewResult
+			Dim model = New ModeloPromotor()
+			model.CargaControles()
+			Return View(model)
+		End Function
+#End Region
+
+#Region "Control de Riesgo"
+
+		<HttpGet>
+		Public Function ControlRiesgo(clienteId As Int32, nombre As String) As ActionResult
+
+			Dim model = New ModeloControlRiesgo()
+			model.propCliente = New ModeloClientes()
+			model.propCliente.cliente = clienteId
+			model.propCliente.nombre = nombre
+			Return View(model)
+
+		End Function
+
+#End Region
+
+#Region "Apoderado"
+		<HttpGet>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_CLIENTES)>
+		Public Function Apoderado(clienteId As Int32) As ActionResult
+
+			Dim model = New ModeloApoderado()
+			model.cliente = clienteId
+			Return View(model)
+
+		End Function
+#End Region
+
+#Region "Menu"
+
+		<HttpGet>
+		Function Index() As ActionResult
+
+			Dim model As New Helpers.Menu
+			model.sMenu = "<div class=""BoxFlex"" id="""" >"
+			model.sMenu &= "<div class=""BoxFlexShadow"">"
+			model.sMenu &= "<label>Regresar</label>"
+			model.sMenu &= "<a href=""../Home/Welcome""> <img src=""../Images/regresar_gris.png""/> </a>"
+			model.sMenu &= "</div>"
+			model.sMenu &= "</div>"
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_INDICADORESFINANCIEROS) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexFinancieros"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Indicadores Financieros</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexParidad"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Paridad Cambiaria</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_SUCURSALES) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexSucursales"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Sucursales</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_CLIENTES) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexClientes"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Clientes</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_COMPRADORES) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexCompradores"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Compradores</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_PROVEEDORES) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexProveedores"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Proveedores</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+			If TryCast(Session("Permisos"), List(Of Integer)).Contains(Permisos.Acciones.CATALOGOS_PROMOTORES) Then
+				model.sMenu &= "<div class=""BoxFlex"" id=""dvflexPromotores"" >"
+				model.sMenu &= "<div class=""BoxFlexShadow"">"
+				model.sMenu &= "<p>Promotores</p>"
+				model.sMenu &= "</div>"
+				model.sMenu &= "</div>"
+			End If
+
+
+
+			Return View(model)
+		End Function
+
+#End Region
+
+#End Region
+
+#Region "Get" '*****GET*****
+
+#Region "Paridad Cambiaria"
+
+		'Obtiene el total de registros
+		<HttpGet>
+		Public Function obtenerListaParidad(fechaMes As String, fechaAnio As String) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaPardiad = New List(Of ParidadEntidad)
+
+			resultado = consulta.ConsultaParidadBAL(fechaMes, fechaAnio, listaPardiad)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaPardiad}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		'Detalle de la paridad '
+		<HttpGet>
+		Public Function GuardarParidad(fecha As String) As ActionResult
+
+			Dim model = New ModeloPar
+			Dim consulta = New FactorBAL.Manager()
+			Dim paridad = New paridad
+
+			Dim resultado = consulta.ConsultaParidadDetalleBAL(fecha, paridad)
+
+			TinyMapper.Bind(Of paridad, ModeloPar)()  'Mapeo de propiedad para modelo.
+			model = TinyMapper.Map(Of ModeloPar)(paridad)
+
+			Return PartialView(model)
+		End Function
+
+#End Region
+
+#Region "Proveedores"
+
+		<HttpGet()>
+		Public Function ObtenerListaProveedores(sucursal As Int16) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+			Dim listaProveedor = New List(Of ProveedorEntidad)
+
+			resultado = consulta.ConsultaProveedorBAL(sucursal, listaProveedor)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaProveedor}, JsonRequestBehavior.AllowGet)
+				jresult.MaxJsonLength = 500000000
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarProveedor(deudor As Int32) As ActionResult
+
+			Dim model = New ModeloProveedor()
+			Dim consulta = New FactorBAL.Manager()
+			Dim proveedor = New proveedor
+			Dim resultado = consulta.ConsultaDetalleProveedorBAL(deudor, proveedor)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of proveedor, ModeloProveedor)()  'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloProveedor)(proveedor)
+				model.CargaControles()
+
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					Return PartialView(model)
+				End If
+			End If
+
+		End Function
+
+#End Region
+
+#Region "Compradores"
+		<HttpGet()>
+		Public Function ObtenerListaCompradores(sucursal As Int16) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaComprador = New List(Of ProveedorEntidad)
+
+			resultado = consulta.ConsultaCompradorBAL(sucursal, listaComprador)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaComprador}, JsonRequestBehavior.AllowGet)
+				jresult.MaxJsonLength = 500000000
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarComprador(deudor As Int32) As ActionResult
+
+			Dim model = New ModeloComprador()
+			Dim consulta = New FactorBAL.Manager()
+			Dim comprador = New comprador
+			Dim resultado = consulta.ConsultaDetalleCompradorBAL(deudor, comprador)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of comprador, ModeloProveedor)()  'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloComprador)(comprador)
+				model.CargaControles()
+
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					Return PartialView(model)
+				End If
+			End If
+
+
+		End Function
+#End Region
+
+#Region "Indicadores Financieros"
+		<HttpGet>
+		Public Function ObtenerListaFinancieros(fechaMes As String, fechaAnio As String) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaPardiad = New List(Of FinancieroEntidad)
+
+			resultado = consulta.ConsultaIndicadoresBAL(fechaMes, fechaAnio, listaPardiad)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaPardiad}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarFinanciero(fecha As String) As ActionResult
+
+			Dim model = New ModeloFinanciero
+			Dim consulta = New FactorBAL.Manager()
+			Dim indicador = New indicadores
+
+			Dim resultado = consulta.ConsultaIndicadorDetalleBAL(fecha, indicador)
+
+			TinyMapper.Bind(Of indicadores, ModeloFinanciero)()	'Mapeo de propiedad para modelo.
+			model = TinyMapper.Map(Of ModeloFinanciero)(indicador)
+
+			Return PartialView(model)
+		End Function
+
+#End Region
+
+#Region "Sucursal"
+		<HttpGet>
+		Public Function ObtenerListaSucursal() As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaSucursal = New List(Of SucursalEntidad)
+
+			resultado = consulta.ConsultaSucursalBAL(listaSucursal)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaSucursal}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarSucursal(suc As Int32) As ActionResult
+
+			Dim model = New ModeloSucursal()
+			Dim consulta = New FactorBAL.Manager()
+			Dim sucursal = New sucursal
+
+			Dim resultado = consulta.ConsultaDetalleSucursalBAL(suc, sucursal)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of sucursal, ModeloSucursal)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloSucursal)(sucursal)
+
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					Return PartialView(model)
+				End If
+			End If
+
+
+		End Function
+
+#End Region
+
+#Region "Clientes"
+		<HttpGet>
+		Public Function ObtenerListaClientes() As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaTipo = New List(Of ClienteEntidad)
+
+			resultado = consulta.ConsultaClienteBAL(listaTipo)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaTipo}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarCliente(clienteId As Int32) As ActionResult
+
+			Dim model = New ModeloClientes()
+			Dim consulta = New FactorBAL.Manager()
+			Dim cliente = New clientes
+			Dim resultado = consulta.ConsultaDetalleClienteBAL(clienteId, cliente)
+
+			'If Request.UrlReferrer IsNot Nothing Then
+			'	If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+			'		ViewBag.Layout = True
+			'	End If
+			'End If
+			ViewBag.Layout = True
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of clientes, ModeloClientes)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloClientes)(cliente)
+				model.CargaControles()
+
+				Return PartialView(model) 'Modelo para modificar registro
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					Return PartialView(model) 'Modelo para alta
+				End If
+			End If
+
+
+		End Function
+#End Region
+
+#Region "Promotores"
+
+		<HttpGet>
+		Public Function ObtenerListaPromotor(sucursal As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim listaPromotor = New List(Of PromotorEntidad)
+
+			resultado = consulta.ConsultaListaPromotorBAL(sucursal, listaPromotor)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = listaPromotor}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion !! "
+				jresult = Json(New With {Key .Mensaje = resultado.Mensaje + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarPromotor(clave As Int32) As ActionResult
+
+			Dim model = New ModeloPromotor()
+			Dim consulta = New FactorBAL.Manager()
+			Dim promotor = New promotor
+			Dim resultado = consulta.ConsultaDetallePromotorBAL(clave, promotor)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of promotor, ModeloPromotor)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloPromotor)(promotor)
+				model.CargaControles()
+				Return PartialView(model)
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					Return PartialView(model)
+				End If
+			End If
+
+
+		End Function
+
+#End Region
+
+#Region "Control de Riesgo"
+
+		<HttpGet>
+		Public Function obtenerListaRiesgo(clienteId As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim manager = New FactorBAL.Manager()
+			Dim riesgo = New ControlRiesgo_Cliente
+
+			resultado = manager.ConsultaControlRiesgoBAL(clienteId, riesgo)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = New CustomJsonResult With {
+				  .Data = New With {Key .Results = riesgo.controlRiesgo.ToList(), .cliente = riesgo.cliente},
+				  .JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				}
+
+			Else
+				jresult = Json(New With {Key .Mensaje = resultado.Detalle + " !!"}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarAsociarLineas(clienteId As Integer) As ActionResult
+
+			Dim resultado
+			Dim manager = New FactorBAL.Manager()
+			Dim model = New ModeloControlRiesgo()
+			Dim entidad = New ControlRiesgo()
+
+			resultado = manager.consultaLineasBAL(clienteId, entidad)
+
+			TinyMapper.Bind(Of ControlRiesgo, ModeloControlRiesgo)()  'Mapeo de propiedad para modelo.
+			model = TinyMapper.Map(Of ModeloControlRiesgo)(entidad)
+			model.propCliente = New ModeloClientes()
+			model.propCliente.cliente = clienteId
+			model.RelacionLineas = entidad.dropdown.Select(Function(x) New SelectListItem With {.Value = x.claveStr, .Text = x.nombre}).ToList()
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				Return PartialView(model)
+			Else
+				Return PartialView()
+			End If
+
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarGarantiaLiquida(idRec As String) As ActionResult
+
+			Dim resultado
+			Dim manager = New FactorBAL.Manager()
+			Dim model = New ModeloControlRiesgo()
+			Dim entidad = New CtrlRiesgo
+
+			resultado = manager.ConsultaGarantiaLiquidaBAL(idRec, entidad)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of linea, ModeloControlRiesgo)()  'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloControlRiesgo)(entidad)
+				Return PartialView(model)
+			Else
+				Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+			End If
+
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarClienteLineas(clienteId As Integer) As ActionResult
+
+			Dim model = New ModeloControlRiesgo
+			model.propCliente = New ModeloClientes
+			model.propCliente.cliente = clienteId
+			Return PartialView(model)
+
+		End Function
+
+#End Region
+
+#Region "Apoderado"
+		<HttpGet>
+		Public Function ObtenerApoderados(cliente As Integer) As ActionResult
+
+			Dim jresult
+			Dim resultado
+			Dim consulta = New FactorBAL.Manager()
+
+			Dim lista = New List(Of ApoderadoEntidad)
+
+			resultado = consulta.ConsultaApoderadoBAL(cliente, lista)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				jresult = Json(New With {Key .Results = lista}, JsonRequestBehavior.AllowGet)
+			Else
+				resultado.Mensaje = "Ocurrio un error al consultar la informacion"
+				jresult = Json(New With {Key .Mensaje = "ERR!!" + resultado.Mensaje + "!!" + resultado.Detalle}, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+
+		<HttpGet>
+		Public Function GuardarApoderado(clienteId As Int32) As ActionResult
+
+			Dim model = New ModeloApoderado()
+			Dim consulta = New FactorBAL.Manager()
+			Dim apoderado = New apoderados
+			Dim resultado = consulta.ConsultaDetalleApoderadoBAL(clienteId, apoderado)
+
+			If Request.UrlReferrer IsNot Nothing Then
+				If Request.UrlReferrer.AbsolutePath.Contains("BusquedaGlobal") Then
+					ViewBag.Layout = True
+				End If
+			End If
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				TinyMapper.Bind(Of apoderados, ModeloApoderado)()	'Mapeo de propiedad para modelo.
+				model = TinyMapper.Map(Of ModeloApoderado)(apoderado)
+				model.CargaControles()
+
+				Return PartialView(model) 'Modelo para modificar registro
+			Else
+				If resultado.Id_Out = 1 Then
+					Return PartialView("~/Views/Shared/_ErrorPopUp.vbhtml")
+				Else
+					model.CargaControles()
+					model.cliente = clienteId
+					Return PartialView(model) 'Modelo para alta
+				End If
+			End If
+
+
+		End Function
+#End Region
+
+#End Region
+
+#Region "Post"	'*****POST*****
+
+#Region "Paridad Cambiaria"
+		'Actualiza Parida'
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarParidad(modelP As ModeloPar) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+
+			TinyMapper.Bind(Of ModeloPar, paridad)() 'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of paridad)(modelP)
+
+			resultado = bs.ActualizarParidad(Session("USERID"), model)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+											"Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+
+			End If
+
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+
+		End Function
+#End Region
+
+#Region "Proveedor"
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarProveedor(proveedor As ModeloProveedor) As ActionResult
+			Dim resultado
+			If ModelState.IsValid Then
+
+				Dim bs = New FactorBAL.Manager()
+
+				TinyMapper.Bind(Of ModeloProveedor, proveedor)() 'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of proveedor)(proveedor)
+				FieldsReflect.initialize(model)	' inicializamos todos los campos string a blanco 
+
+				If proveedor.deudor > 0 Then
+					resultado = bs.ActualizarProveedor(model)
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+												  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				Else
+					resultado = bs.AltaProveedor(model)
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.tipo, .titulo = ""})
+			Else
+				resultado = New Result(False)
+
+				For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+					If ModelState.Values(item).Errors.Count > 0 Then
+						Dim val = item
+						resultado.Mensaje = resultado.Mensaje + "<br/> - " + proveedor.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																					GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																							Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																									FirstOrDefault().Name
+					End If
+				Next
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+			End If
+
+
+
+		End Function
+#End Region
+
+#Region "Comprador"
+
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarComprador(comprador As ModeloComprador) As ActionResult
+
+			Dim resultado
+
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.Manager()
+
+				TinyMapper.Bind(Of ModeloComprador, comprador)() 'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of comprador)(comprador)
+
+				FieldsReflect.initialize(model)
+
+				If comprador.deudor > 0 Then
+					resultado = bs.ActualizarComprador(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+												  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				Else
+					'Inicializa todas las variables que no tengan valor 
+					resultado = bs.Altacomprador(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje})
+			Else
+				resultado = New Result(False)
+
+				For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+					If ModelState.Values(item).Errors.Count > 0 Then
+						Dim val = item
+						resultado.Mensaje = resultado.Mensaje + "<br/> - " + comprador.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																					GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																							Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																									FirstOrDefault().Name
+					End If
+				Next
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+			End If
+
+
+		End Function
+#End Region
+
+#Region "Indicadores Financieros"
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarFinanciero(modelF As ModeloFinanciero) As ActionResult
+			Dim jresult
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+
+			TinyMapper.Bind(Of ModeloFinanciero, indicadores)()	'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of indicadores)(modelF)
+
+			resultado = bs.ActualizarIndicador(model)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+			jresult = Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+
+			Return jresult
+
+		End Function
+#End Region
+
+#Region "Sucursal"
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarSucursal(sucursal As ModeloSucursal) As ActionResult
+
+			Dim resultado
+
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.Manager()
+
+				TinyMapper.Bind(Of ModeloSucursal, sucursal)()	'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of sucursal)(sucursal)
+
+				FieldsReflect.initialize(model)	'Inicializa todas las variables que no tengan valor 
+
+
+				If sucursal.sucursal1 > 0 Then
+					resultado = bs.ActualizarSucursal(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = "Ocurrio un error al tratar de actualizar el registro!! "
+					End If
+
+				Else
+
+					resultado = bs.AltaSucursal(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = "Ocurrio un error al tratar de guardar el registro!! "
+					End If
+
+				End If
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			Else
+
+			End If
+			resultado = New Result(False)
+			For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+				If ModelState.Values(item).Errors.Count > 0 Then
+					Dim val = item
+					resultado.Mensaje = resultado.Mensaje + "<br/> - " + sucursal.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																				GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																						Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																								FirstOrDefault().Name
+				End If
+			Next
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+		End Function
+#End Region
+
+#Region "Clientes"
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarCliente(objetoModelo As ModeloClientes) As ActionResult
+			Dim resultado
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.Manager()
+				TinyMapper.Bind(Of ModeloClientes, clientes)()	'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of clientes)(objetoModelo)
+				FieldsReflect.initialize(model)
+
+				If model.cliente > 0 Then
+					resultado = bs.ActualizarCliente(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				Else
+
+					resultado = bs.AltaCliente(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			Else
+				resultado = New Result(False)
+				For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+					If ModelState.Values(item).Errors.Count > 0 Then
+						Dim val = item
+						resultado.Mensaje = resultado.Mensaje + "<br/> - " + objetoModelo.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																					GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																							Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																									FirstOrDefault().Name
+					End If
+				Next
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+			End If
+		End Function
+
+
+#End Region
+
+#Region "Promotor"
+		<HttpPost>
+		<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarPromotor(promotor As ModeloPromotor) As ActionResult
+
+			Dim resultado
+
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.Manager()
+
+				FieldsReflect.initialize(promotor)
+
+				TinyMapper.Bind(Of ModeloPromotor, promotor)()	'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of promotor)(promotor)
+
+				If promotor.promotor1 > 0 Then
+					resultado = bs.ActualizarPromotor(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				Else
+
+					resultado = bs.AltaPromotor(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo, .titulo = ""})
+			Else
+				resultado = New Result(False)
+
+				For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+					If ModelState.Values(item).Errors.Count > 0 Then
+						Dim val = item
+						resultado.Mensaje = resultado.Mensaje + "<br/> - " + promotor.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																					GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																							Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																									FirstOrDefault().Name
+					End If
+				Next
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+			End If
+
+
+		End Function
+#End Region
+
+#Region "Control Riesgo"
+
+		<HttpPost>
+		Public Function GuardarControlCliente(modeloRiesgo As ModeloControlRiesgo) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+
+			TinyMapper.Bind(Of ModeloClientes, clientes)() 'Mapeo de propiedades Modelo a DTO's
+			Dim model = TinyMapper.Map(Of clientes)(modeloRiesgo.propCliente)
+
+			resultado = bs.ActualizarControlRiesgoBAL(model)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.Mensaje = "Informacion Actualizada"
+				resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+		End Function
+
+		<HttpPost>
+		Public Function GuardarAsociarLineas(model As ModeloControlRiesgo) As ActionResult
+
+			Dim resultado = New Result
+			Dim bs = New FactorBAL.Manager()
+
+			'Arreglar esto para cuando no haya registros daba nulo 
+			If model.claves.Length > 1 Then
+
+
+				'Mapeo de propiedades Modelo a DTO's
+				TinyMapper.Bind(Of ModeloControlRiesgo, ControlRiesgo)()
+				Dim entidad = TinyMapper.Map(Of ControlRiesgo)(model)
+
+				'mapeo Manual de propeidades debido al bug de Tiny Mapper
+				entidad.cliente = model.propCliente.cliente
+
+				resultado = bs.ActualizarAsociarLineasBAL(entidad)
+
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Guardado"
+					resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+				Else
+					resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+									  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+				End If
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			Else
+				resultado.Ok = False
+				resultado.Detalle = "Se debe seleccionar mas de una linea. "
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+									"Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			End If
+
+
+
+		End Function
+
+		<HttpPost>
+		Public Function DesasociarLineas(clienteId As Integer) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+			resultado = bs.DesasociarLineasBAL(clienteId)
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.Mensaje = "Lineas desasociadas"
+				resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+		End Function
+
+		<HttpPost>
+		Public Function GuardarGarantiaLiquida(model As ModeloControlRiesgo) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+
+			'Mapeo de propiedades Modelo a DTO's
+			TinyMapper.Bind(Of ModeloControlRiesgo, linea)()
+			Dim entidad = TinyMapper.Map(Of linea)(model)
+			resultado = bs.ActualizarGarantiaLiquidaBAL(entidad)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.Mensaje = "Informacion Actualizada"
+				resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+
+		End Function
+
+		<HttpPost>
+		Public Function CancelarLinea(idRec As String) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+			resultado = bs.CancelarLineaBAL(idRec)
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.Mensaje = "Linea Cancelada"
+				resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de cancelar la linea !! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+		End Function
+
+		<HttpPost>
+		Public Function GuardarClienteLineas(model As ModeloControlRiesgo) As ActionResult
+
+			Dim resultado = New Result
+			Dim bs = New FactorBAL.Manager()
+
+			'Arreglar esto para cuando no haya registros daba nulo 
+			If ModelState.IsValid Then
+
+				resultado = bs.GuardarClienteLinea(model.propCliente.cliente, model.propCliente.clientet24)
+
+				If resultado.Ok And resultado IsNot Nothing Then
+					resultado.Mensaje = "Registro Guardado"
+					resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+				Else
+					If resultado.Id_Out <> 1 Then
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+													  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					Else
+						resultado.Mensaje = String.Format(resultado.Detalle)
+					End If
+
+				End If
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			Else
+				resultado.Ok = False
+				resultado.Detalle = "Se debe seleccionar mas de una linea. "
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar la informacion !! {0}" +
+													  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			End If
+
+		End Function
+
+		<HttpGet>
+		Public Function ReporteCtrlRiesgo(idcliente As Integer, nombre As String) As ActionResult
+			Dim localReport = New Microsoft.Reporting.WebForms.LocalReport()
+
+			Dim resultado = New Result
+			Dim bs = New FactorBAL.Manager()
+			Dim listaRiesgo = New ControlRiesgo_Cliente
+
+			resultado = bs.ReporteCtrlRiesgo(idcliente, listaRiesgo)
+			localReport.ReportPath = Server.MapPath("~/Reports/CtrlRiesgoTotales.rdlc")
+
+			Dim reportDataSource = New ReportDataSource()
+			reportDataSource.Name = "CtrlRiesgoDS"
+			reportDataSource.Value = listaRiesgo.controlRiesgo
+
+			localReport.DataSources.Add(reportDataSource)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+
+				Dim reportType As String = "PDF"
+				Dim mimeType As String = ""
+				Dim encoding As String = ""
+				Dim fileNameExtension As String = ""
+
+				Dim Waring() As Warning = Nothing	'Array
+				Dim Streams() As String = Nothing	'Array 
+				Dim renderedBytes() As Byte	'Array
+
+				Dim list(5) As ReportParameter
+				list(0) = New ReportParameter("TasaCambio", listaRiesgo.cliente.tipoCambio.ToString())
+				list(1) = New ReportParameter("NombreCliente", nombre)
+				list(2) = New ReportParameter("RiesgoIndividual", listaRiesgo.cliente.riesgo.ToString())
+				list(3) = New ReportParameter("RiesgoGrupo", listaRiesgo.cliente.riesgogpo.ToString())
+				list(4) = New ReportParameter("Cliente", idcliente.ToString())
+				list(5) = New ReportParameter("Usuario", Session("USERID").ToString())
+
+				localReport.SetParameters(list)
+				renderedBytes = localReport.Render(reportType, Nothing, mimeType, encoding, fileNameExtension, Streams, Waring)
+
+				Return File(renderedBytes, "pdf", "ReporteControlRiesgo.pdf")
+
+			Else
+
+				Return Content("<script language='javascript' type='text/javascript'>alert('Error al generar el PDF favor de volver a consultar !!\n\nClick Aceptar para volver'); window.location.href ='../Catalogos/ControlRiesgo?clienteId=" + idcliente.ToString() + "&nombre=" + nombre + "';</script>")
+
+			End If
+
+		End Function
+
+#End Region
+
+#Region "Apoderados"
+		<HttpPost>
+			<CustomAuthorize(Permisos.Acciones.CATALOGOS_ACTUALIZAR)>
+		Public Function GuardarApoderado(apoderados As ModeloApoderado) As ActionResult
+
+			Dim resultado
+
+			If ModelState.IsValid Then
+				Dim bs = New FactorBAL.Manager()
+
+				FieldsReflect.initialize(apoderados)
+
+				TinyMapper.Bind(Of ModeloApoderado, apoderados)()	'Mapeo de propiedades Modelo a DTO's
+				Dim model = TinyMapper.Map(Of apoderados)(apoderados)
+				If apoderados.id > 0 Then
+					resultado = bs.ActualizarApoderadoBAL(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Actualizado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eActualizar
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de actualizar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				Else
+
+					resultado = bs.AltaApoderadoBAL(model)
+
+					If resultado.Ok And resultado IsNot Nothing Then
+						resultado.Mensaje = "Registro Guardado"
+						resultado.tipo = Enumerador.eTipoTransaccion.eAlta
+					Else
+						resultado.Mensaje = String.Format("Ocurrio un error al tratar de guardar el registro!! {0}" +
+										  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+					End If
+
+				End If
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo, .titulo = ""})
+			Else
+				resultado = New Result(False)
+
+				For item As Integer = 0 To ModelState.Keys.Count - 1 Step +1
+					If ModelState.Values(item).Errors.Count > 0 Then
+						Dim val = item
+						resultado.Mensaje = resultado.Mensaje + "<br/> - " + apoderados.GetType().GetProperties().Where(Function(x) x.Name = ModelState.Keys(val)).SingleOrDefault().
+																					GetCustomAttributes(GetType(System.ComponentModel.DataAnnotations.DisplayAttribute), False).
+																							Cast(Of System.ComponentModel.DataAnnotations.DisplayAttribute).
+																									FirstOrDefault().Name
+					End If
+				Next
+
+				Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .titulo = "Revisar los siguientes campos !!"})
+			End If
+
+
+		End Function
+
+		<HttpPost>
+		Public Function CancelarApoderado(clienteid As Integer) As ActionResult
+
+			Dim resultado
+			Dim bs = New FactorBAL.Manager()
+			resultado = bs.CancelarApoderadoBAL(clienteid)
+			If resultado.Ok And resultado IsNot Nothing Then
+				resultado.Mensaje = "Apoderado Cancelado"
+				resultado.Tipo = Enumerador.eTipoTransaccion.eActualizar 'eActualizar permite enviar al json el tipo para saber si la tabla se recargara 
+			Else
+				resultado.Mensaje = String.Format("Ocurrio un error al tratar de cancelar el Apoderado. !! {0}" +
+								  "Tipo de error:{1}", Environment.NewLine, resultado.Detalle)
+			End If
+			Return Json(New With {Key .Result = resultado.Ok, .Text = resultado.Mensaje, .Tipo = resultado.Tipo})
+			Return Nothing
+		End Function
+#End Region
+
+#End Region
+
+#Region "Validaciones"
+		<HttpGet>
+		Public Function ValidarProveedorRFC(rfc As String, Optional deudor As Integer = 0) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim validaciones = New RepositorioValidacion()
+			Dim existe = False
+			Dim resp = "nombre"
+			resultado = validaciones.ValidarRFC(rfc, "proveedor", resp, "deudor ", "RFC", "deudor", deudor, existe)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				If existe Then
+					jresult = Json("R.F.C. ya existe </br>" + resp, JsonRequestBehavior.AllowGet)
+				Else
+					jresult = Json("true", JsonRequestBehavior.AllowGet)
+				End If
+			Else
+				resultado.Mensaje = "Ocurrio un error al validar R.F.C. "
+				jresult = Json(resultado.Mensaje, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+		<HttpGet>
+		Public Function ValidarClienteRFC(rfc As String, Optional cliente As Integer = 0) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim validaciones = New RepositorioValidacion()
+			Dim existe = False
+			Dim resp = "nombre"
+			resultado = validaciones.ValidarRFC(rfc, "clientes", resp, "cliente ", "RFC", "cliente", cliente, existe)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				If existe Then
+					jresult = Json("R.F.C. ya existe </br>" + resp, JsonRequestBehavior.AllowGet)
+				Else
+					jresult = Json("true", JsonRequestBehavior.AllowGet)
+				End If
+			Else
+				resultado.Mensaje = "Ocurrio un error al validar R.F.C."
+				jresult = Json(resultado.Mensaje, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+		<HttpGet>
+		Public Function ValidarCompradorRFC(rfc As String, Optional deudor As Integer = 0) As ActionResult
+
+			Dim jresult = New JsonResult()
+			Dim resultado
+			Dim validaciones = New RepositorioValidacion()
+			Dim existe = False
+			Dim resp = "nombre"
+			resultado = validaciones.ValidarRFC(rfc, "comprador", resp, "deudor", "RFC", "deudor", deudor, existe)
+
+			If resultado.Ok And resultado IsNot Nothing Then
+				If existe Then
+					jresult = Json("R.F.C. ya existe </br>" + resp, JsonRequestBehavior.AllowGet)
+				Else
+					jresult = Json("true", JsonRequestBehavior.AllowGet)
+				End If
+			Else
+				resultado.Mensaje = "Ocurrio un error al validar R.F.C."
+				jresult = Json(resultado.Mensaje, JsonRequestBehavior.AllowGet)
+			End If
+
+			Return jresult
+
+		End Function
+#End Region
+
+	End Class
+End Namespace
+
+

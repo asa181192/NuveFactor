@@ -1,0 +1,33 @@
+﻿Imports FactorEntidades
+Imports FactorDAL
+
+Public Class OperacionesBAL
+#Region "Contratos"
+	Function ConsultaContratosBAL(ClienteID As Integer, ByRef model As List(Of OperacionContrato)) As Result
+		Dim contrato = New ContratosDAL()
+		Return contrato.ConsultaContratosDAL(ClienteID, model)
+	End Function
+
+	Function ConsultaDetalleContratoBAL(clienteid As Integer, ContratoID As Integer, ByRef model As ContratoCliente) As Result
+		Dim contrato = New ContratosDAL()
+		Return contrato.ConsultaDetalleContratoDAL(clienteid, ContratoID, model)
+	End Function
+
+	Function ActualizarContratoBAL(ByRef model As contratos) As Result
+		Dim contrato = New ContratosDAL()
+		Return contrato.ActualizarContratoDAL(model)
+	End Function
+
+	Function AltaContratoBAL(ByRef model As contratos) As Result
+		Dim contrato = New ContratosDAL()
+		Return contrato.AltaContratoDAL(model)
+	End Function
+
+	Function ConsultaClienteContratoBAL(ClienteID As Integer, ByRef model As OperacionContrato) As Result
+		Dim contrato = New ContratosDAL()
+
+		Return contrato.ConsultaClienteContratoDAL(ClienteID, model)
+	End Function
+
+#End Region
+End Class

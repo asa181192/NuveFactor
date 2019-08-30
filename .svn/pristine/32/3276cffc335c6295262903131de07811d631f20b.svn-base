@@ -1,0 +1,313 @@
+﻿//Inicializacion de variables
+var tabla;
+var gliquida = $(".gliquida").attr('href')
+var cancela = $(".cancela").attr('href')
+var data =
+{
+    inicializarTabla: function () {
+
+        tabla = $('#table')
+            .on('preXhr.dt', function (e, settings, data) {
+                 $(this).dataTable().api().clear();
+                 settings.iDraw = 0;   //Setearlo a 0 ,  lo que significa "initial draw"lo que mostrata el loading para la tabla de nuevo .
+                 $(this).dataTable().api().draw();               
+             })
+            .DataTable({
+                ajax: {
+                    "url": "../Catalogos/obtenerListaRiesgo/", // url del controlador a consultar 
+                    "Type": "GET",
+                    "data": function (d) { d.clienteId = $('#propCliente_cliente').val() }, // parametros a enviar al controlador 
+                    "dataSrc": function (json) {
+                        if (typeof (json.Mensaje) != 'undefined') {
+                            mensajemodal(json.Mensaje, 'warning');
+                            $.Loading(false); 
+                            return {}
+                        } else {
+                            $("#propCliente_rgpo").prop('checked', json.cliente.rgpo)
+                            $("#propCliente_voboreg").prop('checked', json.cliente.voboreg)
+                            $("#propCliente_vobo").prop('checked', json.cliente.vobo)
+                            $("#propCliente_riesgogpo").val((json.cliente.riesgogpo).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+                            $("#propCliente_riesgo").val((json.cliente.riesgo).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'))
+                            data.inicializacionControles();
+                            mensajemodal("Proceso trerminado", 'success');
+                            return json.Results;
+                        }
+                    }
+                },
+                initComplete: function (settings, json) {
+                    $.Loading(false);
+                },
+                paging: false, // permite la paginacion en la tabla .
+                lengthMenu: [10, 20, 30], // Cantidad de registros mostrados por pantalla 
+                searching: false, // genera cuadro de busqueda
+                ordering: false, // genera ordenamiento de columnas 
+                order: [[0, 'desc']], // ordena la primer columna
+                responsive: false , // realiza la tabla responsiva en moviles
+                destroy: true, // permite que cuando se realize una nueva consulta se destruya la vieja tabla y genere una nueva . 
+                columns: [ // permite saber que columnas se usaran del json retornado desde el servidor . 
+           { data: "id_rec" },
+           { data: "Div" },          
+           { data: "Cancela" },
+           { data: "Infolinea" },
+           { data: "clientet24" },
+           { data: "nombre" },
+           { data: "RgoDesc" },
+           { data: "ldescrip" },
+           { data: "idmultiple" },
+           { data: "lmonto", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "lutilizado", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "ldisponibl", render: $.fn.dataTable.render.number(',', '.', 2, '$')  },
+           { data: "lvence" },
+           { data: "lmultiple", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "gliq" },
+           { data: "porcentaje", render: $.fn.dataTable.render.number('', '.', 2, '' , '%') },
+           { data: "cuenta" },
+           { data: "adeudo", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "vencida", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "garantsdo", render: $.fn.dataTable.render.number(',', '.', 2, '$') },
+           { data: "garantutl", render: $.fn.dataTable.render.number(',', '.', 2, '$') }
+           //{
+           //    data: "tipoid", "width": "50px", "render": function (data) {
+           //        return '<a class="popup" href="../Catalogos/GuardarTipoGarantia?tipoid=' + data + '" add="true" ><button type="button" class="btn glyphicon glyphicon-pencil"></button></a>';
+           //    }, orderable: false
+           //}
+                //],
+                //"columnDefs": [
+                //    { "className": "dt-body-center", "targets": [21] }
+                ]
+
+            });
+        
+
+    }, //Funcion que inicializa la tabla 
+    openPopUp: function (pageUrl,header) {
+        var $pageContent = $('<div>');
+
+        $pageContent.load(pageUrl, function () {
+
+            $pageContent.dialog({
+                width: 600, // overcomes width:'auto' and maxWidth bug
+                height: 'auto',
+                modal: true,
+                show: 'fade',
+                title: header,
+                hide: 'fade',
+                fluid: true, //new option
+                resizable: false,
+                create: function (event, ui) { //permite inicializar parametros o campos dentro de el popup creado
+
+                    //permite reiniciar el validado de informacion al despelgar una ventana modal
+                    var form = $("#popupForm").closest("form");
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+
+                    $('.my_select_box').multiSelect({
+                        cssClass: "fullwidth",
+                        selectableHeader: "<div class='custom-header'>Seleccione Lineas</div>",
+                        selectionHeader: "<div class='custom-header'>Lineas a Asociar</div>"
+                    });
+                    
+                    $('#porcentaje').mask('000.00', { reverse: true });
+
+                    $("#lmultiple").mask('000,000,000,000,000.00', { reverse: true });
+
+                    // Validacion de tool tip 
+                    $pageContent.tooltip({
+                        items: ".input-validation-error",
+                        content: function () {
+                            return $("[data-valmsg-for='" + $(this).attr('id').replace("_",".") + "']").text();
+                        }
+                    });
+
+                    data.validacionCampos();
+                },
+                close: function () {
+                    $pageContent.dialog('destroy').remove();
+                }
+            });
+        });
+
+        $pageContent.on('submit',
+           '#popupForm',
+           function (e) {
+               var url = $('#popupForm')[0].action;
+               $.ajax({
+                   type: "POST",
+                   url: url,
+                   data: $('#popupForm').serialize(),
+                   beforeSend: function () {
+                       $.Loading(true);
+                   },
+                   success: function (data) {
+                       if (data.Result) {
+                           //mensajemodal(data.Text, 'success');
+                           if (data.Tipo == 2) {
+                               tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                           }
+                           $pageContent.dialog('close');
+                       } else {
+                           mensajemodal(data.Text, 'warning');
+                       }
+                       
+                   },
+                   error: function () {
+                       mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+
+                   },
+                   complete: function () {
+                       $.Loading(false);
+                   }
+               });
+
+               e.preventDefault();
+           });
+    },
+    fluidDialog: function () {
+        var $visible = $(".ui-dialog:visible");
+        // each open dialog
+        $visible.each(function () {
+            var $this = $(this);
+            var dialog = $this.find(".ui-dialog-content").data("ui-dialog");
+            // if fluid option == true
+            if (dialog.options.fluid) {
+                var wWidth = $(window).width();
+                // check window width against dialog width
+                if (wWidth < (parseInt(dialog.options.maxWidth) + 50)) {
+                    // keep dialog from filling entire screen
+                    $this.css("max-width", "90%");
+                } else {
+                    // fix maxWidth bug
+                    $this.css("max-width", dialog.options.maxWidth + "px");
+                }
+                //reposition dialog
+                dialog.option("position", dialog.options.position);
+            }
+        });
+
+    },
+    validacionCampos: function () {
+
+
+        jQuery.validator.addMethod(
+            'date',
+            function (value, element, params) {
+                if (this.optional(element)) {
+                    return true;
+                };
+                var result = false;
+                try {
+                    $.datepicker.parseDate("dd/mm/yy", value);
+                    result = true;
+                } catch (err) {
+                    result = false;
+                }
+                return result;
+            },
+            ''
+        );
+    } ,// validacion de campos 
+    inicializacionControles:function(){
+        if ($("#propCliente_rgpo").is(':checked')) {
+            $("#propCliente_riesgogpo").prop('disabled', false);
+        } else {
+            $("#propCliente_riesgogpo").prop('disabled', true);
+            $("#propCliente_riesgogpo").val("");
+        }
+        $(".gliquida").addClass("disabled")
+        $(".cancela").addClass("disabled")
+    },
+    ajax: function (url,tipo,data) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            beforeSend: function () {
+                $.Loading(true);
+            },
+            success: function (data) {
+                if (data.Result) {
+                    mensajemodal(data.Text, 'success');
+                    if (data.Tipo == 2) {
+                        tabla.ajax.reload(null, false); // False- permite quedarte en la misma pagina despues de actualizar
+                    }                   
+                } else {
+                    mensajemodal(data.Text, 'warning');
+                }
+
+            },
+            error: function () {
+                mensajemodal('Ocurrio un error al consultar la informacion favor de intentar de nuevo!!', 'warning');
+            },
+            complete: function () {
+                $.Loading(false);
+            }
+
+        });
+    }
+}
+
+$(document).ready(function (e) {
+
+    data.inicializarTabla(); // Realiza por primera vez   
+    $('#propCliente_riesgo').mask('000,000,000,000,000.00', { reverse: true });
+    $('#propCliente_riesgogpo').mask('000,000,000,000,000.00', { reverse: true });
+ 
+    
+
+    $("#buttons").on('click',
+        'a.btn',
+        function (e) {
+            e.preventDefault();
+            if ($(this).attr('type') == 'submit') {
+                data.ajax($(this).attr('href'), 'POST', {});
+            }
+            else if ($(this).attr("class").indexOf("actualiza") !== -1) {
+                data.inicializarTabla();
+            }
+            else {                
+                data.openPopUp($(this).attr('href'), $(this).text())
+            }
+        })
+
+    tabla.on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+            $(".gliquida").addClass("disabled")
+            $(".cancela").addClass("disabled")
+        }
+        else {
+            tabla.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            $(".gliquida").removeClass('disabled');
+            $(".gliquida").removeAttr("href");
+            $(".cancela").removeClass('disabled');
+            $(".cancela").removeAttr("href")
+            $(".gliquida").attr("href", gliquida + "?idRec=" + tabla.row('.selected').data()['id_rec'])
+            $(".cancela").attr("href", cancela + "?idRec=" + tabla.row('.selected').data()['id_rec'])
+        }
+    });
+
+    $(window).resize(function () {
+        data.fluidDialog();
+    });
+
+    $(document).on('submit',
+         '#ControlRiesgoForm',
+         function (e) {
+             e.preventDefault();
+             var url = $('#ControlRiesgoForm')[0].action;
+             data.ajax(url, 'POST', $('#ControlRiesgoForm').serialize());
+         });    
+
+    $("#propCliente_rgpo").click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+            $("#propCliente_riesgogpo").prop('disabled', false);
+        } else {
+            $("#propCliente_riesgogpo").prop('disabled', true);
+            $("#propCliente_riesgogpo").val("");
+        }
+    });
+    
+});
